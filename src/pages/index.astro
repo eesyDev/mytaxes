@@ -1,0 +1,63 @@
+---
+import Layout from '../layouts/Layout.astro'
+---
+
+<Layout title="Калькулятор налогов Казахстан 2026">
+
+  <!-- Hero -->
+  <section class="text-center py-14">
+    <h1 class="text-4xl font-bold tracking-tight mb-4">
+      Калькулятор налогов<br />Казахстан 2026
+    </h1>
+    <p class="text-gray-500 text-lg max-w-xl mx-auto">
+      Быстро рассчитайте налоги для ИП и ТОО. Актуальные ставки 2026 года.
+    </p>
+  </section>
+
+  <!-- Calculator cards -->
+  <section class="grid sm:grid-cols-3 gap-4 mb-20">
+    <a href="/calculators/ip" class="group border border-gray-200 rounded-2xl p-6 hover:border-blue-400 hover:shadow-sm transition-all">
+      <div class="text-2xl mb-3">📊</div>
+      <h2 class="font-semibold text-lg mb-1">ИП упрощённый режим</h2>
+      <p class="text-sm text-gray-500">3% от дохода, без НДС. Для малого бизнеса.</p>
+      <span class="mt-4 inline-block text-sm text-blue-600 group-hover:underline">Рассчитать →</span>
+    </a>
+    <a href="/calculators/patent" class="group border border-gray-200 rounded-2xl p-6 hover:border-blue-400 hover:shadow-sm transition-all">
+      <div class="text-2xl mb-3">📄</div>
+      <h2 class="font-semibold text-lg mb-1">Патент</h2>
+      <p class="text-sm text-gray-500">1% от заявленного дохода. Подходит для услуг.</p>
+      <span class="mt-4 inline-block text-sm text-blue-600 group-hover:underline">Рассчитать →</span>
+    </a>
+    <a href="/calculators/too" class="group border border-gray-200 rounded-2xl p-6 hover:border-blue-400 hover:shadow-sm transition-all">
+      <div class="text-2xl mb-3">🏢</div>
+      <h2 class="font-semibold text-lg mb-1">ТОО (общий режим)</h2>
+      <p class="text-sm text-gray-500">КПН 20%, ИПН с дивидендов, НДС.</p>
+      <span class="mt-4 inline-block text-sm text-blue-600 group-hover:underline">Рассчитать →</span>
+    </a>
+  </section>
+
+  <!-- Blog section -->
+  <section>
+    <div class="flex items-center justify-between mb-6">
+      <h2 class="text-xl font-bold">Статьи о налогах</h2>
+      <a href="/blog" class="text-sm text-blue-600 hover:underline">Все статьи →</a>
+    </div>
+    <div class="grid sm:grid-cols-2 gap-4">
+      <a href="/blog/ip-uproshchenniy-rezhim-2026" class="group border border-gray-100 rounded-2xl p-6 hover:border-gray-300 transition-all">
+        <span class="text-xs text-gray-400 uppercase tracking-wide">ИП</span>
+        <h3 class="font-semibold mt-1 mb-2 group-hover:text-blue-600 transition-colors">
+          Упрощённый режим для ИП в 2026 году: всё что нужно знать
+        </h3>
+        <p class="text-sm text-gray-500">Ставки, лимиты дохода, сроки сдачи деклараций и как считать налог вручную.</p>
+      </a>
+      <a href="/blog/patent-dlya-ip-2026" class="group border border-gray-100 rounded-2xl p-6 hover:border-gray-300 transition-all">
+        <span class="text-xs text-gray-400 uppercase tracking-wide">Патент</span>
+        <h3 class="font-semibold mt-1 mb-2 group-hover:text-blue-600 transition-colors">
+          Патент для ИП в Казахстане: кому подходит и как оформить
+        </h3>
+        <p class="text-sm text-gray-500">Разбираем кто может работать на патенте, лимиты и как платить в 2026 году.</p>
+      </a>
+    </div>
+  </section>
+
+</Layout>

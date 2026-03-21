@@ -1,0 +1,149 @@
+---
+import Layout from '../../layouts/Layout.astro'
+---
+
+<Layout
+  title="Патент для ИП в Казахстане 2026"
+  description="Патентный режим для ИП в Казахстане 2026: ставка 1%, кому подходит, виды деятельности, лимиты дохода, как оформить и платить."
+>
+
+  <div class="mb-8">
+    <a href="/blog" class="text-sm text-gray-400 hover:text-gray-600">← Все статьи</a>
+  </div>
+
+  <article class="prose prose-gray max-w-none">
+
+    <div class="mb-8">
+      <span class="text-xs text-gray-400 uppercase tracking-wide">ИП · Патент</span>
+      <h1 class="text-3xl font-bold mt-2 mb-3">
+        Патент для ИП в Казахстане: кому подходит и как оформить в 2026
+      </h1>
+      <p class="text-gray-500 text-lg">
+        Патент — самый простой налоговый режим в Казахстане. Платите 1% и забудьте про квартальные декларации.
+      </p>
+    </div>
+
+    <div class="space-y-8 text-gray-700 leading-relaxed">
+
+      <section>
+        <h2 class="text-xl font-bold text-gray-900 mb-3">Что такое патент для ИП</h2>
+        <p>
+          Патент — это специальный налоговый режим, при котором ИП платит <strong>1% от заявленного дохода</strong> авансом,
+          до начала деятельности. Никаких квартальных деклараций, никакого учёта расходов.
+          Идеально для тех кто работает в одиночку и оказывает услуги.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-gray-900 mb-3">Кому подходит патент</h2>
+        <p>Патент подойдёт если:</p>
+        <ul class="list-disc pl-5 mt-3 space-y-2">
+          <li>Вы работаете <strong>без наёмных работников</strong></li>
+          <li>Ваш годовой доход не превышает <strong>3 528 МРП</strong> (~20.6 млн тенге в 2026)</li>
+          <li>Ваш вид деятельности входит в разрешённый список</li>
+          <li>Вы не ведёте деятельность как агент (не принимаете деньги третьих лиц)</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-gray-900 mb-3">Виды деятельности для патента</h2>
+        <p>На патенте можно работать в сферах:</p>
+        <div class="grid sm:grid-cols-2 gap-3 mt-3">
+          {[
+            'Ремонт и строительство',
+            'Парикмахерские и косметические услуги',
+            'Репетиторство, обучение',
+            'Фотография',
+            'Перевозки (такси, грузовые)',
+            'Аренда имущества',
+            'Сельскохозяйственные услуги',
+            'Торговля на рынках',
+            'IT-услуги и разработка',
+            'Уход за детьми и пожилыми',
+          ].map((item) => (
+            <div class="flex gap-2 items-start text-sm">
+              <span class="text-green-500 mt-0.5">✓</span>
+              <span>{item}</span>
+            </div>
+          ))}
+        </div>
+        <p class="mt-4 text-sm text-gray-500">
+          Полный перечень видов деятельности — в статье 685 Налогового кодекса РК.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-gray-900 mb-3">Как рассчитать стоимость патента</h2>
+        <div class="bg-blue-50 rounded-xl p-5 mb-4">
+          <p class="font-semibold text-blue-900">Формула:</p>
+          <p class="text-blue-800 mt-1 text-lg">Налог = Заявленный доход × 1%</p>
+        </div>
+        <p>Пример: если вы планируете заработать <strong>2 000 000 тенге</strong> в месяц,
+        стоимость патента на этот месяц — <strong>20 000 тенге</strong>.</p>
+
+        <div class="mt-4 border border-gray-200 rounded-xl overflow-hidden">
+          <table class="w-full text-sm">
+            <thead class="bg-gray-50">
+              <tr>
+                <th class="text-left px-4 py-3 font-medium">Заявленный доход</th>
+                <th class="text-right px-4 py-3 font-medium">Стоимость патента (1%)</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+              <tr><td class="px-4 py-3">500 000 тг</td><td class="px-4 py-3 text-right">5 000 тг</td></tr>
+              <tr><td class="px-4 py-3">1 000 000 тг</td><td class="px-4 py-3 text-right">10 000 тг</td></tr>
+              <tr><td class="px-4 py-3">3 000 000 тг</td><td class="px-4 py-3 text-right">30 000 тг</td></tr>
+              <tr><td class="px-4 py-3">10 000 000 тг</td><td class="px-4 py-3 text-right">100 000 тг</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="mt-4 text-sm text-gray-500">
+          Плюс к налогу 1% — нужно платить ОПВ (10%), ВОСМС (5% от 1.4 МЗП) и СО (3.5%).
+          Эти взносы платятся отдельно, ежемесячно.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-gray-900 mb-3">Как оформить патент</h2>
+        <ol class="list-decimal pl-5 space-y-3">
+          <li>
+            <strong>Зарегистрируйтесь как ИП</strong> — через eGov.kz или в Центре обслуживания населения.
+          </li>
+          <li>
+            <strong>Подайте заявление на патент</strong> — через Кабинет налогоплательщика (cabinet.salyk.kz)
+            или приложение e-Salyq Business. Укажите вид деятельности и заявленный доход.
+          </li>
+          <li>
+            <strong>Оплатите стоимость патента</strong> — сразу при подаче заявления. Оплата через
+            мобильный банкинг, Kaspi или в банке по реквизитам.
+          </li>
+          <li>
+            <strong>Получите патент</strong> — он приходит в электронном виде в Кабинете налогоплательщика.
+          </li>
+        </ol>
+      </section>
+
+      <section>
+        <h2 class="text-xl font-bold text-gray-900 mb-3">Срок действия патента</h2>
+        <p>
+          Патент можно оформить на срок <strong>от 1 до 12 месяцев</strong> в пределах одного календарного года.
+          Если доход превысил заявленный — нужно доплатить 1% с превышения и подать уточнённый расчёт.
+          Если не заработали столько — переплату можно зачесть в счёт будущих платежей.
+        </p>
+      </section>
+
+      <div class="bg-gray-50 rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+        <div>
+          <p class="font-semibold">Рассчитайте стоимость патента</p>
+          <p class="text-sm text-gray-500 mt-1">Введите планируемый доход — получите сумму к уплате.</p>
+        </div>
+        <a href="/calculators/patent" class="shrink-0 bg-blue-600 text-white px-5 py-2.5 rounded-xl text-sm font-medium hover:bg-blue-700 transition-colors">
+          Открыть калькулятор →
+        </a>
+      </div>
+
+    </div>
+  </article>
+
+</Layout>
