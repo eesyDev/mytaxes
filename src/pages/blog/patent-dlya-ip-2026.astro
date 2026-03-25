@@ -1,145 +1,151 @@
 ---
 import Layout from '../../layouts/Layout.astro'
+
+// Актуальные константы на март 2026
+const mzp = 85_000;
+const mrp = 3_932; 
+const patentLimitMrp = 3_528;
+const limitTenge = Math.round(patentLimitMrp * mrp);
 ---
 
 <Layout
-  title="Патент для ИП в Казахстане 2026"
-  description="Патентный режим для ИП в Казахстане 2026: ставка 1%, кому подходит, виды деятельности, лимиты дохода, как оформить и платить."
+  title="Патент для ИП в Казахстане 2026: Новые правила"
+  description="Актуальный гайд по патентному режиму в 2026 году: ставка 1%, расчет ОПВР 3.5%, лимиты дохода и список разрешенных КЭД."
 >
 
   <div class="mb-8">
-    <a href="/blog" class="text-sm text-gray-400 hover:text-gray-600">← Все статьи</a>
+    <a href="/blog" class="text-sm text-gray-400 hover:text-blue-600 transition-colors">← Все статьи</a>
   </div>
 
-  <article class="prose prose-gray max-w-none">
+  <article class="prose prose-slate max-w-none">
 
-    <div class="mb-8">
-      <span class="text-xs text-gray-400 uppercase tracking-wide">ИП · Патент</span>
-      <h1 class="text-3xl font-bold mt-2 mb-3">
-        Патент для ИП в Казахстане: кому подходит и как оформить в 2026
+    <div class="mb-8 border-b border-gray-100 pb-8">
+      <div class="flex items-center gap-2 mb-4">
+        <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-[10px] font-black uppercase tracking-wider">ИП · Патент</span>
+        <span class="text-xs text-gray-400 uppercase tracking-wide">Обновлено: Март 2026</span>
+      </div>
+      <h1 class="text-4xl font-black text-gray-900 leading-tight mb-4">
+        Патент для ИП в 2026 году: Полный разбор режима
       </h1>
-      <p class="text-gray-500 text-lg">
-        Патент — самый простой налоговый режим в Казахстане. Платите 1% и забудьте про квартальные декларации.
+      <p class="text-xl text-gray-500 font-medium">
+        Минимальный налог 1% и отсутствие отчетов. Рассказываем, как работать легально и не переплачивать.
       </p>
     </div>
 
-    <div class="space-y-8 text-gray-700 leading-relaxed">
+    <div class="space-y-10 text-gray-700 leading-relaxed">
 
       <section>
-        <h2 class="text-xl font-bold text-gray-900 mb-3">Что такое патент для ИП</h2>
+        <h2 class="text-2xl font-bold text-gray-900 mb-4 tracking-tight">В чем суть патента?</h2>
         <p>
-          Патент — это специальный налоговый режим, при котором ИП платит <strong>1% от заявленного дохода</strong> авансом,
-          до начала деятельности. Никаких квартальных деклараций, никакого учёта расходов.
-          Идеально для тех кто работает в одиночку и оказывает услуги.
+          Патент — это «предоплата» за ведение бизнеса. Вы заявляете государству: <em>«Я планирую заработать X тенге за следующие полгода»</em>, сразу платите <strong>1% налога</strong> и работаете спокойно.
         </p>
+        <div class="bg-indigo-50 border-l-4 border-indigo-500 p-4 my-6">
+          <p class="text-sm text-indigo-900 font-medium">
+            <strong>Главный плюс 2026 года:</strong> Патент по-прежнему освобожден от сдачи формы 910.00. Ваша единственная отчетность — это расчет стоимости патента (форма 911.00), которую вы подаете <strong>ДО</strong> начала работы.
+          </p>
+        </div>
       </section>
 
       <section>
-        <h2 class="text-xl font-bold text-gray-900 mb-3">Кому подходит патент</h2>
-        <p>Патент подойдёт если:</p>
-        <ul class="list-disc pl-5 mt-3 space-y-2">
-          <li>Вы работаете <strong>без наёмных работников</strong></li>
-          <li>Ваш годовой доход не превышает <strong>3 528 МРП</strong> (~20.6 млн тенге в 2026)</li>
-          <li>Ваш вид деятельности входит в разрешённый список</li>
-          <li>Вы не ведёте деятельность как агент (не принимаете деньги третьих лиц)</li>
+        <h2 class="text-2xl font-bold text-gray-900 mb-4 tracking-tight">Жесткие условия 2026 года</h2>
+        <p>Патент — режим не для всех. Чтобы его применять, вы должны соответствовать четырем «НЕ»:</p>
+        <ul class="space-y-3 mt-4">
+          <li class="flex gap-3 items-start">
+            <span class="w-6 h-6 bg-red-100 text-red-600 rounded-full flex shrink-0 items-center justify-center text-xs">✕</span>
+            <span><strong>НЕ иметь работников</strong> (только личный труд ИП).</span>
+          </li>
+          <li class="flex gap-3 items-start">
+            <span class="w-6 h-6 bg-red-100 text-red-600 rounded-full flex shrink-0 items-center justify-center text-xs">✕</span>
+            <span><strong>НЕ превышать лимит дохода:</strong> {patentLimitMrp} МРП в год (около <strong>{limitTenge.toLocaleString()} ₸</strong>).</span>
+          </li>
+          <li class="flex gap-3 items-start">
+            <span class="w-6 h-6 bg-red-100 text-red-600 rounded-full flex shrink-0 items-center justify-center text-xs">✕</span>
+            <span><strong>НЕ заниматься торговлей</strong> (в 2026 году почти вся торговля выведена на упрощенку или спецрежимы через платформы).</span>
+          </li>
+          <li class="flex gap-3 items-start">
+            <span class="w-6 h-6 bg-red-100 text-red-600 rounded-full flex shrink-0 items-center justify-center text-xs">✕</span>
+            <span><strong>НЕ работать через посредников</strong> (агентские договора под запретом).</span>
+          </li>
         </ul>
       </section>
 
       <section>
-        <h2 class="text-xl font-bold text-gray-900 mb-3">Виды деятельности для патента</h2>
-        <p>На патенте можно работать в сферах:</p>
-        <div class="grid sm:grid-cols-2 gap-3 mt-3">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4 tracking-tight">Реальный расчет налогов (Пример)</h2>
+        <p>Многие ошибочно думают, что патент стоит копейки. Но помимо 1% налога, вы обязаны платить <strong>соцплатежи за себя</strong>.</p>
+        
+        <div class="bg-white border-2 border-gray-100 rounded-3xl p-6 shadow-sm my-6">
+          <p class="font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+            Расчет при доходе 500 000 ₸ в месяц:
+          </p>
+          <div class="space-y-2 text-sm">
+            <div class="flex justify-between"><span>Налог (1%)</span> <span class="font-bold text-gray-900">5 000 ₸</span></div>
+            <div class="flex justify-between text-gray-400 italic">Соцплатежи (от МЗП 85 000 ₸):</div>
+            <div class="flex justify-between"><span>ОПВ (Пенсионные 10%)</span> <span class="font-bold">8 500 ₸</span></div>
+            <div class="flex justify-between"><span>ОПВР (Работодатель 3.5%)</span> <span class="font-bold text-blue-600">2 975 ₸</span></div>
+            <div class="flex justify-between"><span>СО (Социальные 5%)</span> <span class="font-bold">4 250 ₸</span></div>
+            <div class="flex justify-between"><span>ВОСМС (Медстрахование)</span> <span class="font-bold">5 950 ₸</span></div>
+            <div class="flex justify-between border-t border-gray-100 pt-3 text-lg font-black">
+              <span>ИТОГО К ОПЛАТЕ:</span> <span>26 675 ₸</span>
+            </div>
+          </div>
+        </div>
+        <p class="text-sm text-gray-500">
+          * ОПВР в размере 3.5% — это обязательное требование с 1 января 2026 года для всех предпринимателей.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-bold text-gray-900 mb-4 tracking-tight">Разрешенные виды деятельности</h2>
+        <p>В 2026 году список КЭД для патента ограничен 32 видами услуг. Самые популярные:</p>
+        <div class="grid sm:grid-cols-2 gap-4 mt-4">
           {[
-            'Ремонт и строительство',
+            'Штукатурные и малярные работы',
+            'Услуги такси и перевозка грузов',
             'Парикмахерские и косметические услуги',
-            'Репетиторство, обучение',
-            'Фотография',
-            'Перевозки (такси, грузовые)',
-            'Аренда имущества',
-            'Сельскохозяйственные услуги',
-            'Торговля на рынках',
-            'IT-услуги и разработка',
-            'Уход за детьми и пожилыми',
+            'Репетиторство (частные уроки)',
+            'Ремонт компьютеров и бытовой техники',
+            'Фотография и видеосъемка',
+            'Аренда жилой недвижимости',
+            'Музыкальное сопровождение мероприятий'
           ].map((item) => (
-            <div class="flex gap-2 items-start text-sm">
-              <span class="text-green-500 mt-0.5">✓</span>
-              <span>{item}</span>
+            <div class="flex items-center gap-3 bg-gray-50 p-3 rounded-2xl border border-gray-100">
+              <span class="text-blue-600 font-bold">●</span>
+              <span class="text-sm font-medium text-gray-700">{item}</span>
             </div>
           ))}
         </div>
-        <p class="mt-4 text-sm text-gray-500">
-          Полный перечень видов деятельности — в статье 685 Налогового кодекса РК.
-        </p>
       </section>
 
       <section>
-        <h2 class="text-xl font-bold text-gray-900 mb-3">Как рассчитать стоимость патента</h2>
-        <div class="bg-blue-50 rounded-xl p-5 mb-4">
-          <p class="font-semibold text-blue-900">Формула:</p>
-          <p class="text-blue-800 mt-1 text-lg">Налог = Заявленный доход × 1%</p>
+        <h2 class="text-2xl font-bold text-gray-900 mb-4 tracking-tight">Как оформить патент в 2026?</h2>
+        <div class="relative space-y-6 pl-8 border-l-2 border-blue-100">
+          <div class="relative">
+            <span class="absolute -left-[41px] top-0 w-5 h-5 bg-blue-600 rounded-full border-4 border-white shadow-sm"></span>
+            <p class="font-bold text-gray-900">Посчитайте доход</p>
+            <p class="text-sm">Определите, сколько вы планируете заработать за период (от 1 до 12 месяцев).</p>
+          </div>
+          <div class="relative">
+            <span class="absolute -left-[41px] top-0 w-5 h-5 bg-blue-600 rounded-full border-4 border-white shadow-sm"></span>
+            <p class="font-bold text-gray-900">Оплатите налоги</p>
+            <p class="text-sm text-gray-600">Важно! Сначала платим налог и соцплатежи через Kaspi или Halyk, и только потом подаем расчет.</p>
+          </div>
+          <div class="relative">
+            <span class="absolute -left-[41px] top-0 w-5 h-5 bg-blue-600 rounded-full border-4 border-white shadow-sm"></span>
+            <p class="font-bold text-gray-900">Подайте форму 911.00</p>
+            <p class="text-sm text-gray-600">Через кабинет налогоплательщика или мобильное приложение e-Salyq Business.</p>
+          </div>
         </div>
-        <p>Пример: если вы планируете заработать <strong>2 000 000 тенге</strong> в месяц,
-        стоимость патента на этот месяц — <strong>20 000 тенге</strong>.</p>
+      </section>
 
-        <div class="mt-4 border border-gray-200 rounded-xl overflow-hidden">
-          <table class="w-full text-sm">
-            <thead class="bg-gray-50">
-              <tr>
-                <th class="text-left px-4 py-3 font-medium">Заявленный доход</th>
-                <th class="text-right px-4 py-3 font-medium">Стоимость патента (1%)</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-100">
-              <tr><td class="px-4 py-3">500 000 тг</td><td class="px-4 py-3 text-right">5 000 тг</td></tr>
-              <tr><td class="px-4 py-3">1 000 000 тг</td><td class="px-4 py-3 text-right">10 000 тг</td></tr>
-              <tr><td class="px-4 py-3">3 000 000 тг</td><td class="px-4 py-3 text-right">30 000 тг</td></tr>
-              <tr><td class="px-4 py-3">10 000 000 тг</td><td class="px-4 py-3 text-right">100 000 тг</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <p class="mt-4 text-sm text-gray-500">
-          Плюс к налогу 1% — нужно платить ОПВ (10%), ВОСМС (5% от 1.4 МЗП) и СО (3.5%).
-          Эти взносы платятся отдельно, ежемесячно.
+      <div class="bg-gray-900 rounded-[2.5rem] p-8 lg:p-12 text-center text-white shadow-2xl overflow-hidden relative group">
+        <div class="absolute top-0 right-0 -mr-10 -mt-10 w-40 h-40 bg-blue-600 rounded-full blur-3xl opacity-20 group-hover:opacity-40 transition-opacity"></div>
+        <h3 class="text-2xl font-black mb-4 tracking-tight">Не уверены в расчетах?</h3>
+        <p class="text-gray-400 mb-8 max-w-md mx-auto">
+          Воспользуйтесь нашим калькулятором патента 2026. Он учитывает новый МЗП, ОПВР и автоматически считает сумму к оплате.
         </p>
-      </section>
-
-      <section>
-        <h2 class="text-xl font-bold text-gray-900 mb-3">Как оформить патент</h2>
-        <ol class="list-decimal pl-5 space-y-3">
-          <li>
-            <strong>Зарегистрируйтесь как ИП</strong> — через eGov.kz или в Центре обслуживания населения.
-          </li>
-          <li>
-            <strong>Подайте заявление на патент</strong> — через Кабинет налогоплательщика (cabinet.salyk.kz)
-            или приложение e-Salyq Business. Укажите вид деятельности и заявленный доход.
-          </li>
-          <li>
-            <strong>Оплатите стоимость патента</strong> — сразу при подаче заявления. Оплата через
-            мобильный банкинг, Kaspi или в банке по реквизитам.
-          </li>
-          <li>
-            <strong>Получите патент</strong> — он приходит в электронном виде в Кабинете налогоплательщика.
-          </li>
-        </ol>
-      </section>
-
-      <section>
-        <h2 class="text-xl font-bold text-gray-900 mb-3">Срок действия патента</h2>
-        <p>
-          Патент можно оформить на срок <strong>от 1 до 12 месяцев</strong> в пределах одного календарного года.
-          Если доход превысил заявленный — нужно доплатить 1% с превышения и подать уточнённый расчёт.
-          Если не заработали столько — переплату можно зачесть в счёт будущих платежей.
-        </p>
-      </section>
-
-      <div class="bg-gray-50 rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-        <div>
-          <p class="font-semibold">Рассчитайте стоимость патента</p>
-          <p class="text-sm text-gray-500 mt-1">Введите планируемый доход — получите сумму к уплате.</p>
-        </div>
-        <a href="/calculators/patent" class="shrink-0 bg-blue-600 text-white px-5 py-2.5 rounded-xl text-sm font-medium hover:bg-blue-700 transition-colors">
-          Открыть калькулятор →
+        <a href="/calculators/ip" class="inline-flex bg-blue-600 text-white px-10 py-4 rounded-2xl font-black hover:bg-blue-700 transition-all transform hover:scale-105 active:scale-95 shadow-xl shadow-blue-500/20">
+          Запустить калькулятор →
         </a>
       </div>
 
