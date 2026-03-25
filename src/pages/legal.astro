@@ -1,0 +1,112 @@
+---
+import Layout from '../layouts/Layout.astro'
+
+// Актуальные константы на март 2026 дляDisclaimer
+const updateDate = "Март 2026";
+const KGD_portal = "cabinet.salyk.kz";
+---
+
+<Layout title="Юридическая информация — Mytaxes 2026">
+  <div class="max-w-5xl mx-auto px-4 py-12 font-sans selection:bg-blue-100">
+    
+    <div class="text-center mb-16 pb-8 border-b border-gray-100">
+      <h1 class="text-4xl font-black text-gray-900 mb-3 tracking-tight">Юридическая информация</h1>
+      <p class="text-xl text-gray-500 font-medium max-w-2xl mx-auto">
+        Пожалуйста, ознакомьтесь с условиями использования калькулятора, политикой данных и отказом от ответственности.
+      </p>
+    </div>
+
+    <div class="space-y-10">
+      
+      <div class="bg-white p-8 lg:p-10 rounded-[2.5rem] border-2 border-red-100 shadow-xl shadow-red-50 relative overflow-hidden group">
+        <div class="absolute top-0 right-0 -mr-8 -mt-8 w-32 h-32 bg-red-100 rounded-full blur-3xl opacity-50 group-hover:opacity-80 transition-opacity"></div>
+        
+        <div class="flex items-center gap-4 mb-8 relative">
+          <div class="w-12 h-12 bg-red-100 text-red-600 rounded-2xl flex items-center justify-center shadow-inner">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+          </div>
+          <h2 class="text-2xl font-black text-gray-950 tracking-tight">Отказ от ответственности</h2>
+        </div>
+
+        <div class="prose prose-slate prose-sm max-w-none text-gray-700 leading-relaxed space-y-4 relative">
+          <p class="font-bold text-red-800 bg-red-50 p-4 rounded-xl">
+            Данный калькулятор предназначен исключительно для ознакомительных и справочных целей. Расчеты производятся на основе алгоритмов, соответствующих налоговому законодательству РК по состоянию на **{updateDate} года**.
+          </p>
+          <p>
+            Обращаем ваше внимание, что с 2026 года процедура «Отзыва налоговой отчетности» в ИС КГД существенно ограничена (внесение изменений возможно только через подачу дополнительных форм). 
+          </p>
+          <p>
+            Владелец сайта не является налоговым консультантом и не несет ответственности за любые финансовые потери, штрафы или пени, возникшие в результате использования данных расчетов для подачи официальной отчетности. Перед оплатой налогов и подачей деклараций рекомендуем проверять данные в кабинете налогоплательщика на портале <strong>{KGD_portal}</strong> или консультироваться с сертифицированным бухгалтером.
+          </p>
+        </div>
+      </div>
+
+      <div class="bg-white p-8 lg:p-10 rounded-[2.5rem] border border-gray-100 shadow-sm transition-all hover:border-blue-100 hover:shadow-lg">
+        <div class="flex items-center gap-4 mb-8">
+          <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+          </div>
+          <h2 class="text-2xl font-black text-gray-950 tracking-tight">Политика данных</h2>
+        </div>
+
+        <div class="prose prose-slate prose-sm max-w-none text-gray-700 leading-relaxed space-y-5">
+          <div>
+            <h4 class="font-bold text-gray-900 mb-2">1. Сбор обезличенных данных</h4>
+            <p>
+              Сайт собирает исключительно обезличенные технические данные (IP-адрес, тип браузера, cookies) с помощью аналитических систем (Google Analytics, Яндекс.Метрика). Мы не собираем и не храним персональные данные, позволяющие идентифицировать пользователя (ФИО, ИИН, телефон), если они не были введены добровольно в формах обратной связи.
+            </p>
+          </div>
+          <div>
+            <h4 class="font-bold text-gray-900 mb-2">2. Использование данных расчета</h4>
+            <p>
+              Числовые значения, вводимые в калькулятор (доход, расходы, количество сотрудников), используются только в рамках текущей сессии для математического расчета налогов. Эти данные не сохраняются на сервере и не передаются третьим лицам.
+            </p>
+          </div>
+          <div>
+            <h4 class="font-bold text-gray-900 mb-2">3. Цель и защита</h4>
+            <p>
+              Обезличенные данные собираются для улучшения работы алгоритмов калькулятора и анализа популярности режимов налогообложения. Мы гарантируем безопасность данных в соответствии с требованиями законодательства РК «О персональных данных и их защите».
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white p-8 lg:p-10 rounded-[2.5rem] border border-gray-100 shadow-sm transition-all hover:border-gray-200">
+        <div class="flex items-center gap-4 mb-8">
+          <div class="w-12 h-12 bg-gray-100 text-gray-700 rounded-2xl flex items-center justify-center">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+          </div>
+          <h2 class="text-2xl font-black text-gray-950 tracking-tight">Условия использования</h2>
+        </div>
+
+        <div class="prose prose-slate prose-sm max-w-none text-gray-700 leading-relaxed space-y-5">
+          <div>
+            <h4 class="font-bold text-gray-900 mb-2">1. Интеллектуальная собственность</h4>
+            <p>
+              Весь контент, включая математические алгоритмы расчета налогов РК 2026, дизайн, программный код и тексты, являются собственностью автора. Копирование, распространение или использование кода/дизайна без письменного согласия или прямой индексируемой ссылки на данный сайт запрещено.
+            </p>
+          </div>
+          <div>
+            <h4 class="font-bold text-gray-900 mb-2">2. Ограничение ответственности и изменения</h4>
+            <p>
+              Сайт предоставляется «как есть» (as is). Администрация оставляет за собой право в любое время изменять налоговые ставки, формулы и алгоритмы в калькуляторе в связи с изменениями в Налоговом кодексе РК без предварительного уведомления пользователей.
+            </p>
+          </div>
+          <div>
+            <h4 class="font-bold text-gray-900 mb-2">3. Согласие пользователя</h4>
+            <p>
+              Используя данный калькулятор, вы автоматически подтверждаете, что ознакомлены и согласны с данными Условиями использования и Отказом от ответственности.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="mt-16 pt-10 border-t border-gray-100 text-center text-xs text-gray-400 space-y-2">
+      <p>&copy; 2026 Mytaxes. Все права защищены. Республика Казахстан.</p>
+      <p>Используя сайт, вы принимаете <a href="/legal" class="text-blue-500 hover:text-blue-700 underline">юридические условия</a>.</p>
+    </div>
+
+  </div>
+</Layout>
