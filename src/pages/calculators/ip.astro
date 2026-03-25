@@ -1,186 +1,243 @@
 ---
 import Layout from '../../layouts/Layout.astro'
+
+const cfg = {
+  mzp: 85_000,
+  taxSimpl: 0.04,  
+  taxPatent: 0.01, 
+  taxOUR: 0.10,    
+  opvRate: 0.10,
+  opvrRate: 0.035, // Март 2026
+  vsmsRate: 0.05,
+  vsmsMZP: 1.4,
+  soRate: 0.05
+}
 ---
 
-<Layout
-  title="Калькулятор ИП упрощённый режим 2026"
-  description="Рассчитайте налог ИП на упрощённом режиме в Казахстане 2026. 3% от дохода, ОПВ, ВОСМС. Бесплатный онлайн калькулятор."
->
+<Layout title="Калькулятор налогов ИП 2026">
+  <div class="max-w-6xl mx-auto px-4 py-10 font-sans">
+    
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-black text-gray-900 mb-2 tracking-tight text-balance">Налоговый калькулятор 2026</h1>
+      <p class="text-gray-500 font-medium">Республика Казахстан | Март 2026</p>
+    </div>
 
-  <div class="mb-8">
-    <a href="/" class="text-sm text-gray-400 hover:text-gray-600">← Назад</a>
-  </div>
+    <div class="flex justify-center mb-12">
+      <div class="inline-flex bg-gray-100 p-1.5 rounded-2xl border border-gray-200 shadow-inner">
+        <button id="period-month" class="period-btn active-tab px-10 py-3 text-sm font-black rounded-xl transition-all uppercase tracking-widest">Месяц</button>
+        <button id="period-half" class="period-btn px-10 py-3 text-sm font-black rounded-xl transition-all text-gray-400 uppercase tracking-widest">Полгода</button>
+      </div>
+    </div>
 
-  <h1 class="text-3xl font-bold mb-2">ИП на упрощённом режиме</h1>
-  <p class="text-gray-500 mb-10">Налоговая ставка 3% от дохода. Лимит дохода — 24 038 МРП в полугодие (~141 млн тенге).</p>
+    <div id="cfg-data" data-cfg={JSON.stringify(cfg)} class="hidden"></div>
 
-  <div class="grid md:grid-cols-2 gap-10">
-
-    <!-- Form -->
-    <div>
-      <div class="space-y-5">
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">
-            Доход за полугодие (тенге)
-          </label>
-          <input
-            id="income"
-            type="number"
-            min="1"
-            placeholder="Например: 5 000 000"
-            class="w-full border border-gray-200 rounded-xl px-4 py-3 text-lg focus:outline-none focus:border-blue-400 transition-colors"
-          />
-          <p id="error-income" class="hidden text-sm text-red-500 mt-1"></p>
-        </div>
-
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">
-            Расходы за полугодие (тенге) <span class="text-gray-400 font-normal">— необязательно</span>
-          </label>
-          <input
-            id="expenses"
-            type="number"
-            placeholder="Если есть подтверждённые расходы"
-            class="w-full border border-gray-200 rounded-xl px-4 py-3 text-lg focus:outline-none focus:border-blue-400 transition-colors"
-          />
-          <p class="text-xs text-gray-400 mt-1">На упрощённом режиме налог считается с дохода, расходы не учитываются. Поле для справки.</p>
-        </div>
-
-        <div>
-          <label class="block text-sm font-medium text-gray-700 mb-2">Наёмные работники</label>
-          <div class="flex gap-3">
-            <button id="btn-no-workers" onclick="setWorkers(false)" class="flex-1 border border-blue-400 bg-blue-50 text-blue-700 rounded-xl py-2 text-sm font-medium transition-all">
-              Нет работников
+    <div class="grid lg:grid-cols-12 gap-10">
+      
+      <div class="lg:col-span-5 space-y-6">
+        
+        <div class="bg-white p-7 rounded-[2rem] border border-gray-100 shadow-sm">
+          <label class="block text-[10px] font-black text-gray-400 uppercase mb-4 tracking-widest">1. Налоговый режим</label>
+          <div class="grid grid-cols-1 gap-2">
+            <button data-regime="simpl" class="regime-btn active-regime p-5 rounded-2xl border-2 text-left transition-all">
+              <div class="font-bold text-base text-gray-900 leading-tight">ИП на упрощенке</div>
+              <div class="text-[10px] opacity-60 mt-1">Налог 4% от оборота</div>
             </button>
-            <button id="btn-with-workers" onclick="setWorkers(true)" class="flex-1 border border-gray-200 text-gray-600 rounded-xl py-2 text-sm font-medium hover:border-gray-300 transition-all">
-              Есть работники
+            <button data-regime="patent" class="regime-btn p-5 rounded-2xl border-2 text-left transition-all">
+              <div class="font-bold text-base text-gray-900 leading-tight">ИП на патенте</div>
+              <div class="text-[10px] opacity-60 mt-1">Налог 1% (без работников)</div>
+            </button>
+            <button data-regime="our" class="regime-btn p-5 rounded-2xl border-2 text-left transition-all">
+              <div class="font-bold text-base text-gray-900 leading-tight">Общеустановленный (ОУР)</div>
+              <div class="text-[10px] opacity-60 mt-1">ИПН 10% от прибыли</div>
             </button>
           </div>
         </div>
 
-        <div id="workers-block" class="hidden">
-          <label class="block text-sm font-medium text-gray-700 mb-1">Кол-во работников</label>
-          <input
-            id="workers"
-            type="number"
-            min="1"
-            max="30"
-            placeholder="1"
-            class="w-full border border-gray-200 rounded-xl px-4 py-3 text-lg focus:outline-none focus:border-blue-400 transition-colors"
-          />
-          <p id="error-workers" class="hidden text-sm text-red-500 mt-1"></p>
-          <p class="text-xs text-gray-400 mt-1">ИПН с зарплаты работников уменьшает налог ИП (до 1.5% от дохода). Максимум 30 чел.</p>
+        <div class="bg-white p-7 rounded-[2rem] border border-gray-100 shadow-sm space-y-6">
+          <label class="block text-[10px] font-black text-gray-400 uppercase mb-0 tracking-widest">2. Денежные показатели</label>
+          <div>
+            <label id="income-label" class="block text-sm font-bold text-gray-700 mb-2">Доход за месяц (₸)</label>
+            <input id="inp-income" type="number" placeholder="0" class="w-full bg-gray-50 border-none rounded-2xl px-5 py-4 text-3xl font-black focus:ring-2 focus:ring-blue-500 outline-none" />
+          </div>
+
+          <div id="our-expenses-block" class="hidden animate-fade-in border-t pt-6 border-gray-50">
+            <label id="expenses-label" class="block text-sm font-bold text-gray-700 mb-2 text-red-600">Подтвержденные расходы (₸)</label>
+            <input id="inp-expenses" type="number" placeholder="0" class="w-full bg-red-50/50 border-none rounded-2xl px-5 py-4 text-3xl font-black text-red-600 outline-none" />
+          </div>
         </div>
 
-        <button
-          onclick="calculate()"
-          class="w-full bg-blue-600 text-white rounded-xl py-3 font-semibold text-lg hover:bg-blue-700 transition-colors"
-        >
-          Рассчитать
-        </button>
-      </div>
-    </div>
+        <div id="workers-container" class="bg-white p-7 rounded-[2rem] border border-gray-100 shadow-sm">
+           <label class="flex items-center justify-between cursor-pointer group">
+             <div class="flex items-center gap-3">
+               <span class="bg-gray-100 text-gray-600 p-2 rounded-lg"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg></span>
+               <h3 class="font-bold text-gray-800 tracking-tight">Наемные работники</h3>
+             </div>
+             <input type="checkbox" id="check-workers" class="w-6 h-6 rounded-lg border-gray-200 text-blue-600 focus:ring-blue-500 cursor-pointer">
+           </label>
 
-    <!-- Results -->
-    <div id="results" class="hidden">
-      <h2 class="font-semibold text-lg mb-4">Результат расчёта</h2>
-      <div class="space-y-3">
-        <div class="flex justify-between py-3 border-b border-gray-100">
-          <span class="text-gray-600">Доход</span>
-          <span id="res-income" class="font-medium"></span>
-        </div>
-        <div class="flex justify-between py-3 border-b border-gray-100">
-          <span class="text-gray-600">Налог 3% (ИПН + СН)</span>
-          <span id="res-tax" class="font-medium text-red-500"></span>
-        </div>
-        <div class="flex justify-between py-3 border-b border-gray-100">
-          <span class="text-gray-600">ОПВ (10% от дохода, макс. 212 500 тг)</span>
-          <span id="res-opv" class="font-medium text-red-500"></span>
-        </div>
-        <div class="flex justify-between py-3 border-b border-gray-100">
-          <span class="text-gray-600">ВОСМС (5% от 1.4 МЗП)</span>
-          <span id="res-voсмс" class="font-medium text-red-500"></span>
-        </div>
-        <div class="flex justify-between py-3 bg-gray-50 rounded-xl px-3 mt-2">
-          <span class="font-semibold">Итого к уплате</span>
-          <span id="res-total" class="font-bold text-xl text-red-600"></span>
-        </div>
-        <div class="flex justify-between py-3">
-          <span class="text-gray-600">Остаток на руки</span>
-          <span id="res-net" class="font-semibold text-green-600 text-lg"></span>
+           <div id="workers-input-block" class="hidden mt-6 space-y-4 animate-fade-in pt-6 border-t border-gray-50">
+             <div class="grid grid-cols-2 gap-4">
+               <div>
+                 <label class="block text-[10px] font-bold text-gray-400 uppercase mb-1">Кол-во человек</label>
+                 <input id="inp-worker-count" type="number" value="1" min="1" class="w-full bg-gray-50 border-none rounded-xl px-4 py-3 font-bold text-lg" />
+               </div>
+               <div>
+                 <label class="block text-[10px] font-bold text-gray-400 uppercase mb-1">ЗП на руки</label>
+                 <input id="inp-worker-salary" type="number" placeholder="85000" class="w-full bg-gray-50 border-none rounded-xl px-4 py-3 font-bold text-lg" />
+               </div>
+             </div>
+           </div>
         </div>
       </div>
 
-      <div class="mt-6 bg-blue-50 rounded-xl p-4 text-sm text-blue-800">
-        <p class="font-medium mb-1">Когда платить</p>
-        <p>Налог по упрощёнке — до 25-го числа второго месяца после полугодия.<br />
-        I полугодие → до 25 августа<br />
-        II полугодие → до 25 февраля следующего года</p>
+      <div class="lg:col-span-7">
+        <div class="bg-white border border-gray-100 shadow-2xl rounded-[3rem] p-8 lg:p-12 sticky top-8">
+          <div class="flex items-center gap-2 mb-10 pb-6 border-b border-gray-50">
+            <span class="w-3 h-3 bg-blue-600 rounded-full animate-pulse"></span>
+            <h2 class="text-xl font-black text-gray-900 tracking-tight">Квитанция на оплату</h2>
+          </div>
+
+          <div class="space-y-6">
+            <div class="space-y-4">
+              <div class="flex justify-between items-center text-base"><span class="text-gray-500">Медстрахование (ВОСМС за ИП)</span> <span id="out-vosms" class="font-bold text-gray-900">0 ₸</span></div>
+              <div class="flex justify-between items-center text-base"><span class="text-gray-500">Пенсионные (ОПВ + ОПВР за ИП)</span> <span id="out-opv" class="font-bold text-gray-900">0 ₸</span></div>
+              <div class="flex justify-between items-center text-base"><span class="text-gray-500">Соц. отчисления (СО за ИП)</span> <span id="out-so" class="font-bold text-gray-900">0 ₸</span></div>
+            </div>
+
+            <div id="out-workers-block" class="hidden space-y-3 pt-6 border-t border-dashed border-gray-200">
+              <div class="flex justify-between items-center text-base text-blue-600 font-medium"><span>Всего налогов за сотрудников</span> <span id="out-worker-taxes" class="font-bold">0 ₸</span></div>
+            </div>
+
+            <div class="space-y-4 pt-6 border-t border-gray-200">
+              <div class="flex justify-between items-center">
+                <span id="tax-label" class="text-sm font-black text-red-500 uppercase tracking-widest">ИПН (4%)</span>
+                <span id="out-tax-main" class="text-2xl font-black text-red-600 underline decoration-red-200 underline-offset-4">0 ₸</span>
+              </div>
+            </div>
+
+            <div class="mt-12 p-10 bg-gray-900 rounded-[2.5rem] text-white shadow-2xl flex flex-col items-center">
+              <div id="badge-period" class="bg-blue-600 text-[10px] font-black px-4 py-1.5 rounded-full mb-6 tracking-[0.2em] uppercase">За 1 месяц</div>
+              <span class="text-[10px] font-bold uppercase opacity-40 mb-2 tracking-widest">Общая сумма</span>
+              <span id="out-total" class="text-6xl font-black tracking-tighter">0 ₸</span>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <!-- Empty state -->
-    <div id="empty-state" class="flex items-center justify-center text-gray-300 text-sm">
-      Введите доход и нажмите «Рассчитать»
     </div>
-
   </div>
-
 </Layout>
 
-<script>
-  let hasWorkers = false
+<style is:global>
+  body { background-color: #fcfcfc; }
+  .regime-btn { border-color: #f5f5f5; color: #a3a3a3; }
+  .active-regime { border-color: #2563eb; background: #fff; color: #111827 !important; box-shadow: 0 10px 20px -10px rgba(37, 99, 235, 0.2); }
+  .period-btn { color: #a3a3a3; }
+  .active-tab { background: #fff; color: #111827 !important; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+  .animate-fade-in { animation: fadeIn 0.3s ease-out forwards; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+</style>
 
-  function setWorkers(val) {
-    hasWorkers = val
-    document.getElementById('workers-block').classList.toggle('hidden', !val)
-    document.getElementById('btn-no-workers').className = !val
-      ? 'flex-1 border border-blue-400 bg-blue-50 text-blue-700 rounded-xl py-2 text-sm font-medium transition-all'
-      : 'flex-1 border border-gray-200 text-gray-600 rounded-xl py-2 text-sm font-medium hover:border-gray-300 transition-all'
-    document.getElementById('btn-with-workers').className = val
-      ? 'flex-1 border border-blue-400 bg-blue-50 text-blue-700 rounded-xl py-2 text-sm font-medium transition-all'
-      : 'flex-1 border border-gray-200 text-gray-600 rounded-xl py-2 text-sm font-medium hover:border-gray-300 transition-all'
-  }
+<script is:inline>
+  const cfg = JSON.parse(document.getElementById('cfg-data').dataset.cfg);
+  let currentRegime = 'simpl';
+  let currentPeriod = 1; 
 
-  function fmt(n) {
-    return n.toLocaleString('ru-KZ', { maximumFractionDigits: 0 }) + ' тг'
-  }
+  const fmt = (v) => Math.round(v).toLocaleString('ru-KZ') + ' ₸';
 
   function calculate() {
-    const income = parseFloat(document.getElementById('income').value) || 0
-    if (income <= 0) return
+    const income = parseFloat(document.getElementById('inp-income').value) || 0;
+    const expenses = parseFloat(document.getElementById('inp-expenses').value) || 0;
+    const hasWorkers = document.getElementById('check-workers').checked;
+    const m = currentPeriod;
 
-    // Ставки 2026
-    const MZP = 85000 // МЗП 2026 (уточнить)
-    const taxRate = 0.03
-    const opvRate = 0.10
-    const opvMax = 212500 // 25 МЗП * 10% (приблизительно)
-    const vosmsCap = MZP * 1.4 * 0.05
+    // 1. ИП за себя
+    const vosms = (cfg.mzp * cfg.vsmsMZP * cfg.vsmsRate) * m;
+    let opv = 0, so = 0;
 
-    const tax = income * taxRate
-    const opv = Math.min(income * opvRate, opvMax)
-    const vosms = vosmsCap
+    if (income > 0) {
+      opv = ((cfg.mzp * cfg.opvRate) + (cfg.mzp * cfg.opvrRate)) * m;
+      so = (cfg.mzp * cfg.soRate) * m;
+    }
 
-    const total = tax + opv + vosms
-    const net = income - total
+    // 2. Налог
+    let taxMain = 0;
+    const label = document.getElementById('tax-label');
 
-    document.getElementById('res-income').textContent = fmt(income)
-    document.getElementById('res-tax').textContent = fmt(tax)
-    document.getElementById('res-opv').textContent = fmt(opv)
-    document.getElementById('res-voсмс').textContent = fmt(vosms)
-    document.getElementById('res-total').textContent = fmt(total)
-    document.getElementById('res-net').textContent = fmt(net)
+    if (currentRegime === 'simpl') {
+      taxMain = income * cfg.taxSimpl;
+      label.textContent = `ИПН (Упрощенка 4%) за ${m === 1 ? 'мес.' : 'полгода'}`;
+    } else if (currentRegime === 'patent') {
+      taxMain = income * cfg.taxPatent;
+      label.textContent = `Налог (Патент 1%) за ${m === 1 ? 'мес.' : 'полгода'}`;
+    } else if (currentRegime === 'our') {
+      const profit = Math.max(0, income - expenses);
+      taxMain = profit * cfg.taxOUR;
+      label.textContent = `ИПН (ОУР 10%) за ${m === 1 ? 'мес.' : 'полгода'}`;
+    }
 
-    document.getElementById('results').classList.remove('hidden')
-    document.getElementById('empty-state').classList.add('hidden')
+    // 3. Работники
+    let workerTaxesTotal = 0;
+    if (hasWorkers && currentRegime !== 'patent') {
+      const count = parseInt(document.getElementById('inp-worker-count').value) || 0;
+      const salary = parseFloat(document.getElementById('inp-worker-salary').value) || 0;
+      workerTaxesTotal = (count * (salary * 0.21)) * m;
+      document.getElementById('out-workers-block').classList.remove('hidden');
+    } else {
+      document.getElementById('out-workers-block').classList.add('hidden');
+    }
+
+    document.getElementById('out-vosms').textContent = fmt(vosms);
+    document.getElementById('out-opv').textContent = fmt(opv);
+    document.getElementById('out-so').textContent = fmt(so);
+    document.getElementById('out-tax-main').textContent = fmt(taxMain);
+    document.getElementById('out-worker-taxes').textContent = fmt(workerTaxesTotal);
+    document.getElementById('out-total').textContent = fmt(vosms + opv + so + taxMain + workerTaxesTotal);
   }
 
-  // Allow Enter key
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') calculate()
-  })
+  // Скрипты переключения
+  document.getElementById('period-month').onclick = (e) => setPeriod(1, e.target);
+  document.getElementById('period-half').onclick = (e) => setPeriod(6, e.target);
 
-  // Expose to onclick
-  window.calculate = calculate
-  window.setWorkers = setWorkers
+  function setPeriod(p, btn) {
+    currentPeriod = p;
+    document.querySelectorAll('.period-btn').forEach(b => {
+        b.classList.remove('active-tab');
+        b.classList.add('text-gray-400');
+    });
+    btn.classList.add('active-tab');
+    btn.classList.remove('text-gray-400');
+    
+    document.getElementById('badge-period').textContent = p === 1 ? 'За 1 месяц' : 'За полгода';
+    document.getElementById('income-label').textContent = p === 1 ? 'Доход за месяц (₸)' : 'Общий доход за полгода (₸)';
+    document.getElementById('expenses-label').textContent = p === 1 ? 'Расходы за месяц (₸)' : 'Расходы за полгода (₸)';
+    calculate();
+  }
+
+  document.querySelectorAll('.regime-btn').forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll('.regime-btn').forEach(b => b.classList.remove('active-regime'));
+      btn.classList.add('active-regime');
+      currentRegime = btn.dataset.regime;
+      document.getElementById('our-expenses-block').classList.toggle('hidden', currentRegime !== 'our');
+      const workersCont = document.getElementById('workers-container');
+      if (currentRegime === 'patent') {
+        workersCont.classList.add('opacity-40', 'pointer-events-none');
+        document.getElementById('check-workers').checked = false;
+        document.getElementById('workers-input-block').classList.add('hidden');
+      } else { workersCont.classList.remove('opacity-40', 'pointer-events-none'); }
+      calculate();
+    }
+  });
+
+  document.getElementById('inp-income').oninput = calculate;
+  document.getElementById('inp-expenses').oninput = calculate;
+  document.getElementById('inp-worker-count').oninput = calculate;
+  document.getElementById('inp-worker-salary').oninput = calculate;
+  document.getElementById('check-workers').onchange = (e) => {
+    document.getElementById('workers-input-block').classList.toggle('hidden', !e.target.checked);
+    calculate();
+  };
+
+  calculate();
 </script>
