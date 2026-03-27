@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro'
 
 const cfg = {
   mzp: 85_000,
+  mrp: 3_932,
   taxSimpl: 0.04,  
   taxPatent: 0.01, 
   taxOUR: 0.10,    
@@ -12,7 +13,11 @@ const cfg = {
   vsmsMZP: 1.4,
   soRate: 0.05,
   opvMaxBase: 50,
-  soMaxBase: 7
+  soMaxBase: 7,
+  // --- НОВЫЕ ДАННЫЕ ДЛЯ РАБОТНИКОВ ---
+  vosmsWorkerRate: 0.02, // ВОСМС (удержание с работника)
+  oosmsEmployerRate: 0.03, // ООСМС (платит работодатель)
+  ipnRate: 0.10 // Ставка ИПН для физлиц
 }
 ---
 
@@ -198,13 +203,18 @@ const cfg = {
 
     // 3. РАБОТНИКИ
     let workerTaxesTotal = 0;
+    const outWorkersBlock = document.getElementById('out-workers-block'); // Находим блок в квитанции
+
     if (hasWorkers && currentRegime !== 'patent') {
       const count = parseInt(document.getElementById('inp-worker-count').value) || 0;
       const salary = parseFloat(document.getElementById('inp-worker-salary').value) || 0;
-      workerTaxesTotal = (count * (salary * 0.21)) * m;
+      
+      workerTaxesTotal = calculateWorkerTaxes(salary, count, m);
+      outWorkersBlock.classList.remove('hidden'); // Показываем строку в квитанции
+    } else {
+      outWorkersBlock.classList.add('hidden'); // Прячем строку, если галочка снята
     }
 
-    // ВЫВОД (используем безопасную функцию fmt)
     document.getElementById('out-vosms').textContent = fmt(vosms);
     document.getElementById('out-opv').textContent = fmt(opv);
     document.getElementById('out-so').textContent = fmt(so);
@@ -215,7 +225,7 @@ const cfg = {
     document.getElementById('out-total').textContent = fmt(grandTotal);
   }
 
-  // --- ПРИВЯЗКА СОБЫТИЙ (остается прежней) ---
+  // --- ПРИВЯЗКА СОБЫТИЙ ---
   document.getElementById('period-month').onclick = (e) => setPeriod(1, e.target);
   document.getElementById('period-half').onclick = (e) => setPeriod(6, e.target);
 
@@ -246,6 +256,54 @@ const cfg = {
     document.getElementById('workers-input-block').classList.toggle('hidden', !e.target.checked);
     calculate();
   };
+
+  function calculateWorkerTaxes(grossSalary, count, months) {
+    if (grossSalary <= 0 || count <= 0) return 0;
+
+    // Лимиты баз
+    const limit10MZP = cfg.mzp * 10;
+    const limit50MZP = cfg.mzp * 50;
+    const limit7MZP = cfg.mzp * 7;
+    const limit25MRP = cfg.mrp * 25;
+    const deduction14MRP = cfg.mrp * 14; // Стандартный вычет
+
+    // --- 1. УДЕРЖАНИЯ С РАБОТНИКА (Вычитаются из оклада) ---
+    // ОПВ (10%)
+    const opvBase = Math.min(grossSalary, limit50MZP);
+    const opvWorker = opvBase * cfg.opvRate; 
+
+    // ВОСМС (2%)
+    const vosmsBase = Math.min(grossSalary, limit10MZP);
+    const vosmsWorker = vosmsBase * cfg.vosmsWorkerRate;
+
+    // ИПН (10%)
+    let ipnBase = grossSalary - opvWorker - vosmsWorker - deduction14MRP;
+    if (ipnBase < 0) ipnBase = 0;
+    
+    // Корректировка 90% для зарплат ниже 25 МРП
+    if (grossSalary <= limit25MRP) {
+      ipnBase = ipnBase - (ipnBase * 0.90);
+    }
+    const ipnWorker = ipnBase * cfg.ipnRate;
+
+    // --- 2. НАЛОГИ ЗА СЧЕТ РАБОТОДАТЕЛЯ (Платятся сверху) ---
+    // ООСМС (3%)
+    const oosmsEmployer = vosmsBase * cfg.oosmsEmployerRate;
+
+    // СО (5%) - База не менее 1 МЗП и не более 7 МЗП
+    let soBase = grossSalary - opvWorker;
+    soBase = Math.max(soBase, cfg.mzp); 
+    soBase = Math.min(soBase, limit7MZP);
+    const soEmployer = soBase * cfg.soRate;
+
+    // ОПВР (3.5%)
+    const opvrEmployer = opvBase * cfg.opvrRate;
+
+    // Итого налогов государству с одного сотрудника
+    const totalTaxesPerWorker = opvWorker + vosmsWorker + ipnWorker + oosmsEmployer + soEmployer + opvrEmployer;
+
+    return totalTaxesPerWorker * count * months;
+  }
 
   calculate();
 </script>

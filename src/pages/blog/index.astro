@@ -1,39 +1,43 @@
 ---
 import Layout from '../../layouts/Layout.astro'
+
+// Используем нативный import.meta.glob вместо глючного Astro.glob
+const files = await import.meta.glob('./*.astro', { eager: true });
+const allFiles = Object.values(files);
+
+// Исключаем саму страницу index.astro
+const posts = allFiles.filter((file: any) => file.file && !file.file.endsWith('index.astro'));
 ---
 
-<Layout title="Статьи о налогах Казахстан 2026" description="Полезные статьи о налогах для ИП и ТОО в Казахстане. Разборы ставок, сроков, режимов налогообложения 2026.">
+<Layout title="Статьи о налогах Казахстан 2026" description="Полезные статьи о налогах для ИП и ТОО в Казахстане.">
 
   <h1 class="text-3xl font-bold mb-2">Статьи о налогах</h1>
   <p class="text-gray-500 mb-10">Понятно о налогах в Казахстане. Без воды.</p>
 
   <div class="space-y-4">
-
-    <a href="/blog/ip-uproshchenniy-rezhim-2026" class="group flex gap-4 border border-gray-100 rounded-2xl p-6 hover:border-gray-300 transition-all">
-      <div class="flex-1">
-        <span class="text-xs text-gray-400 uppercase tracking-wide">ИП · Упрощёнка</span>
-        <h2 class="font-semibold text-lg mt-1 mb-2 group-hover:text-blue-600 transition-colors">
-          Упрощённый режим для ИП в 2026 году: всё что нужно знать
-        </h2>
-        <p class="text-sm text-gray-500">
-          Ставки налога, лимиты дохода, сроки сдачи деклараций, ОПВ и ВОСМС — полный разбор упрощённого режима для ИП в Казахстане.
-        </p>
-      </div>
-      <span class="text-gray-300 self-center text-xl">→</span>
-    </a>
-
-    <a href="/blog/patent-dlya-ip-2026" class="group flex gap-4 border border-gray-100 rounded-2xl p-6 hover:border-gray-300 transition-all">
-      <div class="flex-1">
-        <span class="text-xs text-gray-400 uppercase tracking-wide">ИП · Патент</span>
-        <h2 class="font-semibold text-lg mt-1 mb-2 group-hover:text-blue-600 transition-colors">
-          Патент для ИП в Казахстане: кому подходит и как оформить в 2026
-        </h2>
-        <p class="text-sm text-gray-500">
-          Разбираем кто может работать на патенте, какие виды деятельности разрешены, лимиты дохода и как платить налог в 2026 году.
-        </p>
-      </div>
-      <span class="text-gray-300 self-center text-xl">→</span>
-    </a>
+    
+    {/* 3. Запускаем цикл (map), который сам создаст карточку для каждой статьи */}
+    {posts.map((post) => (
+      <a href={post.url} class="group flex gap-4 border border-gray-100 rounded-2xl p-6 hover:border-gray-300 transition-all shadow-sm hover:shadow-md bg-white">
+        <div class="flex-1">
+          {/* Берем категорию из файла статьи. Если ее нет, пишем 'Статья' */}
+          <span class="text-xs text-gray-400 font-bold uppercase tracking-wide">
+            {post.category || 'Статья'}
+          </span>
+          
+          <h2 class="font-black text-xl mt-1 mb-2 text-gray-900 group-hover:text-blue-600 transition-colors">
+            {post.title}
+          </h2>
+          
+          <p class="text-sm text-gray-500 font-medium">
+            {post.description}
+          </p>
+        </div>
+        <div class="flex items-center justify-center w-10 h-10 rounded-full bg-gray-50 group-hover:bg-blue-50 transition-colors self-center">
+          <span class="text-gray-400 group-hover:text-blue-600 font-bold text-xl">→</span>
+        </div>
+      </a>
+    ))}
 
   </div>
 
