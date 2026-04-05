@@ -1,5 +1,16 @@
 ---
 import Layout from '../../layouts/Layout.astro'
+
+export const meta = {
+  title: 'Упрощённый режим для ИП в 2026 году: всё что нужно знать',
+  description: 'Ставки налога, лимиты дохода, сроки сдачи деклараций, ОПВ и ВОСМС — полный разбор упрощённого режима для ИП в Казахстане.',
+  category: 'ИП · Упрощёнка',
+}
+
+const mzp = 85_000
+const mrp = 3_932
+const simplLimit = 24_038
+const limitTenge = Math.round(simplLimit * mrp)
 ---
 
 <Layout
@@ -8,157 +19,228 @@ import Layout from '../../layouts/Layout.astro'
 >
 
   <div class="mb-8">
-    <a href="/blog" class="text-sm text-gray-400 hover:text-gray-600">← Все статьи</a>
+    <a href="/blog" class="text-sm text-gray-400 hover:text-blue-600 transition-colors">← Все статьи</a>
   </div>
 
   <article class="prose prose-gray max-w-none">
 
-    <div class="mb-8">
-      <span class="text-xs text-gray-400 uppercase tracking-wide">ИП · Упрощёнка</span>
-      <h1 class="text-3xl font-bold mt-2 mb-3">
-        Упрощённый режим для ИП в 2026 году: всё что нужно знать
+    <div class="mb-8 border-b border-gray-100 pb-8">
+      <div class="flex items-center gap-2 mb-4">
+        <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-[10px] font-black uppercase tracking-wider">ИП · Упрощёнка</span>
+        <span class="text-xs text-gray-400 uppercase tracking-wide">Обновлено: 2026</span>
+      </div>
+      <h1 class="text-4xl font-black text-gray-900 leading-tight mb-4">
+        Упрощённый режим для ИП в 2026 году: полный разбор
       </h1>
-      <p class="text-gray-500 text-lg">
-        Ставки, лимиты, декларации и сроки — полный разбор для тех кто работает или планирует работать на упрощёнке.
+      <p class="text-xl text-gray-500 font-medium">
+        4% от оборота, минимум бумаг, декларация два раза в год. Разбираем всё — от условий до реальных цифр.
       </p>
     </div>
 
-    <div class="space-y-8 text-gray-700 leading-relaxed">
+    <div class="space-y-10 text-gray-700 leading-relaxed">
 
       <section>
-        <h2 class="text-xl font-bold text-gray-900 mb-3">Что такое упрощённый режим</h2>
+        <h2 class="text-2xl font-bold text-gray-900 mb-4 tracking-tight">В чём суть упрощёнки</h2>
         <p>
-          Упрощённый режим (или «упрощёнка») — это специальный налоговый режим для малого бизнеса в Казахстане.
-          Вместо нескольких налогов вы платите один — <strong>4% от дохода</strong>. Этот налог включает в себя
-          индивидуальный подоходный налог (ИПН) и социальный налог (СН) в равных долях: по 1.5% каждый.
+          Упрощённый режим — это специальный налоговый режим для малого бизнеса, при котором вы платите
+          <strong>4% от всего дохода</strong> без разбивки на расходы. Внутри этих 4% скрыты два налога:
+          по <strong>1.5% ИПН</strong> и <strong>1.5% социального налога</strong> (плюс 1% — корректировки).
         </p>
-        <p class="mt-3">
-          Режим подходит для ИП с небольшим доходом, которые хотят минимальную нагрузку и простую отчётность.
-        </p>
+        <div class="bg-indigo-50 border-l-4 border-indigo-500 p-4 my-6">
+          <p class="text-sm text-indigo-900 font-medium">
+            <strong>Главный смысл режима:</strong> вы не считаете расходы и не доказываете их налоговой.
+            Получили деньги — заплатили 4%. Всё.
+          </p>
+        </div>
       </section>
 
       <section>
-        <h2 class="text-xl font-bold text-gray-900 mb-3">Кто может применять упрощёнку</h2>
-        <p>Чтобы работать на упрощённом режиме, нужно соответствовать условиям:</p>
-        <ul class="list-disc pl-5 mt-3 space-y-2">
-          <li>Доход за полугодие не превышает <strong>24 038 МРП</strong> (~141 млн тенге по МРП 2026 года)</li>
-          <li>Среднесписочное число работников — не более <strong>30 человек</strong></li>
-          <li>Деятельность не входит в список запрещённых для упрощёнки (например, нельзя продавать алкоголь, заниматься банковской деятельностью, юридическими услугами и рядом других)</li>
+        <h2 class="text-2xl font-bold text-gray-900 mb-4 tracking-tight">Кто может работать на упрощёнке</h2>
+        <p>Четыре обязательных условия:</p>
+        <ul class="space-y-3 mt-4">
+          <li class="flex gap-3 items-start">
+            <span class="w-6 h-6 bg-green-100 text-green-600 rounded-full flex shrink-0 items-center justify-center text-xs font-bold">✓</span>
+            <span>Доход за полугодие — не более <strong>{simplLimit.toLocaleString()} МРП</strong> (~{Math.round(limitTenge / 1_000_000)} млн ₸ по МРП 2026 года)</span>
+          </li>
+          <li class="flex gap-3 items-start">
+            <span class="w-6 h-6 bg-green-100 text-green-600 rounded-full flex shrink-0 items-center justify-center text-xs font-bold">✓</span>
+            <span>Среднесписочное число работников — <strong>не более 30 человек</strong></span>
+          </li>
+          <li class="flex gap-3 items-start">
+            <span class="w-6 h-6 bg-red-100 text-red-600 rounded-full flex shrink-0 items-center justify-center text-xs">✕</span>
+            <span>Нельзя продавать <strong>алкоголь, табак, бензин</strong> и подакцизные товары</span>
+          </li>
+          <li class="flex gap-3 items-start">
+            <span class="w-6 h-6 bg-red-100 text-red-600 rounded-full flex shrink-0 items-center justify-center text-xs">✕</span>
+            <span>Нельзя заниматься <strong>банковской, юридической деятельностью</strong> и рядом других лицензируемых сфер</span>
+          </li>
         </ul>
       </section>
 
       <section>
-        <h2 class="text-xl font-bold text-gray-900 mb-3">Ставка налога и расчёт</h2>
-        <div class="bg-blue-50 rounded-xl p-5 mb-4">
-          <p class="font-semibold text-blue-900">Формула расчёта:</p>
-          <p class="text-blue-800 mt-1 text-lg">Налог = Доход × 4%</p>
-          <p class="text-sm text-blue-700 mt-2">Из этих 4%: 1.5% — ИПН, 1.5% — социальный налог</p>
-        </div>
-        <p>
-          Важно: если у вас есть наёмные работники, налог с их зарплаты (ИПН с доходов работников)
-          уменьшает ваш налог по упрощёнке — но не более чем на <strong>1.5% от вашего дохода</strong>.
-        </p>
+        <h2 class="text-2xl font-bold text-gray-900 mb-4 tracking-tight">Реальный расчёт налогов (пример)</h2>
+        <p>Многие считают только 4% — и потом удивляются итоговой сумме. Помимо налога, ИП платит соцплатежи за себя.</p>
 
-        <div class="mt-4 border border-gray-200 rounded-xl overflow-hidden">
+        <div class="bg-white border-2 border-gray-100 rounded-3xl p-6 shadow-sm my-6">
+          <p class="font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <span class="w-2 h-2 bg-blue-500 rounded-full"></span>
+            Расчёт при доходе 1 000 000 ₸ в месяц:
+          </p>
+          <div class="space-y-2 text-sm">
+            <div class="flex justify-between font-bold text-gray-900 pb-2 border-b border-gray-100">
+              <span>Налог упрощёнки (4%)</span><span>40 000 ₸</span>
+            </div>
+            <div class="flex justify-between text-gray-400 text-xs italic pt-1">Соцплатежи за себя (от МЗП {mzp.toLocaleString()} ₸):</div>
+            <div class="flex justify-between"><span>ОПВ (пенсионные, 10%)</span><span class="font-bold">{(mzp * 0.10).toLocaleString()} ₸</span></div>
+            <div class="flex justify-between"><span>ОПВР (работодатель, 3.5%)</span><span class="font-bold text-blue-600">{(mzp * 0.035).toLocaleString()} ₸</span></div>
+            <div class="flex justify-between"><span>СО (социальные, 5%)</span><span class="font-bold">{(mzp * 0.05).toLocaleString()} ₸</span></div>
+            <div class="flex justify-between"><span>ВОСМС (медстрахование)</span><span class="font-bold">{(mzp * 1.4 * 0.05).toLocaleString()} ₸</span></div>
+            <div class="flex justify-between border-t border-gray-100 pt-3 text-lg font-black">
+              <span>ИТОГО К ОПЛАТЕ:</span>
+              <span>{(40_000 + mzp * 0.10 + mzp * 0.035 + mzp * 0.05 + mzp * 1.4 * 0.05).toLocaleString()} ₸</span>
+            </div>
+          </div>
+        </div>
+
+        <p class="text-sm text-gray-500">
+          * ОПВР 3.5% — обязательно с 1 января 2026 года для всех ИП. Соцплатежи платятся ежемесячно,
+          налог 4% — раз в полгода при сдаче 910 формы.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-bold text-gray-900 mb-4 tracking-tight">Таблица налога при разных доходах</h2>
+        <div class="border border-gray-200 rounded-2xl overflow-hidden">
           <table class="w-full text-sm">
             <thead class="bg-gray-50">
               <tr>
                 <th class="text-left px-4 py-3 font-medium">Доход за полугодие</th>
                 <th class="text-right px-4 py-3 font-medium">Налог 4%</th>
+                <th class="text-right px-4 py-3 font-medium">Ежемес. соцплатежи</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-100">
-              <tr><td class="px-4 py-3">1 000 000 тг</td><td class="px-4 py-3 text-right">30 000 тг</td></tr>
-              <tr><td class="px-4 py-3">5 000 000 тг</td><td class="px-4 py-3 text-right">150 000 тг</td></tr>
-              <tr><td class="px-4 py-3">10 000 000 тг</td><td class="px-4 py-3 text-right">300 000 тг</td></tr>
-              <tr><td class="px-4 py-3">30 000 000 тг</td><td class="px-4 py-3 text-right">900 000 тг</td></tr>
+              <tr><td class="px-4 py-3">1 000 000 ₸</td><td class="px-4 py-3 text-right font-bold">40 000 ₸</td><td class="px-4 py-3 text-right text-gray-500">~27 500 ₸</td></tr>
+              <tr><td class="px-4 py-3">5 000 000 ₸</td><td class="px-4 py-3 text-right font-bold">200 000 ₸</td><td class="px-4 py-3 text-right text-gray-500">~27 500 ₸</td></tr>
+              <tr><td class="px-4 py-3">10 000 000 ₸</td><td class="px-4 py-3 text-right font-bold">400 000 ₸</td><td class="px-4 py-3 text-right text-gray-500">~27 500 ₸</td></tr>
+              <tr><td class="px-4 py-3">30 000 000 ₸</td><td class="px-4 py-3 text-right font-bold">1 200 000 ₸</td><td class="px-4 py-3 text-right text-gray-500">~27 500 ₸</td></tr>
             </tbody>
           </table>
         </div>
+        <p class="text-xs text-gray-400 mt-2">Соцплатежи фиксированы и не зависят от дохода — считаются от МЗП.</p>
       </section>
 
       <section>
-        <h2 class="text-xl font-bold text-gray-900 mb-3">ОПВ и ВОСМС — не забывайте</h2>
-        <p>
-          Помимо налога 4%, ИП на упрощёнке обязан платить обязательные пенсионные взносы и взносы на медицину за себя:
-        </p>
-        <ul class="list-disc pl-5 mt-3 space-y-2">
-          <li><strong>ОПВ</strong> — 10% от заявленного дохода, но не более 25 МЗП × 10% = <strong>212 500 тг</strong> в месяц (за полугодие суммируется)</li>
-          <li><strong>ВОСМС</strong> — 5% от 1.4 МЗП. При МЗП 85 000 тг: 5% × 119 000 = <strong>5 950 тг</strong> в месяц</li>
-          <li><strong>СО (социальные отчисления)</strong> — 3.5% от заявленного дохода (минимум от 1 МЗП)</li>
-        </ul>
-        <p class="mt-3 text-sm text-gray-500">
-          МЗП в 2026 году — уточняйте актуальные данные на сайте Министерства труда РК.
-        </p>
-      </section>
-
-      <section>
-        <h2 class="text-xl font-bold text-gray-900 mb-3">Сроки подачи декларации и уплаты</h2>
-        <p>На упрощённом режиме вы сдаёте <strong>форму 910.00</strong> — два раза в год:</p>
-        <div class="mt-4 space-y-3">
-          <div class="flex gap-4 border border-gray-100 rounded-xl p-4">
-            <div class="text-2xl">📅</div>
-            <div>
-              <p class="font-medium">I полугодие (январь — июнь)</p>
-              <p class="text-sm text-gray-500">Сдать декларацию и уплатить налог — <strong>до 25 августа</strong></p>
-            </div>
+        <h2 class="text-2xl font-bold text-gray-900 mb-4 tracking-tight">Как сдать форму 910.00 — пошагово</h2>
+        <div class="relative space-y-6 pl-8 border-l-2 border-blue-100">
+          <div class="relative">
+            <span class="absolute -left-[41px] top-0 w-5 h-5 bg-blue-600 rounded-full border-4 border-white shadow-sm"></span>
+            <p class="font-bold text-gray-900">Подсчитайте доход за полугодие</p>
+            <p class="text-sm text-gray-600">Сложите все поступления на расчётный счёт и наличными. Расходы не важны — только оборот.</p>
           </div>
-          <div class="flex gap-4 border border-gray-100 rounded-xl p-4">
-            <div class="text-2xl">📅</div>
-            <div>
-              <p class="font-medium">II полугодие (июль — декабрь)</p>
-              <p class="text-sm text-gray-500">Сдать декларацию и уплатить налог — <strong>до 25 февраля следующего года</strong></p>
-            </div>
+          <div class="relative">
+            <span class="absolute -left-[41px] top-0 w-5 h-5 bg-blue-600 rounded-full border-4 border-white shadow-sm"></span>
+            <p class="font-bold text-gray-900">Войдите в кабинет налогоплательщика</p>
+            <p class="text-sm text-gray-600">Сайт cabinet.salyk.kz или мобильное приложение e-Salyq Business. Найдите раздел «Формы» → «910.00».</p>
+          </div>
+          <div class="relative">
+            <span class="absolute -left-[41px] top-0 w-5 h-5 bg-blue-600 rounded-full border-4 border-white shadow-sm"></span>
+            <p class="font-bold text-gray-900">Заполните и отправьте</p>
+            <p class="text-sm text-gray-600">Укажите доход, система сама посчитает налог. Подпишите ЭЦП или через SMS.</p>
+          </div>
+          <div class="relative">
+            <span class="absolute -left-[41px] top-0 w-5 h-5 bg-blue-600 rounded-full border-4 border-white shadow-sm"></span>
+            <p class="font-bold text-gray-900">Оплатите налог</p>
+            <p class="text-sm text-gray-600">Через Kaspi Pay, Halyk Bank или в любом банке по реквизитам. Важно уложиться в срок.</p>
           </div>
         </div>
-        <p class="mt-4 text-sm text-gray-500">
-          Декларацию можно подать через Кабинет налогоплательщика на сайте cabinet.salyk.kz или через мобильное приложение e-Salyq Business.
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-bold text-gray-900 mb-4 tracking-tight">Сроки — запомните раз и навсегда</h2>
+        <div class="grid sm:grid-cols-2 gap-4 mt-4">
+          <div class="border border-gray-100 rounded-2xl p-5">
+            <p class="text-xs font-black text-blue-600 uppercase tracking-widest mb-2">I полугодие</p>
+            <p class="font-bold text-gray-900 text-lg">Январь — Июнь</p>
+            <p class="text-sm text-gray-500 mt-1">Сдать и оплатить — <strong class="text-gray-900">до 25 августа</strong></p>
+          </div>
+          <div class="border border-gray-100 rounded-2xl p-5">
+            <p class="text-xs font-black text-blue-600 uppercase tracking-widest mb-2">II полугодие</p>
+            <p class="font-bold text-gray-900 text-lg">Июль — Декабрь</p>
+            <p class="text-sm text-gray-500 mt-1">Сдать и оплатить — <strong class="text-gray-900">до 25 февраля</strong> следующего года</p>
+          </div>
+        </div>
+        <p class="text-sm text-gray-500 mt-4">
+          Просрочка — штраф 15–30 МРП за первое нарушение. При повторном — до 45 МРП.
         </p>
       </section>
 
       <section>
-        <h2 class="text-xl font-bold text-gray-900 mb-3">Упрощёнка vs Патент — что выбрать</h2>
-        <div class="border border-gray-200 rounded-xl overflow-hidden">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4 tracking-tight">Упрощёнка или патент — что выбрать</h2>
+        <div class="border border-gray-200 rounded-2xl overflow-hidden">
           <table class="w-full text-sm">
             <thead class="bg-gray-50">
               <tr>
                 <th class="text-left px-4 py-3 font-medium">Критерий</th>
-                <th class="px-4 py-3 font-medium">Упрощёнка</th>
-                <th class="px-4 py-3 font-medium">Патент</th>
+                <th class="px-4 py-3 font-medium text-center">Упрощёнка</th>
+                <th class="px-4 py-3 font-medium text-center">Патент</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-100 text-center">
-              <tr>
-                <td class="text-left px-4 py-3">Ставка</td>
-                <td class="px-4 py-3">4% от факт. дохода</td>
-                <td class="px-4 py-3">1% от заявл. дохода</td>
-              </tr>
-              <tr>
-                <td class="text-left px-4 py-3">Работники</td>
-                <td class="px-4 py-3">до 30 человек</td>
-                <td class="px-4 py-3">нельзя</td>
-              </tr>
-              <tr>
-                <td class="text-left px-4 py-3">Лимит дохода/год</td>
-                <td class="px-4 py-3">~282 млн тг</td>
-                <td class="px-4 py-3">~3 528 МРП (~20 млн тг)</td>
-              </tr>
-              <tr>
-                <td class="text-left px-4 py-3">Отчётность</td>
-                <td class="px-4 py-3">2 раза в год</td>
-                <td class="px-4 py-3">до начала деятельности</td>
-              </tr>
+              <tr><td class="text-left px-4 py-3">Ставка налога</td><td class="px-4 py-3 font-bold text-blue-600">4% от факт. дохода</td><td class="px-4 py-3">1% от заявл. дохода</td></tr>
+              <tr><td class="text-left px-4 py-3">Работники</td><td class="px-4 py-3">до 30 человек</td><td class="px-4 py-3 text-red-500">нельзя</td></tr>
+              <tr><td class="text-left px-4 py-3">Лимит дохода/год</td><td class="px-4 py-3">~282 млн ₸</td><td class="px-4 py-3">~13.9 млн ₸</td></tr>
+              <tr><td class="text-left px-4 py-3">Декларация</td><td class="px-4 py-3">2 раза в год (910)</td><td class="px-4 py-3">до начала работы (911)</td></tr>
+              <tr><td class="text-left px-4 py-3">Торговля</td><td class="px-4 py-3 text-green-600">разрешена</td><td class="px-4 py-3 text-red-500">запрещена</td></tr>
             </tbody>
           </table>
         </div>
+        <p class="text-sm text-gray-500 mt-3">
+          Если работаете один и доход небольшой — патент выгоднее. Есть сотрудники или большой оборот — упрощёнка.
+        </p>
       </section>
 
-      <div class="bg-gray-50 rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-        <div>
-          <p class="font-semibold">Рассчитайте свой налог прямо сейчас</p>
-          <p class="text-sm text-gray-500 mt-1">Введите доход — получите точную сумму к уплате за секунду.</p>
+      <section>
+        <h2 class="text-2xl font-bold text-gray-900 mb-4 tracking-tight">Частые вопросы</h2>
+        <div class="space-y-4">
+          <details class="group border-b border-gray-100 pb-4">
+            <summary class="font-medium cursor-pointer list-none flex justify-between items-center">
+              Можно ли совмещать упрощёнку с работой по найму?
+              <span class="transition group-open:rotate-180 text-gray-400">▼</span>
+            </summary>
+            <p class="text-sm text-gray-500 mt-3">Да. Зарплата облагается ИПН отдельно у работодателя. Доход от ИП декларируете сами по форме 910.</p>
+          </details>
+          <details class="group border-b border-gray-100 pb-4">
+            <summary class="font-medium cursor-pointer list-none flex justify-between items-center">
+              Что считается доходом — только безналичные поступления?
+              <span class="transition group-open:rotate-180 text-gray-400">▼</span>
+            </summary>
+            <p class="text-sm text-gray-500 mt-3">Нет. Доход — это всё: переводы на карту, наличные, оплата через терминал. Всё что получили за услуги или товары.</p>
+          </details>
+          <details class="group border-b border-gray-100 pb-4">
+            <summary class="font-medium cursor-pointer list-none flex justify-between items-center">
+              Нужен ли кассовый аппарат на упрощёнке?
+              <span class="transition group-open:rotate-180 text-gray-400">▼</span>
+            </summary>
+            <p class="text-sm text-gray-500 mt-3">Зависит от вида деятельности. Большинство ИП обязаны применять онлайн-ККМ при расчётах наличными или картой. Исключения — определённые виды услуг на рынках.</p>
+          </details>
+          <details class="group border-b border-gray-100 pb-4">
+            <summary class="font-medium cursor-pointer list-none flex justify-between items-center">
+              Что будет если превысить лимит дохода?
+              <span class="transition group-open:rotate-180 text-gray-400">▼</span>
+            </summary>
+            <p class="text-sm text-gray-500 mt-3">Нужно перейти на общеустановленный режим (ОУР) с начала следующего квартала. Налоговая уведомит об этом.</p>
+          </details>
         </div>
-        <a href="/calculators/ip" class="shrink-0 bg-blue-600 text-white px-5 py-2.5 rounded-xl text-sm font-medium hover:bg-blue-700 transition-colors">
+      </section>
+
+      <div class="bg-gray-900 rounded-[2.5rem] p-8 lg:p-12 text-center text-white shadow-2xl overflow-hidden relative group">
+        <div class="absolute top-0 right-0 -mr-10 -mt-10 w-40 h-40 bg-blue-600 rounded-full blur-3xl opacity-20 group-hover:opacity-40 transition-opacity"></div>
+        <h3 class="text-2xl font-black mb-4 tracking-tight">Рассчитайте точную сумму</h3>
+        <p class="text-gray-400 mb-8 max-w-md mx-auto">
+          Калькулятор учитывает актуальные МЗП, ОПВР и все соцплатежи 2026 года. Результат — за 5 секунд.
+        </p>
+        <a href="/calculators/ip" class="inline-flex bg-blue-600 text-white px-10 py-4 rounded-2xl font-black hover:bg-blue-700 transition-all transform hover:scale-105 active:scale-95 shadow-xl shadow-blue-500/20">
           Открыть калькулятор →
         </a>
       </div>
