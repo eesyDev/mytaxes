@@ -2,160 +2,199 @@
 import Layout from '../../layouts/Layout.astro'
 
 export const meta = {
-  title: 'Патент для ИП в 2026 году: Полный разбор режима',
-  description: 'Актуальный гайд по патентному режиму в 2026 году: ставка 1%, расчет ОПВР 3.5%, лимиты дохода и список разрешенных КЭД.',
+  title: 'ИП на патенте в 2026 году: Последний «тихий» режим?',
+  description: 'Полный разбор патентного режима в 2026 году: ставка 1%, новый ОПВР 3.5%, ограничения по КЭД и риски превышения дохода.',
   category: 'ИП · Патент',
 }
 
-// Актуальные константы на март 2026
 const mzp = 85_000;
 const mrp = 3_932; 
 const patentLimitMrp = 3_528;
 const limitTenge = Math.round(patentLimitMrp * mrp);
 ---
 
-<Layout
-  title="Патент для ИП в Казахстане 2026: Новые правила"
-  description="Актуальный гайд по патентному режиму в 2026 году: ставка 1%, расчет ОПВР 3.5%, лимиты дохода и список разрешенных КЭД."
->
+<Layout title={meta.title}>
 
-  <div class="mb-8">
-    <a href="/blog" class="text-sm text-gray-400 hover:text-blue-600 transition-colors">← Все статьи</a>
-  </div>
-
-  <article class="prose prose-slate max-w-none">
-
-    <div class="mb-8 border-b border-gray-100 pb-8">
-      <div class="flex items-center gap-2 mb-4">
-        <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded text-[10px] font-black uppercase tracking-wider">ИП · Патент</span>
-        <span class="text-xs text-gray-400 uppercase tracking-wide">Обновлено: Март 2026</span>
+  <article class="max-w-4xl mx-auto py-12 px-4 font-sans text-gray-800 leading-relaxed">
+    
+    <header class="mb-16">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-widest border border-amber-200">Режим: Патент</span>
+        <span class="text-sm text-gray-400 font-bold">Данные на 2026 год</span>
       </div>
-      <h1 class="text-4xl font-black text-gray-900 leading-tight mb-4">
-        Патент для ИП в 2026 году: Полный разбор режима
+      <h1 class="text-5xl font-black text-gray-900 mb-6 tracking-tight leading-[1.1]">
+        Патент 2026: <br/>
+        <span class="text-blue-600">Минимум налогов, максимум контроля</span>
       </h1>
-      <p class="text-xl text-gray-500 font-medium">
-        Минимальный налог 1% и отсутствие отчетов. Рассказываем, как работать легально и не переплачивать.
+      <p class="text-2xl text-gray-500 leading-relaxed max-w-3xl">
+        Ставка 1% манит многих, но в 2026 году патент — это «минное поле» из ограничений. Разбираемся, кому он выгоден, а кому грозит огромными штрафами.
       </p>
-    </div>
+    </header>
 
-    <div class="space-y-10 text-gray-700 leading-relaxed">
-
-      <section>
-        <h2 class="text-2xl font-bold text-gray-900 mb-4 tracking-tight">В чем суть патента?</h2>
+    <section class="mb-16">
+      <h2 class="text-3xl font-black text-gray-900 mb-6">1. Философия патента: Плати, пока не заработал</h2>
+      <div class="prose prose-lg text-gray-600 space-y-4">
         <p>
-          Патент — это «предоплата» за ведение бизнеса. Вы заявляете государству: <em>«Я планирую заработать X тенге за следующие полгода»</em>, сразу платите <strong>1% налога</strong> и работаете спокойно.
+          Патент — это единственный режим в РК, где налог платится <strong>авансом</strong>. Вы не отчитываетесь о том, что заработали. Вы покупаете право работать на определенный срок.
         </p>
-        <div class="bg-indigo-50 border-l-4 border-indigo-500 p-4 my-6">
-          <p class="text-sm text-indigo-900 font-medium">
-            <strong>Главный плюс 2026 года:</strong> Патент по-прежнему освобожден от сдачи формы 910.00. Ваша единственная отчетность — это расчет стоимости патента (форма 911.00), которую вы подаете <strong>ДО</strong> начала работы.
-          </p>
+        <div class="bg-blue-50 border-l-4 border-blue-600 p-8 rounded-r-3xl my-8">
+          <p class="font-bold text-blue-900 text-lg mb-2">Почему это удобно в 2026?</p>
+          <ul class="list-disc list-inside space-y-2 text-blue-800">
+            <li><strong>Ноль отчетов:</strong> Форма 911.00 — это и есть ваша заявка и отчет в одном флаконе.</li>
+            <li><strong>Простота:</strong> Не нужен бухгалтер. Вообще.</li>
+            <li><strong>Цена:</strong> Всего 1% подоходного налога.</li>
+          </ul>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section>
-        <h2 class="text-2xl font-bold text-gray-900 mb-4 tracking-tight">Жесткие условия 2026 года</h2>
-        <p>Патент — режим не для всех. Чтобы его применять, вы должны соответствовать четырем «НЕ»:</p>
-        <ul class="space-y-3 mt-4">
-          <li class="flex gap-3 items-start">
-            <span class="w-6 h-6 bg-red-100 text-red-600 rounded-full flex shrink-0 items-center justify-center text-xs">✕</span>
-            <span><strong>НЕ иметь работников</strong> (только личный труд ИП).</span>
-          </li>
-          <li class="flex gap-3 items-start">
-            <span class="w-6 h-6 bg-red-100 text-red-600 rounded-full flex shrink-0 items-center justify-center text-xs">✕</span>
-            <span><strong>НЕ превышать лимит дохода:</strong> {patentLimitMrp} МРП в год (около <strong>{limitTenge.toLocaleString()} ₸</strong>).</span>
-          </li>
-          <li class="flex gap-3 items-start">
-            <span class="w-6 h-6 bg-red-100 text-red-600 rounded-full flex shrink-0 items-center justify-center text-xs">✕</span>
-            <span><strong>НЕ заниматься торговлей</strong> (в 2026 году почти вся торговля выведена на упрощенку или спецрежимы через платформы).</span>
-          </li>
-          <li class="flex gap-3 items-start">
-            <span class="w-6 h-6 bg-red-100 text-red-600 rounded-full flex shrink-0 items-center justify-center text-xs">✕</span>
-            <span><strong>НЕ работать через посредников</strong> (агентские договора под запретом).</span>
-          </li>
-        </ul>
-      </section>
+    <section class="mb-16">
+      <h2 class="text-3xl font-black text-gray-900 mb-6 font-mono tracking-tighter text-red-600">// КРАСНЫЕ ЛИНИИ ПАТЕНТА</h2>
+      <p class="mb-8 text-gray-600">Если вы нарушите хотя бы одно из этих правил в 2026 году, налоговая переведет вас на общеустановленный режим (ОУР) с налогом 10% и штрафами за весь период.</p>
+      
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="p-6 bg-white border-2 border-gray-100 rounded-2xl shadow-sm hover:border-red-200 transition-colors">
+          <h4 class="font-black text-gray-900 uppercase text-xs mb-3">Доход</h4>
+          <p class="text-2xl font-black text-gray-900">{limitTenge.toLocaleString()} ₸</p>
+          <p class="text-sm text-gray-400 mt-2">Предел в год. Если заработаете хотя бы на 1 тенге больше — патент аннулируется.</p>
+        </div>
+        <div class="p-6 bg-white border-2 border-gray-100 rounded-2xl shadow-sm hover:border-red-200 transition-colors">
+          <h4 class="font-black text-gray-900 uppercase text-xs mb-3">Сотрудники</h4>
+          <p class="text-2xl font-black text-gray-900">0 человек</p>
+          <p class="text-sm text-gray-400 mt-2">Только вы. Даже «помощник по ГПХ» превращает патент в незаконную деятельность.</p>
+        </div>
+      </div>
+    </section>
 
-      <section>
-        <h2 class="text-2xl font-bold text-gray-900 mb-4 tracking-tight">Реальный расчет налогов (Пример)</h2>
-        <p>Многие ошибочно думают, что патент стоит копейки. Но помимо 1% налога, вы обязаны платить <strong>соцплатежи за себя</strong>.</p>
-        
-        <div class="bg-white border-2 border-gray-100 rounded-3xl p-6 shadow-sm my-6">
-          <p class="font-bold text-gray-900 mb-4 flex items-center gap-2">
-            <span class="w-2 h-2 bg-green-500 rounded-full"></span>
-            Расчет при доходе 500 000 ₸ в месяц:
-          </p>
-          <div class="space-y-2 text-sm">
-            <div class="flex justify-between"><span>Налог (1%)</span> <span class="font-bold text-gray-900">5 000 ₸</span></div>
-            <div class="flex justify-between text-gray-400 italic">Соцплатежи (от МЗП 85 000 ₸):</div>
-            <div class="flex justify-between"><span>ОПВ (Пенсионные 10%)</span> <span class="font-bold">8 500 ₸</span></div>
-            <div class="flex justify-between"><span>ОПВР (Работодатель 3.5%)</span> <span class="font-bold text-blue-600">2 975 ₸</span></div>
-            <div class="flex justify-between"><span>СО (Социальные 5%)</span> <span class="font-bold">4 250 ₸</span></div>
-            <div class="flex justify-between"><span>ВОСМС (Медстрахование)</span> <span class="font-bold">5 950 ₸</span></div>
-            <div class="flex justify-between border-t border-gray-100 pt-3 text-lg font-black">
-              <span>ИТОГО К ОПЛАТЕ:</span> <span>26 675 ₸</span>
+    <section class="mb-16">
+      <h2 class="text-3xl font-black text-gray-900 mb-6">2. Стоимость патента в 2026 году</h2>
+      <p class="mb-6">Налог 1% — это верхушка айсберга. Основная нагрузка — это социальные платежи, которые в 2026 году снова выросли за счет пенсионных взносов работодателя (ОПВР).</p>
+
+      <div class="bg-gray-900 rounded-[2.5rem] p-8 lg:p-12 text-white relative overflow-hidden shadow-2xl">
+        <div class="relative z-10">
+          <h3 class="text-xl font-bold mb-8 flex items-center gap-2">
+            <span class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></span>
+            Пример для дохода 1 000 000 ₸ в месяц:
+          </h3>
+          
+          <div class="space-y-4 font-mono text-sm">
+            <div class="flex justify-between border-b border-gray-800 pb-2">
+              <span class="text-gray-400 italic">Налог ИПН (1%)</span>
+              <span class="font-bold text-green-400">10 000 ₸</span>
+            </div>
+            <div class="flex justify-between border-b border-gray-800 pb-2">
+              <span class="text-gray-400 italic">ОПВ (Пенсионные)</span>
+              <span>8 500 ₸</span>
+            </div>
+            <div class="flex justify-between border-b border-gray-800 pb-2">
+              <span class="text-gray-400 italic font-bold">ОПВР (Новинка 2026 — 3.5%)</span>
+              <span class="text-blue-400">2 975 ₸</span>
+            </div>
+            <div class="flex justify-between border-b border-gray-800 pb-2">
+              <span class="text-gray-400 italic">СО (Соцотчисления)</span>
+              <span>4 250 ₸</span>
+            </div>
+            <div class="flex justify-between border-b border-gray-800 pb-2">
+              <span class="text-gray-400 italic">ВОСМС (Медстраховка)</span>
+              <span>5 950 ₸</span>
+            </div>
+            
+            <div class="flex justify-between pt-6">
+              <span class="text-2xl font-black">ИТОГО К ОПЛАТЕ:</span>
+              <span class="text-2xl font-black text-white">31 675 ₸</span>
             </div>
           </div>
         </div>
-        <p class="text-sm text-gray-500">
-          * ОПВР в размере 3.5% — это обязательное требование с 1 января 2026 года для всех предпринимателей.
-        </p>
-      </section>
+      </div>
+      <p class="text-xs text-gray-400 mt-4 text-center">
+        *Соцплатежи за себя считаются от минимальной зарплаты (85 000 ₸). Можно платить больше, но меньше — нельзя.
+      </p>
+    </section>
 
-      <section>
-        <h2 class="text-2xl font-bold text-gray-900 mb-4 tracking-tight">Разрешенные виды деятельности</h2>
-        <p>В 2026 году список КЭД для патента ограничен 32 видами услуг. Самые популярные:</p>
-        <div class="grid sm:grid-cols-2 gap-4 mt-4">
-          {[
-            'Штукатурные и малярные работы',
-            'Услуги такси и перевозка грузов',
-            'Парикмахерские и косметические услуги',
-            'Репетиторство (частные уроки)',
-            'Ремонт компьютеров и бытовой техники',
-            'Фотография и видеосъемка',
-            'Аренда жилой недвижимости',
-            'Музыкальное сопровождение мероприятий'
-          ].map((item) => (
-            <div class="flex items-center gap-3 bg-gray-50 p-3 rounded-2xl border border-gray-100">
-              <span class="text-blue-600 font-bold">●</span>
-              <span class="text-sm font-medium text-gray-700">{item}</span>
+    <section class="mb-16">
+      <h2 class="text-3xl font-black text-gray-900 mb-6 text-center text-blue-600">Кому разрешен патент?</h2>
+      <p class="text-center mb-10 text-gray-500">В 2026 году список жестко ограничен 32 видами деятельности. <br/>Если вашего КЭД нет в списке — патент вам запрещен.</p>
+      
+      <div class="grid sm:grid-cols-2 gap-4">
+        {[
+          { icon: '🚕', title: 'Транспорт', desc: 'Такси и перевозка грузов' },
+          { icon: '🏠', title: 'Аренда', desc: 'Сдача жилья и управление недвижимостью' },
+          { icon: '✂️', title: 'Красота', desc: 'Парикмахеры, мастера маникюра (на дому)' },
+          { icon: '📚', title: 'Образование', desc: 'Репетиторы и частные курсы' },
+          { icon: '🛠️', title: 'Ремонт', desc: 'Бытовая техника, компьютеры, мебель' },
+          { icon: '📸', title: 'Творчество', desc: 'Фотографы и видеооператоры' }
+        ].map((item) => (
+          <div class="flex items-center gap-4 p-5 bg-white border border-gray-100 rounded-3xl shadow-sm hover:shadow-md transition-shadow">
+            <span class="text-3xl">{item.icon}</span>
+            <div>
+              <h4 class="font-black text-gray-900 leading-tight">{item.title}</h4>
+              <p class="text-xs text-gray-500 mt-1 uppercase tracking-tighter">{item.desc}</p>
             </div>
-          ))}
-        </div>
-      </section>
+          </div>
+        ))}
+      </div>
+    </section>
 
-      <section>
-        <h2 class="text-2xl font-bold text-gray-900 mb-4 tracking-tight">Как оформить патент в 2026?</h2>
-        <div class="relative space-y-6 pl-8 border-l-2 border-blue-100">
-          <div class="relative">
-            <span class="absolute -left-[41px] top-0 w-5 h-5 bg-blue-600 rounded-full border-4 border-white shadow-sm"></span>
-            <p class="font-bold text-gray-900">Посчитайте доход</p>
-            <p class="text-sm">Определите, сколько вы планируете заработать за период (от 1 до 12 месяцев).</p>
-          </div>
-          <div class="relative">
-            <span class="absolute -left-[41px] top-0 w-5 h-5 bg-blue-600 rounded-full border-4 border-white shadow-sm"></span>
-            <p class="font-bold text-gray-900">Оплатите налоги</p>
-            <p class="text-sm text-gray-600">Важно! Сначала платим налог и соцплатежи через Kaspi или Halyk, и только потом подаем расчет.</p>
-          </div>
-          <div class="relative">
-            <span class="absolute -left-[41px] top-0 w-5 h-5 bg-blue-600 rounded-full border-4 border-white shadow-sm"></span>
-            <p class="font-bold text-gray-900">Подайте форму 911.00</p>
-            <p class="text-sm text-gray-600">Через кабинет налогоплательщика или мобильное приложение e-Salyq Business.</p>
-          </div>
+    <section class="mb-16 bg-blue-50 p-8 rounded-[2.5rem] border border-blue-100">
+      <h2 class="text-2xl font-black text-blue-900 mb-6">Как читать патент (Форма 911.00)</h2>
+      <div class="bg-white p-6 rounded-2xl shadow-inner font-mono text-sm space-y-4 text-gray-600">
+        <div class="flex justify-between border-b pb-2">
+          <span>Срок действия:</span>
+          <span class="font-bold text-gray-900">01.01.2026 — 31.12.2026</span>
         </div>
-      </section>
-
-      <div class="bg-gray-900 rounded-[2.5rem] p-8 lg:p-12 text-center text-white shadow-2xl overflow-hidden relative group">
-        <div class="absolute top-0 right-0 -mr-10 -mt-10 w-40 h-40 bg-blue-600 rounded-full blur-3xl opacity-20 group-hover:opacity-40 transition-opacity"></div>
-        <h3 class="text-2xl font-black mb-4 tracking-tight">Не уверены в расчетах?</h3>
-        <p class="text-gray-400 mb-8 max-w-md mx-auto">
-          Воспользуйтесь нашим калькулятором патента 2026. Он учитывает новый МЗП, ОПВР и автоматически считает сумму к оплате.
+        <div class="flex justify-between border-b pb-2 italic">
+          <span>Предполагаемый доход:</span>
+          <span class="font-bold text-gray-900 text-lg underline">12 000 000 ₸</span>
+        </div>
+        <p class="text-[11px] leading-tight text-blue-700">
+          💡 Важно: Если к декабрю вы поймете, что заработали 13 млн — нужно СРОЧНО подать «дополнительный» расчет патента до того, как деньги упадут на счет.
         </p>
-        <a href="/calculators/ip" class="inline-flex bg-blue-600 text-white px-10 py-4 rounded-2xl font-black hover:bg-blue-700 transition-all transform hover:scale-105 active:scale-95 shadow-xl shadow-blue-500/20">
-          Запустить калькулятор →
+      </div>
+    </section>
+
+    <section class="mb-16 space-y-8">
+      <h2 class="text-3xl font-black text-gray-900 mb-6">3. Подводные камни и риски 2026 года</h2>
+      
+      <div class="space-y-4">
+        <details class="group border-2 border-gray-100 rounded-2xl p-6 open:border-blue-200 transition-all">
+          <summary class="font-bold cursor-pointer list-none flex justify-between items-center text-lg">
+            Нужен ли кассовый аппарат (ККМ)?
+            <span class="group-open:rotate-180 transition-transform">▼</span>
+          </summary>
+          <p class="mt-4 text-gray-600 leading-relaxed italic border-l-2 border-blue-600 pl-4">
+            <strong>Да, почти всегда.</strong> В 2026 году освобождены только те, кто работает через мобильное приложение *e-Salyq Business*. Если вы принимаете оплаты картой или наличными через Kaspi QR — вы обязаны пробивать фискальный чек.
+          </p>
+        </details>
+
+        <details class="group border-2 border-gray-100 rounded-2xl p-6 open:border-blue-200 transition-all">
+          <summary class="font-bold cursor-pointer list-none flex justify-between items-center text-lg">
+            Что если доход превысил лимит патента?
+            <span class="group-open:rotate-180 transition-transform">▼</span>
+          </summary>
+          <p class="mt-4 text-gray-600 leading-relaxed italic border-l-2 border-blue-600 pl-4">
+            У вас есть 5 рабочих дней, чтобы подать уведомление о переходе на Упрощенку или ОУР. Если это сделает налоговая (увидев обороты по Kaspi), вам грозит доначисление ИПН (10% вместо 1%) за весь прошлый год.
+          </p>
+        </details>
+      </div>
+    </section>
+
+    <footer class="mt-24 p-12 bg-gray-900 rounded-[3rem] text-center text-white relative overflow-hidden">
+      <div class="absolute top-0 right-0 w-64 h-64 bg-blue-600 rounded-full blur-[100px] opacity-20"></div>
+      <h2 class="text-4xl font-black mb-6 italic tracking-tight uppercase">Нужен расчет на 2026 год?</h2>
+      <p class="text-gray-400 max-w-lg mx-auto mb-10 text-lg italic">
+        Наш калькулятор уже обновлен под МЗП {mzp.toLocaleString()} тенге и все новые ставки 2026 года.
+      </p>
+      
+      <div class="flex flex-wrap justify-center gap-4 relative z-10">
+        <a href="/calculators/ip" class="bg-blue-600 hover:bg-blue-700 text-white px-10 py-5 rounded-2xl font-black transition-all transform hover:scale-105 shadow-xl shadow-blue-900/40">
+          Калькулятор Патента 2026
+        </a>
+        <a href="https://cabinet.salyk.kz" target="_blank" class="bg-white/5 hover:bg-white/10 border-2 border-white/10 text-white px-10 py-5 rounded-2xl font-black transition-all">
+          Оплатить патент онлайн
         </a>
       </div>
+    </footer>
 
-    </div>
   </article>
 
 </Layout>
