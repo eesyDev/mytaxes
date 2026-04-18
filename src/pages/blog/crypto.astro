@@ -1,0 +1,128 @@
+---
+import Layout from '../../layouts/Layout.astro'
+
+export const meta = {
+  title: 'Налоги на криптовалюту в РК 2026: Как не получить блок счета',
+  description: 'Полный гайд по налогам на крипту в Казахстане. Как легализовать P2P, платить 10% с дохода и заполнять декларацию.',
+  category: 'Физлица · Инвестиции',
+}
+---
+
+<Layout title={meta.title}>
+
+  <article class="max-w-5xl mx-auto py-12 px-4 font-sans text-gray-800 leading-relaxed">
+    
+    <header class="mb-16">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs font-black uppercase tracking-widest border border-yellow-200">Крипто-налоги 2026</span>
+        <span class="text-sm text-gray-400 font-bold uppercase tracking-widest">Digital Assets</span>
+      </div>
+      <h1 class="text-5xl md:text-6xl font-black text-gray-900 mb-8 tracking-tight leading-[1.05]">
+        Крипта в законе: <br/>
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 to-orange-600">Как торговать и не бояться налоговой</span>
+      </h1>
+      <p class="text-2xl text-gray-500 max-w-3xl">
+        Эпоха «тихого P2P» закончилась. В 2026 году каждый вывод на Kaspi или Halyk попадает под фильтры финмониторинга. Разбираемся, как платить 10% и спать спокойно.
+      </p>
+    </header>
+
+    <div class="space-y-16">
+      
+      <section class="bg-gray-50 p-10 rounded-[3rem] border border-gray-100">
+        <h2 class="text-3xl font-black mb-6">1. Главный миф: "Крипта не регулируется"</h2>
+        <div class="prose prose-lg text-gray-600">
+          <p>В Налоговом кодексе 2026 года криптовалюта официально проходит как <strong>"цифровой актив"</strong>. Это значит, что для государства ваш биткоин — это такое же имущество, как квартира или машина.</p>
+          <div class="grid md:grid-cols-2 gap-6 mt-8">
+            <div class="bg-white p-6 rounded-2xl shadow-sm">
+              <p class="font-bold text-gray-900 mb-2">Объект налога:</p>
+              <p class="text-sm">Положительная разница между ценой покупки и ценой продажи (прирост стоимости).</p>
+            </div>
+            <div class="bg-white p-6 rounded-2xl shadow-sm">
+              <p class="font-bold text-gray-900 mb-2">Ставка (ИПН):</p>
+              <p class="text-3xl font-black text-orange-600">10%</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="text-3xl font-black text-gray-900 mb-8 underline decoration-yellow-500 decoration-4 underline-offset-8">2. P2P-переводы и "красные флажки" банков</h2>
+        <p class="text-lg mb-6">
+          Банковская система Казахстана в 2026 году интегрирована с КГД. Если вам регулярно приходят переводы от разных физлиц (классический P2P на Binance или Bybit), алгоритмы помечают вас как "незарегистрированного предпринимателя".
+        </p>
+        
+        <div class="bg-red-50 border-l-8 border-red-500 p-8 rounded-r-3xl">
+          <h4 class="font-black text-red-900 mb-2 uppercase">Риск №1: Блокировка по 24-ФЗ (Финмониторинг)</h4>
+          <p class="text-red-800">Если вы вывели 1 000 000 ₸ через P2P и не можете доказать происхождение средств, банк заморозит карту до выяснения обстоятельств. Налоговая потребует отчетность по форме 240.00 или 270.00.</p>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="text-3xl font-black text-gray-900 mb-6">3. Как считать налог: Математика профита</h2>
+        <p class="mb-8 text-lg text-gray-600">Налог платится только тогда, когда вы <strong>продали</strong> крипту (вышли в фиат или стейблкоины). Пока она лежит на холодном кошельке — налога нет.</p>
+        
+        <div class="bg-white border-2 border-gray-900 rounded-[2.5rem] overflow-hidden shadow-xl">
+          <div class="bg-gray-900 text-white p-6">
+            <h4 class="font-bold uppercase tracking-widest text-sm text-center">Пример расчета (ETH)</h4>
+          </div>
+          <div class="p-8 space-y-4">
+            <div class="flex justify-between border-b pb-2"><span>Купили ETH (по курсу 450 ₸/$):</span> <span class="font-bold">500 000 ₸</span></div>
+            <div class="flex justify-between border-b pb-2"><span>Продали ETH (по курсу 480 ₸/$):</span> <span class="font-bold text-green-600">800 000 ₸</span></div>
+            <div class="flex justify-between border-b pb-2 italic text-gray-500"><span>Чистый доход (Прирост):</span> <span>300 000 ₸</span></div>
+            <div class="flex justify-between pt-4 text-2xl font-black text-gray-900">
+              <span>Налог 10%:</span>
+              <span class="text-orange-600">30 000 ₸</span>
+            </div>
+          </div>
+        </div>
+        <p class="mt-6 text-sm text-gray-400 italic text-center">**Важно: Все расчеты производятся по курсу Нацбанка РК на дату каждой операции.</p>
+      </section>
+
+      <section class="bg-black text-white p-12 rounded-[3rem]">
+        <h2 class="text-3xl font-black mb-8 text-center text-yellow-400 uppercase tracking-tighter">Чек-лист легального криптана</h2>
+        <ul class="space-y-6 max-w-2xl mx-auto">
+          <li class="flex gap-4 items-start">
+            <span class="bg-yellow-400 text-black w-8 h-8 rounded-full flex shrink-0 items-center justify-center font-black">1</span>
+            <p><strong>Храните скриншоты:</strong> Сохраняйте историю ордеров на бирже. В 2026 году налоговая принимает выписки с Binance, Bybit и OKX как подтверждение расходов.</p>
+          </li>
+          <li class="flex gap-4 items-start">
+            <span class="bg-yellow-400 text-black w-8 h-8 rounded-full flex shrink-0 items-center justify-center font-black">2</span>
+            <p><strong>Разделяйте личное и крипту:</strong> Не смешивайте переводы от друзей и P2P-сделки на одной карте. Заведите отдельный виртуальный счет.</p>
+          </li>
+          <li class="flex gap-4 items-start">
+            <span class="bg-yellow-400 text-black w-8 h-8 rounded-full flex shrink-0 items-center justify-center font-black">3</span>
+            <p><strong>Сдавайте 240.00 вовремя:</strong> Срок — до 31 марта. Даже если вы в минусе, но у вас есть активы на зарубежных биржах более 2000 МРП — их нужно декларировать.</p>
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="text-3xl font-black text-gray-900 mb-6">FAQ: Вопросы из чатов</h2>
+        <div class="divide-y divide-gray-200">
+          <div class="py-6">
+            <h4 class="font-bold text-xl mb-2 italic">"А если я меняю крипту на крипту (BTC на USDT)?"</h4>
+            <p class="text-gray-600 leading-relaxed">В 2026 году такая операция считается реализацией. Вы должны зафиксировать доход в тенге по курсу на момент обмена. Да, это неудобно, но таковы правила.</p>
+          </div>
+          <div class="py-6">
+            <h4 class="font-bold text-xl mb-2 italic">"Что будет, если не платить?"</h4>
+            <p class="text-gray-600 leading-relaxed">Штраф 200% от суммы неуплаченного налога при первом нарушении. Плюс риск блокировки всех счетов по линии АФМ (Агентство по финансовому мониторингу).</p>
+          </div>
+        </div>
+      </section>
+
+      <footer class="bg-yellow-500 rounded-[3rem] p-12 text-center text-black">
+        <h3 class="text-4xl font-black mb-6 italic underline">Сложно считать самому?</h3>
+        <p class="text-black/70 mb-10 text-lg font-medium">
+          Наш крипто-калькулятор автоматически подгружает курсы Нацбанка за любую дату и считает налог в пару кликов.
+        </p>
+        <div class="flex flex-wrap justify-center gap-4">
+          <a href="/calculators/crypto" class="bg-black text-white px-10 py-5 rounded-2xl font-black hover:scale-105 transition-transform shadow-xl">
+            Крипто-калькулятор 2026 →
+          </a>
+        </div>
+      </footer>
+
+    </div>
+  </article>
+
+</Layout>

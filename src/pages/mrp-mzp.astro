@@ -1,0 +1,65 @@
+---
+import Layout from '../layouts/Layout.astro'
+
+// Централизованные данные на 2026 год
+export const stats = {
+  mrp: 3_932,
+  mzp: 85_000,
+  year: 2026,
+  limits: {
+    nds: 10_000, // порог НДС в МРП
+    patent: 3_528, // предел патента в МРП
+    simplified: 24_038, // предел упрощенки в МРП (полугодие)
+  }
+}
+---
+
+<Layout title={`МРП и МЗП на ${stats.year} год в Казахстане`}>
+  <article class="max-w-4xl mx-auto py-16 px-4">
+    
+    <header class="text-center mb-16">
+      <h1 class="text-6xl font-black text-gray-900 mb-4 tracking-tighter">
+        {stats.year} <span class="text-blue-600">Показатели</span>
+      </h1>
+      <p class="text-xl text-gray-500">Актуальные расчетные показатели Республики Казахстан</p>
+    </header>
+
+    <div class="grid md:grid-cols-2 gap-8 mb-16">
+      <div class="bg-white border-4 border-gray-900 p-8 rounded-[3rem] shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]">
+        <h2 class="text-sm font-bold uppercase tracking-widest text-gray-400 mb-2">МРП (Месячный расчетный показатель)</h2>
+        <p class="text-7xl font-black text-gray-900">{stats.mrp.toLocaleString()} <span class="text-3xl">₸</span></p>
+        <p class="mt-4 text-gray-600 text-sm leading-relaxed">
+          Используется для исчисления пособий, штрафов, налогов и других платежей. 
+          <br/><strong>В 2025 году был:</strong> 3 692 ₸.
+        </p>
+      </div>
+
+      <div class="bg-blue-600 p-8 rounded-[3rem] shadow-[12px_12px_0px_0px_rgba(37,99,235,0.3)] text-white">
+        <h2 class="text-sm font-bold uppercase tracking-widest opacity-70 mb-2">МЗП (Минимальная зарплата)</h2>
+        <p class="text-7xl font-black">{stats.mzp.toLocaleString()} <span class="text-3xl">₸</span></p>
+        <p class="mt-4 opacity-80 text-sm leading-relaxed">
+          Минимальный порог оплаты труда. От этой суммы считаются ваши пенсионные (ОПВ) и социальные отчисления (СО).
+        </p>
+      </div>
+    </div>
+
+    <section class="bg-gray-50 rounded-[2rem] p-10">
+      <h3 class="text-2xl font-bold mb-8">Важные лимиты на {stats.year} год</h3>
+      <div class="space-y-6">
+        <div class="flex justify-between items-center border-b pb-4">
+          <span>Порог постановки на НДС (10 000 МРП)</span>
+          <span class="font-bold text-xl">{(stats.limits.nds * stats.mrp).toLocaleString()} ₸</span>
+        </div>
+        <div class="flex justify-between items-center border-b pb-4">
+          <span>Лимит дохода для патента (3 528 МРП)</span>
+          <span class="font-bold text-xl">{(stats.limits.patent * stats.mrp).toLocaleString()} ₸</span>
+        </div>
+        <div class="flex justify-between items-center border-b pb-4">
+          <span>Лимит упрощенки за полугодие (24 038 МРП)</span>
+          <span class="font-bold text-xl text-blue-600">{(stats.limits.simplified * stats.mrp).toLocaleString()} ₸</span>
+        </div>
+      </div>
+    </section>
+
+  </article>
+</Layout>
