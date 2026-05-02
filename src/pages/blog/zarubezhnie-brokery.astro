@@ -1,0 +1,172 @@
+---
+import Layout from '../../layouts/Layout.astro'
+
+export const meta = {
+  title: 'Налоги при работе через зарубежных брокеров: Interactive Brokers, Freedom Global 2026',
+  description: 'Как платить налоги в Казахстане, если торгуете через IBKR или Freedom Global. Выписки, подтверждение расходов и декларация 270.00 в 2026 году.',
+  category: 'Физлица · Инвестиции',
+}
+---
+
+<Layout
+  title="Налоги при работе через зарубежных брокеров: Interactive Brokers, Freedom Global"
+  description="Как платить налоги в Казахстане, если торгуете акциями через Interactive Brokers или Freedom Global. Выписки, подтверждение расходов и декларирование в 2026 году."
+>
+
+  <div class="mb-8">
+    <a href="/blog" class="text-sm text-gray-400 hover:text-gray-600">← Все статьи</a>
+  </div>
+
+  <article class="prose prose-gray max-w-none">
+
+    <div class="mb-12">
+      <span class="px-3 py-1 bg-blue-100 text-blue-700 text-xs font-bold rounded-full uppercase tracking-widest">Инвестиции · Зарубежные брокеры 2026</span>
+      <h1 class="text-4xl font-black text-gray-900 mt-4 mb-4">
+        Interactive Brokers, Freedom Global и налоговая РК: гайд по выживанию
+      </h1>
+      <p class="text-xl text-gray-600 max-w-3xl">
+        Зарубежный брокер перестал быть «невидимым» для КГД. Благодаря автоматическому обмену данными, налоговая в 2026 году видит ваши счета. Разбираемся, как спать спокойно.
+      </p>
+    </div>
+
+    <div class="space-y-12 text-gray-800 text-lg leading-relaxed">
+
+      <section class="bg-blue-50 p-8 rounded-3xl">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">Главные цифры для инвестора</h2>
+        <div class="grid md:grid-cols-3 gap-4 mt-4">
+          <div class="bg-white p-5 rounded-2xl text-center">
+            <p class="text-3xl font-black text-blue-700">10%</p>
+            <p class="text-sm text-gray-600 mt-2">ИПН с прибыли от продажи акций</p>
+          </div>
+          <div class="bg-white p-5 rounded-2xl text-center">
+            <p class="text-3xl font-black text-blue-700">10%</p>
+            <p class="text-sm text-gray-600 mt-2">ИПН с дивидендов (с учетом зачета)</p>
+          </div>
+          <div class="bg-white p-5 rounded-2xl text-center">
+            <p class="text-3xl font-black text-blue-700">270.00</p>
+            <p class="text-sm text-gray-600 mt-2">Форма ежегодной декларации</p>
+          </div>
+        </div>
+        <p class="mt-6 text-blue-800 font-semibold">
+          Важно: В 2026 году доходы от брокеров указываются в общей форме 270.00. Форма 240.00 осталась только для узких категорий лиц.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Шаг 1: Готовим отчеты (Statements)</h2>
+        <p>
+          Без документов вы заплатите налог не с прибыли, а со **всей суммы продажи**. Для налоговой покупка за $100 и продажа за $110 без выписки выглядит как чистый доход в $110.
+        </p>
+
+        <div class="space-y-6 mt-8">
+          <div class="border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-black text-lg text-gray-900 mb-3">Interactive Brokers (IBKR)</h3>
+            <ul class="space-y-2 text-sm">
+              <li class="flex gap-2"><span class="font-bold text-blue-600 shrink-0">→</span> <span><strong>Activity Statement</strong> — основной отчет. Качайте за период с 01.01 по 31.12.</span></li>
+              <li class="flex gap-2"><span class="font-bold text-blue-600 shrink-0">→</span> <span><strong>Dividend Report</strong> — для детального расчета налогов с дивидендов и зачета W-8BEN.</span></li>
+              <li class="flex gap-2"><span class="font-bold text-blue-600 shrink-0">→</span> <span><strong>FX Income Worksheet</strong> — отчет, который поможет посчитать курсовую разницу (важно для тенговых расчетов).</span></li>
+            </ul>
+          </div>
+
+          <div class="border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-black text-lg text-gray-900 mb-3">Freedom Global (Кипр)</h3>
+            <ul class="space-y-2 text-sm">
+              <li class="flex gap-2"><span class="font-bold text-blue-600 shrink-0">→</span> <span><strong>Брокерский отчет</strong> — доступен в кабинете Freedom24.</span></li>
+              <li class="flex gap-2"><span class="font-bold text-blue-600 shrink-0">→</span> <span><strong>Справка о доходах за рубежом</strong> — Freedom часто предоставляет отчеты сразу на русском языке, что избавляет от трат на перевод.</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Шаг 2: Валютная ловушка (Курс НБ РК)</h2>
+        <p class="mb-6">
+          В Казахстане нет понятия «долларовая прибыль». Все считается через тенге. 
+        </p>
+
+        <div class="bg-white border-2 border-gray-900 rounded-3xl overflow-hidden">
+          <div class="bg-gray-900 text-white p-5 text-center">
+            <h4 class="font-bold uppercase tracking-widest text-sm text-blue-400">Пример с учетом курса (2026)</h4>
+          </div>
+          <div class="p-8 space-y-4 text-base">
+            <div class="flex justify-between border-b pb-3">
+              <span class="text-gray-600">Покупка: $100 (курс 480 ₸)</span>
+              <span class="font-bold">48 000 ₸</span>
+            </div>
+            <div class="flex justify-between border-b pb-3">
+              <span class="text-gray-600">Продажа: $110 (курс 510 ₸)</span>
+              <span class="font-bold text-green-600">56 100 ₸</span>
+            </div>
+            <div class="flex justify-between border-b pb-3 italic text-gray-500">
+              <span>Прирост (тенговый)</span>
+              <span>8 100 ₸</span>
+            </div>
+            <div class="flex justify-between pt-2 text-xl font-black">
+              <span>Итого налог (10%)</span>
+              <span class="text-blue-700">810 ₸</span>
+            </div>
+          </div>
+        </div>
+        <p class="text-sm text-gray-500 mt-4">Даже если акция в долларах не выросла, но тенге упал — вы заплатите налог с курсовой разницы. Это суровая реальность НК РК.</p>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Шаг 3: Декларация 270.00 и CRS</h2>
+        <p>
+          С 2025-2026 года Казахстан активно участвует в <strong>Common Reporting Standard (CRS)</strong>. IBKR и Freedom Global передают данные о наличии счетов казахстанцев в налоговые органы стран своей регистрации, а те — в КГД РК.
+        </p>
+
+        <div class="bg-gray-50 p-8 rounded-3xl mt-6">
+          <h3 class="font-bold mb-4">Что отражаем в 270.00 (до 15 сентября):</h3>
+          <div class="space-y-5">
+            <div class="flex gap-4">
+              <span class="bg-blue-600 text-white font-black w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-sm">1</span>
+              <div>
+                <p class="font-bold">Наличие ценных бумаг</p>
+                <p class="text-gray-600 text-base text-sm">Все ваши акции, ETF и облигации, хранящиеся у брокера на конец года.</p>
+              </div>
+            </div>
+            <div class="flex gap-4">
+              <span class="bg-blue-600 text-white font-black w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-sm">2</span>
+              <div>
+                <p class="font-bold">Деньги на брокерском счету</p>
+                <p class="text-base text-gray-600 text-sm">Кэш в валюте, если общая сумма на всех зарубежных счетах превышает 1000 МРП (~4.2 млн ₸).</p>
+              </div>
+            </div>
+            <div class="flex gap-4">
+              <span class="bg-blue-600 text-white font-black w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-sm">3</span>
+              <div>
+                <p class="font-bold">Прибыль (Gain)</p>
+                <p class="text-base text-gray-600 text-sm">Суммарный доход от всех закрытых сделок за год.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="bg-gray-900 text-white p-10 rounded-3xl">
+        <h2 class="text-2xl font-bold text-blue-400 mb-6">Чек-лист безопасности инвестора</h2>
+        <ul class="space-y-4 opacity-90 text-sm">
+          <li class="flex gap-4">
+            <span class="text-green-400 font-black shrink-0">✓</span>
+            <p><strong>W-8BEN:</strong> Убедитесь, что форма активна. Это экономит вам 15% налога на дивиденды США.</p>
+          </li>
+          <li class="flex gap-4">
+            <span class="text-green-400 font-black shrink-0">✓</span>
+            <p><strong>Нотариальный перевод:</strong> Для сдачи отчета в КГД часто требуют перевод выписки. Делайте его только по запросу (камеральный контроль), заранее не всегда нужно.</p>
+          </li>
+          <li class="flex gap-4">
+            <span class="text-red-400 font-black shrink-0">!</span>
+            <p><strong>Перенос убытков:</strong> Помните, что убыток прошлых лет нельзя зачесть в 2026 году. Только сальдирование внутри одного года.</p>
+          </li>
+        </ul>
+      </section>
+
+      <div class="bg-blue-100 p-8 rounded-3xl text-center">
+        <p class="text-blue-900 font-bold">Остались вопросы по конкретному брокеру?</p>
+        <p class="text-blue-800 text-sm mt-2">Каждый случай индивидуален, особенно при наличии корпоративных акций (RSU/ESPP). Не затягивайте с расчетами до сентября!</p>
+      </div>
+
+    </div>
+  </article>
+</Layout>
