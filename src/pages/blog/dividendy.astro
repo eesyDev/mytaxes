@@ -1,0 +1,190 @@
+---
+import Layout from '../../layouts/Layout.astro'
+
+export const meta = {
+  title: 'Налог на дивиденды от иностранных акций: W-8BEN и двойное налогообложение в 2026 году',
+  description: 'Как работает W-8BEN для дивидендов США и как отразить их в декларации 270.00. Налоги на иностранные инвестиции для резидентов РК.',
+  category: 'Физлица · Инвестиции',
+}
+---
+
+<Layout
+  title="Налог на дивиденды от иностранных акций: W-8BEN и двойное налогообложение"
+  description="Как работает W-8BEN для дивидендов от акций США и как отразить их в казахстанской декларации. Налог на дивиденды в разных юрисдикциях для резидентов РК."
+>
+
+  <div class="mb-8">
+    <a href="/blog" class="text-sm text-gray-400 hover:text-gray-600">← Все статьи</a>
+  </div>
+
+  <article class="prose prose-gray max-w-none">
+
+    <div class="mb-12">
+      <span class="px-3 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full uppercase tracking-widest">Инвестиции · Дивиденды 2026</span>
+      <h1 class="text-4xl font-black text-gray-900 mt-4 mb-4">
+        Дивиденды от иностранных акций: сколько реально платит казахстанец
+      </h1>
+      <p class="text-xl text-gray-600 max-w-3xl">
+        Apple, Microsoft, Coca-Cola платят дивиденды. Но до вашего кармана доходит не вся сумма. Разбираемся, как работает W-8BEN и почему в 2026 году мы отчитываемся по форме 270.00.
+      </p>
+    </div>
+
+    <div class="space-y-12 text-gray-800 text-lg leading-relaxed">
+
+      <section class="bg-green-50 p-8 rounded-3xl">
+        <h2 class="text-2xl font-bold text-gray-900 mb-4">Главная проблема: два государства хотят налог</h2>
+        <p>
+          Когда американская компания выплачивает вам дивиденды, происходит следующее:
+        </p>
+        <div class="grid md:grid-cols-2 gap-4 mt-6">
+          <div class="bg-white p-5 rounded-2xl border border-red-200">
+            <p class="font-bold text-red-700 mb-2">США удерживают налог у источника</p>
+            <p class="text-sm text-gray-600">По умолчанию — 30% withholding tax. С формой W-8BEN — 15% (по налоговому договору РК-США).</p>
+          </div>
+          <div class="bg-white p-5 rounded-2xl border border-orange-200">
+            <p class="font-bold text-orange-700 mb-2">Казахстан применяет ИПН 10%</p>
+            <p class="text-sm text-gray-600">РК облагает налогом мировые доходы резидентов. В 2026 году эти данные вносятся в декларацию 270.00.</p>
+          </div>
+        </div>
+        <p class="mt-6 text-green-800 font-semibold">
+          Важно: Благодаря Конвенциям об избежании двойного налогообложения (КИДН), налог, уплаченный в США, можно зачесть в Казахстане.
+        </p>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Что такое форма W-8BEN и зачем её подавать</h2>
+        <p>
+          <strong>W-8BEN</strong> — это ваш «паспорт инвестора» для Налоговой службы США (IRS). Она подтверждает, что вы платите налоги в Казахстане, и дает право на сниженную ставку.
+        </p>
+
+        <div class="bg-gray-50 p-8 rounded-3xl mt-6">
+          <h3 class="font-bold mb-4">Математика дивидендов США:</h3>
+          <div class="space-y-4">
+            <div class="flex justify-between items-center p-4 bg-red-100 rounded-xl">
+              <span>Без W-8BEN</span>
+              <span class="font-black text-red-700 text-xl">−30%</span>
+            </div>
+            <div class="flex justify-between items-center p-4 bg-green-100 rounded-xl">
+              <span>С W-8BEN (Тариф "Казахстан")</span>
+              <span class="font-black text-green-700 text-xl">−15%</span>
+            </div>
+          </div>
+          <p class="text-sm text-gray-500 mt-4">На каждые $100 дивидендов вы экономите $15. При долгосрочном инвестировании это серьезно увеличивает сложный процент.</p>
+        </div>
+
+        <div class="bg-blue-50 p-6 rounded-2xl mt-6">
+          <p class="font-bold text-blue-900 mb-2">Как подать W-8BEN в 2026 году:</p>
+          <ul class="space-y-2 text-blue-800 text-base list-disc pl-5">
+            <li>Через кабинет брокера (Interactive Brokers, Freedom, и др.). Сейчас это делается парой кликов.</li>
+            <li>Срок действия — 3 полных календарных года. Проверьте статус формы, если открывали счет до 2023 года!</li>
+            <li>Ваш Tax ID — это ваш ИИН.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Дивиденды из разных стран: ставки налога</h2>
+
+        <div class="overflow-x-auto">
+          <table class="w-full border-collapse text-base">
+            <thead>
+              <tr class="bg-gray-900 text-white">
+                <th class="p-4 text-left rounded-tl-xl">Страна</th>
+                <th class="p-4 text-center">Стандартная ставка</th>
+                <th class="p-4 text-center">По договору с РК</th>
+                <th class="p-4 text-left rounded-tr-xl">Особенности</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200 text-sm">
+              <tr>
+                <td class="p-4 font-semibold">США</td>
+                <td class="p-4 text-center text-red-600 font-bold">30%</td>
+                <td class="p-4 text-center text-green-700 font-bold">15%</td>
+                <td class="p-4">Нужна форма W-8BEN</td>
+              </tr>
+              <tr class="bg-gray-50">
+                <td class="p-4 font-semibold">Германия</td>
+                <td class="p-4 text-center text-red-600 font-bold">~26.4%</td>
+                <td class="p-4 text-center text-green-700 font-bold">15%</td>
+                <td class="p-4">Сложный возврат переплаты</td>
+              </tr>
+              <tr>
+                <td class="p-4 font-semibold">Великобритания</td>
+                <td class="p-4 text-center text-orange-600 font-bold">0%</td>
+                <td class="p-4 text-center text-green-700 font-bold">0%</td>
+                <td class="p-4">У источника 0%, платите 10% сами в РК</td>
+              </tr>
+              <tr class="bg-gray-50">
+                <td class="p-4 font-semibold">Китай (H-shares)</td>
+                <td class="p-4 text-center text-red-600 font-bold">10%</td>
+                <td class="p-4 text-center text-green-700 font-bold">10%</td>
+                <td class="p-4">Полный зачет в РК</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Как работает налоговый зачёт в 2026 году</h2>
+        <p>
+          В Казахстане действует правило: если вы уже заплатили налог за рубежом (например, 15% в США), вы можете «зачесть» его против казахстанских 10%.
+        </p>
+
+        <div class="bg-white border-2 border-gray-200 rounded-3xl overflow-hidden mt-6">
+          <div class="bg-gray-100 p-5">
+            <h4 class="font-bold text-center">Пример: дивиденды $200 (акции США)</h4>
+          </div>
+          <div class="p-8 space-y-3 text-base">
+            <div class="flex justify-between border-b pb-2">
+              <span>Начислено (курс 500 ₸)</span>
+              <span class="font-bold">$200 (100 000 ₸)</span>
+            </div>
+            <div class="flex justify-between border-b pb-2 text-red-600">
+              <span>Удержано в США (15%)</span>
+              <span class="font-bold">−$30 (−15 000 ₸)</span>
+            </div>
+            <div class="flex justify-between border-b pb-2 text-orange-600">
+              <span>ИПН в РК (10%)</span>
+              <span class="font-bold">10 000 ₸</span>
+            </div>
+            <div class="flex justify-between border-b pb-2 text-green-600">
+              <span>Зачёт (15 000 > 10 000)</span>
+              <span class="font-bold">−10 000 ₸</span>
+            </div>
+            <div class="flex justify-between pt-2 text-xl font-black text-green-700">
+              <span>Итого к уплате в РК</span>
+              <span>0 ₸</span>
+            </div>
+          </div>
+        </div>
+        <p class="text-sm text-gray-500 mt-3">Важно: чтобы налоговая приняла зачет, у вас должен быть подтверждающий документ от брокера (1042-S или официальный годовой отчет).</p>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Как отчитаться: прощай 240.00, привет 270.00</h2>
+        <div class="bg-gray-50 p-8 rounded-3xl">
+          <p class="mb-4 font-bold">С 2025 года большинство инвесторов перешли на всеобщее декларирование. Теперь дивиденды указываются так:</p>
+          <ol class="space-y-4 list-decimal pl-5 text-gray-700 text-base">
+            <li>Берете брокерский отчет (Dividend Report) за 2025 год.</li>
+            <li>Пересчитываете каждую выплату в тенге по курсу Нацбанка **на день получения**.</li>
+            <li>В **форме 270.00** находите раздел «Доходы, облагаемые у источника выплаты» или «Доходы из иностранных источников».</li>
+            <li>Указываете сумму налога, удержанного за рубежом, для проведения зачета.</li>
+          </ol>
+        </div>
+        <p class="mt-4 text-gray-600">
+          Срок сдачи 270.00 в 2026 году — до <strong>15 сентября</strong>.
+        </p>
+      </section>
+
+      <section class="bg-gray-900 text-white p-10 rounded-3xl">
+        <h2 class="text-2xl font-bold text-green-400 mb-6">Лайфхак для ленивых: Ирландские ETF</h2>
+        <p class="opacity-90">
+          Если не хотите возиться с W-8BEN и зачетами, покупайте ETF, зарегистрированные в Ирландии (тикеры начинаются на IE...). 
+          Такие фонды сами платят льготный налог 15% внутри своей структуры, а вы получаете уже «чистый» доход, который часто реинвестируется внутри фонда без выплаты вам (Accumulating ETF). В этом случае налог на дивиденды платить вообще не нужно — вы заплатите только налог на прирост стоимости при продаже всей акции.
+        </p>
+      </section>
+
+    </div>
+  </article>
+</Layout>
