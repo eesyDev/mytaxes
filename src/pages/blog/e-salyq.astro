@@ -1,5 +1,6 @@
 ---
-import Layout from '../../layouts/Layout.astro';
+import Layout from '../../layouts/Layout.astro'
+import AuthorBlock from '../../components/AuthorBlock.astro';
 
 export const meta = {
   title: 'ИП на e-Salyq Business 2026',
@@ -10,7 +11,12 @@ export const meta = {
 
 <Layout 
   title="ИП на e-Salyq Business 2026: Ставка 1%, условия и пошаговый гайд" 
-  description="Полный разбор режима e-Salyq Business в Казахстане. Кто может платить 1% налога, как выдавать чеки без кассового аппарата и автоматизировать отчетность в 2026 году.">
+  description="Полный разбор режима e-Salyq Business в Казахстане. Кто может платить 1% налога, как выдавать чеки без кассового аппарата и автоматизировать отчетность в 2026 году."
+  article={{
+    authorName: 'Даниэль Амирханов',
+    datePublished: '2026-01-01',
+    dateModified: '2026-05-01',
+  }}>
   
   <article class="max-w-4xl mx-auto px-4 py-16 font-sans text-gray-800 leading-relaxed">
     
@@ -137,6 +143,14 @@ export const meta = {
       </p>
 
     </div>
+  
+    <AuthorBlock
+      name="Даниэль Амирханов"
+      role="Налоговый консультант · mytaxes.kz"
+      photo="/author.webp"
+      updated="Май 2026"
+    />
+
   </article>
 
   <section class="bg-gray-50 border-t border-gray-100 pb-24">

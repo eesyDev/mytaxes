@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro'
+import AuthorBlock from '../../components/AuthorBlock.astro'
 
 export const meta = {
   title: 'Сальдирование убытков по инвестициям в Казахстане 2026: как платить меньше',
@@ -11,6 +12,11 @@ export const meta = {
 <Layout
   title="Сальдирование убытков по инвестициям в Казахстане 2026: как платить меньше"
   description="Разбор правил зачета инвестиционных потерь в налоговом кодексе РК для физических лиц. Можно ли переносить убытки на будущие года?"
+  article={{
+    authorName: 'Даниэль Амирханов',
+    datePublished: '2026-01-01',
+    dateModified: '2026-05-01',
+  }}
 >
 
   <div class="mb-8">
@@ -141,5 +147,13 @@ export const meta = {
       </section>
 
     </div>
+  
+    <AuthorBlock
+      name="Даниэль Амирханов"
+      role="Налоговый консультант · mytaxes.kz"
+      photo="/author.webp"
+      updated="Май 2026"
+    />
+
   </article>
 </Layout>

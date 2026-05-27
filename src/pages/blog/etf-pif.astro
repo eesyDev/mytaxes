@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro'
+import AuthorBlock from '../../components/AuthorBlock.astro'
 
 export const meta = {
   title: 'Налоги на ETF и ПИФы в Казахстане 2026: как считать и что декларировать',
@@ -11,6 +12,11 @@ export const meta = {
 <Layout
   title="Налоги на ETF и ПИФы в Казахстане 2026: как считать и что декларировать"
   description="Как облагаются налогом ETF и паевые инвестиционные фонды в Казахстане. Когда возникает налог и нужно ли декларировать паи ПИФов в форме 270.00."
+  article={{
+    authorName: 'Даниэль Амирханов',
+    datePublished: '2026-01-01',
+    dateModified: '2026-05-01',
+  }}
 >
 
   <div class="mb-8">
@@ -170,5 +176,13 @@ export const meta = {
       </section>
 
     </div>
+  
+    <AuthorBlock
+      name="Даниэль Амирханов"
+      role="Налоговый консультант · mytaxes.kz"
+      photo="/author.webp"
+      updated="Май 2026"
+    />
+
   </article>
 </Layout>

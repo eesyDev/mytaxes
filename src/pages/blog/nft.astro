@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro'
+import AuthorBlock from '../../components/AuthorBlock.astro'
 
 export const meta = {
   title: 'Налоги на NFT в Казахстане 2026: гид по цифровым активам',
@@ -11,6 +12,11 @@ export const meta = {
 <Layout
   title="Налоги на NFT в Казахстане 2026: это имущественный доход или нет?"
   description="Как классифицируются NFT для налоговых целей в Казахстане. Нужно ли платить налог при продаже NFT и как отразить их в декларации в 2026 году."
+  article={{
+    authorName: 'Даниэль Амирханов',
+    datePublished: '2026-01-01',
+    dateModified: '2026-05-01',
+  }}
 >
 
   <div class="mb-8">
@@ -145,5 +151,13 @@ export const meta = {
       </section>
 
     </div>
+  
+    <AuthorBlock
+      name="Даниэль Амирханов"
+      role="Налоговый консультант · mytaxes.kz"
+      photo="/author.webp"
+      updated="Май 2026"
+    />
+
   </article>
 </Layout>

@@ -1,12 +1,81 @@
 ---
 import '../styles/global.css'
 
+interface ArticleSchema {
+  authorName: string
+  datePublished: string
+  dateModified?: string
+}
+
 interface Props {
   title: string
   description?: string
+  article?: ArticleSchema
 }
 
-const { title, description = 'Калькулятор налогов Казахстан 2026. Рассчитайте налоги для ИП и ТОО быстро и бесплатно.' } = Astro.props
+const {
+  title,
+  description = 'Калькулятор налогов Казахстан 2026. Рассчитайте налоги для ИП и ТОО быстро и бесплатно.',
+  article,
+} = Astro.props
+
+const baseUrl = 'https://mytaxes.kz'
+const currentUrl = new URL(Astro.url.pathname, baseUrl).href
+
+const schemas: object[] = [
+  {
+    '@type': 'WebSite',
+    '@id': `${baseUrl}/#website`,
+    url: baseUrl,
+    name: 'MyTaxes.kz',
+    description: 'Калькулятор налогов Казахстан 2026',
+    inLanguage: 'ru',
+  },
+  {
+    '@type': 'Organization',
+    '@id': `${baseUrl}/#organization`,
+    name: 'MyTaxes.kz',
+    url: baseUrl,
+    logo: {
+      '@type': 'ImageObject',
+      url: `${baseUrl}/favicon.svg`,
+    },
+  },
+]
+
+if (article) {
+  schemas.push({
+    '@type': 'Article',
+    headline: title,
+    description,
+    url: currentUrl,
+    author: {
+      '@type': 'Person',
+      name: article.authorName,
+    },
+    publisher: {
+      '@type': 'Organization',
+      '@id': `${baseUrl}/#organization`,
+    },
+    datePublished: article.datePublished,
+    dateModified: article.dateModified ?? article.datePublished,
+    inLanguage: 'ru',
+  })
+
+  schemas.push({
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Главная', item: baseUrl },
+      { '@type': 'ListItem', position: 2, name: 'Статьи', item: `${baseUrl}/blog` },
+      { '@type': 'ListItem', position: 3, name: title, item: currentUrl },
+    ],
+  })
+}
+
+const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': schemas })
+
+const ogType = article ? 'article' : 'website'
+const ogImage = `${baseUrl}/og-image.png`
 ---
 
 <!doctype html>
@@ -18,6 +87,28 @@ const { title, description = 'Калькулятор налогов Казахс
     <meta name="google-site-verification" content="_OQXWII4T_Av5SBj3O66yzD5P2DvWWiTp7rbDQZMy5g" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title} | MyTaxes.kz</title>
+
+    <!-- Open Graph -->
+    <meta property="og:site_name" content="MyTaxes.kz" />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={currentUrl} />
+    <meta property="og:title" content={`${title} | MyTaxes.kz`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="ru_RU" />
+    {article && <meta property="article:published_time" content={article.datePublished} />}
+    {article && <meta property="article:modified_time" content={article.dateModified ?? article.datePublished} />}
+    {article && <meta property="article:author" content={article.authorName} />}
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={`${title} | MyTaxes.kz`} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <script type="application/ld+json" set:html={jsonLd} />
   </head>
   <body class="bg-white text-gray-900 font-sans antialiased">
 
