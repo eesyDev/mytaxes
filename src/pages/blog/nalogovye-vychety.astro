@@ -1,0 +1,184 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import AuthorBlock from '../../components/AuthorBlock.astro'
+
+export const meta = {
+  title: 'Налоговые вычеты физлиц в Казахстане 2026: как платить меньше ИПН',
+  description: 'Как законно уменьшить налогооблагаемую базу по ИПН в 2026 году. Разбор вычетов: 1 МЗП, медицина, ипотека Отбасы банка и ВОСМС.',
+  category: 'Физлица · Вычеты',
+}
+
+const mrp = 3_932
+const mzp = 85_000 // Стандартный вычет в месяц равен 1 МЗП
+---
+
+<Layout
+  title={meta.title}
+  description={meta.description}
+  article={{
+    authorName: 'Даниэль Амирханов',
+    datePublished: '2026-06-01',
+    dateModified: '2026-06-07',
+    mentions: ['налоговый вычет', 'ИПН', 'стандартный вычет', 'вычет на лечение', 'ипотечный вычет', 'Отбасы банк', 'ВОСМС'],
+  }}
+>
+
+  <article class="max-w-4xl mx-auto py-12 px-4 font-sans text-gray-800 leading-relaxed">
+
+    <header class="mb-16">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="bg-teal-100 text-teal-700 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-widest border border-teal-200">Физлица · Вычеты</span>
+        <span class="text-sm text-gray-400 font-bold">Данные на 2026 год</span>
+      </div>
+      <h1 class="text-5xl font-black text-gray-900 mb-6 tracking-tight leading-[1.1]">
+        Налоговые вычеты 2026:<br/>
+        <span class="text-teal-600">как законно забирать у государства свой ИПН</span>
+      </h1>
+      <p class="text-2xl text-gray-500 leading-relaxed max-w-3xl">
+        Налоговый вычет — это законный способ уменьшить сумму дохода, с которой удерживается подоходный налог (ИПН 10%). Многие тратят миллионы на медицину и ипотеку, даже не зная, что могут уменьшить свои налоги.
+      </p>
+    </header>
+
+    <section class="mb-12 text-xl text-gray-600 italic border-l-4 border-teal-100 pl-8">
+      Вычет — это не прямой возврат «живых» денег на карту, а уменьшение налогооблагаемой базы. Если вы получили право на вычет в 100 000 ₸, это значит, что ваш чистый доход на руки увеличится на 10 000 ₸ (10% сэкономленного ИПН).
+    </section>
+
+    <section class="mb-16">
+      <h2 class="text-3xl font-black text-gray-900 mb-6">1. Стандартный вычет: главная льгота каждого работника</h2>
+      <p class="mb-6">Каждый официально трудоустроенный гражданин РК имеет право на ежемесячный стандартный вычет в размере **1 МЗП ({mzp.toLocaleString()} ₸)**. Работодатель применяет его автоматически.</p>
+
+      <div class="bg-teal-900 text-white rounded-[2rem] p-10 relative overflow-hidden mb-6">
+        <div class="relative z-10">
+          <h3 class="text-teal-300 font-bold uppercase tracking-widest text-xs mb-4">Правильный пример расчёта ИПН в 2026 году</h3>
+          <div class="font-mono space-y-4 text-sm">
+            <div class="flex justify-between border-b border-teal-700 pb-3">
+              <span class="text-teal-200">Оклад (грязными)</span>
+              <span class="font-black">500 000 ₸</span>
+            </div>
+            <div class="flex justify-between border-b border-teal-700 pb-3 text-teal-300">
+              <span>− ОПВ (10% на пенсию)</span>
+              <span>−50 000 ₸</span>
+            </div>
+            <div class="flex justify-between border-b border-teal-700 pb-3 text-teal-300">
+              <span>− ВОСМС (2% медстрахование)</span>
+              <span>−10 000 ₸</span>
+            </div>
+            <div class="flex justify-between border-b border-teal-700 pb-3 text-teal-300">
+              <span>− Стандартный вычет (1 МЗП)</span>
+              <span>−{mzp.toLocaleString()} ₸</span>
+            </div>
+            <div class="flex justify-between border-b border-teal-700 pb-3 text-yellow-300 font-bold">
+              <span>Налогооблагаемый доход</span>
+              <span>{(500_000 - 50_000 - 10_000 - mzp).toLocaleString()} ₸</span>
+            </div>
+            <div class="flex justify-between text-xl font-black pt-2">
+              <span>ИПН к удержанию (10%)</span>
+              <span class="text-emerald-400">{Math.round((500_000 - 50_000 - 10_000 - mzp) * 0.1).toLocaleString()} ₸</span>
+            </div>
+          </div>
+          <p class="text-teal-400 text-xs mt-6 italic">Без стандартного вычета в 1 МЗП вы бы каждый месяц отдавали государству на {Math.round(mzp * 0.1).toLocaleString()} ₸ больше.</p>
+        </div>
+        <div class="absolute -right-20 -bottom-20 w-64 h-64 bg-teal-700 rounded-full opacity-20"></div>
+      </div>
+    </section>
+
+    <section class="mb-16">
+      <h2 class="text-3xl font-black text-gray-900 mb-6">2. Прочие вычеты, о которых вам не скажет работодатель</h2>
+      <p class="mb-6">Эти вычеты носят заявительный характер. Пока вы сами не принесете документы в бухгалтерию или не укажете их в декларации, налоги вам не снизят.</p>
+
+      <div class="space-y-5">
+
+        <div class="p-6 bg-white border border-gray-200 rounded-3xl hover:shadow-lg transition-shadow">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <h4 class="font-black text-lg mb-1">Ипотечный вычет (Строго Отбасы Банк)</h4>
+              <p class="text-gray-600 text-sm mb-2">Вы имеете право вычитать из своего налогооблагаемого дохода суммы, которые уходят на оплату <strong>процентов (вознаграждения)</strong> по ипотеке. Важное условие: заем должен быть оформлен исключительно в АО «Отбасы банк». Ипотеки обычных коммерческих банков под этот вычет не подходят.</p>
+              <p class="text-xs text-amber-700 font-bold">Что нужно: копия договора займа с Отбасы банком и ежегодная справка о графике погашения с выделенной суммой вознаграждения.</p>
+            </div>
+            <div class="shrink-0 bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-xs font-black uppercase">По заявлению</div>
+          </div>
+        </div>
+
+        <div class="p-6 bg-white border border-gray-200 rounded-3xl hover:shadow-lg transition-shadow">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <h4 class="font-black text-lg mb-1">Вычет на медицину (с лимитом)</h4>
+              <p class="text-gray-600 text-sm mb-2">Позволяет уменьшить базу налога на стоимость платных операций, обследований, стоматологии или лечения в стационарах Казахстана за себя или близких родственников. Сумма ограничена потолком в <strong>94 МРП за календарный год ({ (94 * mrp).toLocaleString() } ₸)</strong>.</p>
+              <p class="text-xs text-amber-700 font-bold">Что нужно: договор с клиникой, кассовые чеки об оплате, фискальные квитанции.</p>
+            </div>
+            <div class="shrink-0 bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-xs font-black uppercase">По заявлению</div>
+          </div>
+        </div>
+
+        <div class="p-6 bg-white border border-gray-200 rounded-3xl hover:shadow-lg transition-shadow">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <h4 class="font-black text-lg mb-1">ОПВ, ОПВР и ВОСМС</h4>
+              <p class="text-gray-600 text-sm">Ваши обязательные пенсионные взносы, обязательные пенсионные взносы работодателя (введенные в РК) и взносы на медстрахование. Все они уменьшают сумму налога в автоматическом режиме через вашу бухгалтерию.</p>
+            </div>
+            <div class="shrink-0 bg-teal-100 text-teal-700 px-3 py-1 rounded-full text-xs font-black uppercase">Авто</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="mb-16">
+      <h2 class="text-3xl font-black text-gray-900 mb-6">3. Два пути оформления налогового вычета</h2>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="p-6 border border-gray-200 rounded-3xl bg-gray-50/50">
+          <h4 class="font-black text-lg mb-3">Через работодателя (в текущем году)</h4>
+          <p class="text-sm text-gray-600 mb-4">Самый простой и быстрый способ получать больше денег к зарплате прямо сейчас.</p>
+          <ul class="space-y-2 text-sm text-gray-600 font-medium">
+            <li class="flex gap-2">📱 <span class="text-gray-800">Берете справку/чеки об оплате процентов или лечения</span></li>
+            <li class="flex gap-2">✍️ <span class="text-gray-800">Пишете заявление на имя директора/главбуха компании</span></li>
+            <li class="flex gap-2">💰 <span class="text-gray-800">Бухгалтерия сразу перестает удерживать лишний ИПН</span></li>
+          </ul>
+        </div>
+        <div class="p-6 border border-gray-200 rounded-3xl bg-gray-50/50">
+          <h4 class="font-black text-lg mb-3">Через Декларацию 270.00 (по итогам года)</h4>
+          <p class="text-sm text-gray-600 mb-4">Связан со Всеобщим декларированием в 2026 году, когда отчетность сдают практически все физлица.</p>
+          <ul class="space-y-2 text-sm text-gray-600 font-medium">
+            <li class="flex gap-2">💻 <span class="text-gray-800">В кабинете налогоплательщика открываете форму 270.00</span></li>
+            <li class="flex gap-2">📝 <span class="text-gray-800">В специальном разделе заявляете сумму расходов за прошлый год</span></li>
+            <li class="flex gap-2">🏦 <span class="text-gray-800">Переплата по ИПН возвращается государством на ваш банковский счет</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-6 p-5 bg-amber-50 border border-amber-200 rounded-2xl">
+        <p class="font-black text-amber-800 mb-1">Срок давности — 3 года</p>
+        <p class="text-amber-700 text-sm">Если вы платили проценты Отбасы банку в прошлые годы (2023–2025), но не знали о вычетах, вы имеете полное право подать дополнительную или уточненную декларацию и вернуть свои деньги.</p>
+      </div>
+    </section>
+
+    <footer class="mt-24 p-12 bg-gray-900 rounded-[3rem] text-center text-white relative overflow-hidden">
+      <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-teal-500 to-transparent opacity-50"></div>
+      <h2 class="text-4xl font-black mb-6 italic tracking-tight">Сдаете отчетность во Всеобщем декларировании?</h2>
+      <p class="text-gray-400 max-w-lg mx-auto mb-10 text-lg">
+        Узнайте, как правильно заполнить Декларацию о доходах и имуществе (Форма 270) и не получить штрафы.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="/calculators/forma-270" class="bg-teal-600 hover:bg-teal-700 text-white px-10 py-5 rounded-2xl font-black transition-all transform hover:scale-105 shadow-xl shadow-teal-900/40">
+          Калькулятор Формы 270
+        </a>
+        <a href="/blog/vseobschee-2026" class="bg-white/5 hover:bg-white/10 border-2 border-white/10 text-white px-10 py-5 rounded-2xl font-black transition-all">
+          Гайд по всеобщему декларированию →
+        </a>
+      </div>
+      <p class="mt-8 text-xs text-gray-500 uppercase tracking-widest font-bold">
+        Данные обновлены в соответствии с Налоговым кодексом РК на 2026 год
+      </p>
+    </footer>
+
+    <AuthorBlock
+      name="Даниэль Амирханов"
+      role="Налоговый консультант · mytaxes.kz"
+      photo="/author.webp"
+      updated="Июнь 2026"
+    />
+
+  </article>
+
+</Layout>

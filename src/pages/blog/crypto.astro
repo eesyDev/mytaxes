@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro'
+import AuthorBlock from '../../components/AuthorBlock.astro'
 
 export const meta = {
   title: 'Налоги на криптовалюту в РК 2026: Как не получить блок счета',
@@ -8,7 +9,12 @@ export const meta = {
 }
 ---
 
-<Layout title={meta.title}>
+<Layout title={meta.title}
+  article={{
+    authorName: 'Даниэль Амирханов',
+    datePublished: '2026-01-01',
+    dateModified: '2026-05-01',
+  }}>
 
   <article class="max-w-5xl mx-auto py-12 px-4 font-sans text-gray-800 leading-relaxed">
     
@@ -123,6 +129,14 @@ export const meta = {
       </footer>
 
     </div>
+  
+    <AuthorBlock
+      name="Даниэль Амирханов"
+      role="Налоговый консультант · mytaxes.kz"
+      photo="/author.webp"
+      updated="Май 2026"
+    />
+
   </article>
 
 </Layout>

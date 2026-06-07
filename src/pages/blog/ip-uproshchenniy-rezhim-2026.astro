@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro'
+import AuthorBlock from '../../components/AuthorBlock.astro'
 
 export const meta = {
   title: 'ИП на упрощенке в 2026 году: стратегический разбор',
@@ -11,7 +12,12 @@ const mzp = 85_000
 const mrp = 3_932
 ---
 
-<Layout title={meta.title}>
+<Layout title={meta.title}
+  article={{
+    authorName: 'Даниэль Амирханов',
+    datePublished: '2026-01-01',
+    dateModified: '2026-05-01',
+  }}>
 
   <article class="max-w-4xl mx-auto py-12 px-4 font-sans text-gray-800 leading-relaxed">
     
@@ -231,6 +237,14 @@ const mrp = 3_932
         Актуально для налогового периода 2026 года
       </p>
     </footer>
+
+  
+    <AuthorBlock
+      name="Даниэль Амирханов"
+      role="Налоговый консультант · mytaxes.kz"
+      photo="/author.webp"
+      updated="Май 2026"
+    />
 
   </article>
 

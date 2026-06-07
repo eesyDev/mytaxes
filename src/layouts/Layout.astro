@@ -1,12 +1,156 @@
 ---
 import '../styles/global.css'
 
+interface ArticleSchema {
+  authorName: string
+  authorTitle?: string
+  datePublished: string
+  dateModified?: string
+  mentions?: string[]
+}
+
+interface CalculatorSchema {
+  name: string
+  description: string
+}
+
 interface Props {
   title: string
   description?: string
+  article?: ArticleSchema
+  calculator?: CalculatorSchema
+  breadcrumbs?: Array<{ name: string; item?: string }>
+  pageType?: string
 }
 
-const { title, description = 'Калькулятор налогов Казахстан 2026. Рассчитайте налоги для ИП и ТОО быстро и бесплатно.' } = Astro.props
+const {
+  title,
+  description = 'Калькулятор налогов Казахстан 2026. Рассчитайте налоги для ИП и ТОО быстро и бесплатно.',
+  article,
+  calculator,
+  breadcrumbs,
+  pageType = 'WebPage',
+} = Astro.props
+
+const baseUrl = 'https://mytaxes.kz'
+const currentUrl = new URL(Astro.url.pathname, baseUrl).href
+
+const schemas: object[] = [
+  {
+    '@type': 'Organization',
+    '@id': `${baseUrl}/#organization`,
+    name: 'MyTaxes.kz',
+    description: 'Онлайн-сервис для расчёта налогов ИП и физлиц Казахстана. Актуальные ставки 2026 года.',
+    url: baseUrl,
+    logo: {
+      '@type': 'ImageObject',
+      '@id': `${baseUrl}/#logo`,
+      url: `${baseUrl}/favicon.svg`,
+    },
+  },
+  {
+    '@type': 'WebSite',
+    '@id': `${baseUrl}/#website`,
+    url: baseUrl,
+    name: 'MyTaxes.kz',
+    description: 'Калькулятор налогов Казахстан 2026',
+    inLanguage: 'ru',
+    publisher: { '@id': `${baseUrl}/#organization` },
+  },
+  {
+    '@type': pageType,
+    '@id': `${currentUrl}#webpage`,
+    url: currentUrl,
+    name: title,
+    description,
+    isPartOf: { '@id': `${baseUrl}/#website` },
+    publisher: { '@id': `${baseUrl}/#organization` },
+    inLanguage: 'ru',
+  },
+]
+
+if (article) {
+  const authorId = `${baseUrl}/#person-${article.authorName.replace(/\s+/g, '_')}`
+
+  schemas.push({
+    '@type': 'Person',
+    '@id': authorId,
+    name: article.authorName,
+    ...(article.authorTitle ? { jobTitle: article.authorTitle } : {}),
+    worksFor: { '@id': `${baseUrl}/#organization` },
+  })
+
+  schemas.push({
+    '@type': 'Article',
+    '@id': `${currentUrl}#article`,
+    headline: title,
+    description,
+    author: { '@id': authorId },
+    publisher: { '@id': `${baseUrl}/#organization` },
+    datePublished: article.datePublished,
+    dateModified: article.dateModified ?? article.datePublished,
+    mainEntityOfPage: { '@id': `${currentUrl}#webpage` },
+    ...(article.mentions?.length
+      ? { mentions: article.mentions.map((name) => ({ '@type': 'DefinedTerm', name })) }
+      : {}),
+    inLanguage: 'ru',
+  })
+
+  schemas.push({
+    '@type': 'BreadcrumbList',
+    '@id': `${currentUrl}#breadcrumb`,
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Главная', item: baseUrl },
+      { '@type': 'ListItem', position: 2, name: 'Статьи', item: `${baseUrl}/blog` },
+      { '@type': 'ListItem', position: 3, name: title, item: currentUrl },
+    ],
+  })
+}
+
+if (calculator) {
+  schemas.push({
+    '@type': 'WebApplication',
+    '@id': `${currentUrl}#webapp`,
+    name: calculator.name,
+    description: calculator.description,
+    url: currentUrl,
+    applicationCategory: 'FinanceApplication',
+    operatingSystem: 'Web',
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'KZT',
+    },
+    provider: { '@id': `${baseUrl}/#organization` },
+  })
+
+  schemas.push({
+    '@type': 'BreadcrumbList',
+    '@id': `${currentUrl}#breadcrumb`,
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Главная', item: baseUrl },
+      { '@type': 'ListItem', position: 2, name: calculator.name, item: currentUrl },
+    ],
+  })
+}
+
+if (breadcrumbs?.length) {
+  schemas.push({
+    '@type': 'BreadcrumbList',
+    '@id': `${currentUrl}#breadcrumb`,
+    itemListElement: breadcrumbs.map((crumb, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: crumb.name,
+      ...(crumb.item ? { item: crumb.item } : {}),
+    })),
+  })
+}
+
+const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': schemas })
+
+const ogType = article ? 'article' : 'website'
+const ogImage = `${baseUrl}/og-image.png`
 ---
 
 <!doctype html>
@@ -18,6 +162,28 @@ const { title, description = 'Калькулятор налогов Казахс
     <meta name="google-site-verification" content="_OQXWII4T_Av5SBj3O66yzD5P2DvWWiTp7rbDQZMy5g" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title} | MyTaxes.kz</title>
+
+    <!-- Open Graph -->
+    <meta property="og:site_name" content="MyTaxes.kz" />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={currentUrl} />
+    <meta property="og:title" content={`${title} | MyTaxes.kz`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="ru_RU" />
+    {article && <meta property="article:published_time" content={article.datePublished} />}
+    {article && <meta property="article:modified_time" content={article.dateModified ?? article.datePublished} />}
+    {article && <meta property="article:author" content={article.authorName} />}
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={`${title} | MyTaxes.kz`} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <script type="application/ld+json" set:html={jsonLd} />
   </head>
   <body class="bg-white text-gray-900 font-sans antialiased">
 

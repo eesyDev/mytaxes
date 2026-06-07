@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro'
+import AuthorBlock from '../../components/AuthorBlock.astro'
 
 export const meta = {
   title: 'Налоги на майнинг и стейкинг в Казахстане 2026: полный гид',
@@ -11,6 +12,11 @@ export const meta = {
 <Layout
   title="Налоги на майнинг и стейкинг в Казахстане 2026"
   description="Как классифицировать и платить налоги с майнинга и стейкинга криптовалюты в РК. Когда возникает доход, как считать и что декларировать в 2026 году."
+  article={{
+    authorName: 'Даниэль Амирханов',
+    datePublished: '2026-01-01',
+    dateModified: '2026-05-01',
+  }}
 >
 
   <div class="mb-8">
@@ -162,5 +168,13 @@ export const meta = {
       </section>
 
     </div>
+  
+    <AuthorBlock
+      name="Даниэль Амирханов"
+      role="Налоговый консультант · mytaxes.kz"
+      photo="/author.webp"
+      updated="Май 2026"
+    />
+
   </article>
 </Layout>

@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro'
+import AuthorBlock from '../../components/AuthorBlock.astro'
 
 export const meta = {
   title: 'P2P-торговля криптой и блокировки карт Kaspi/Halyk: выживание в 2026',
@@ -11,6 +12,11 @@ export const meta = {
 <Layout
   title="P2P-торговля криптой и блокировки карт Kaspi/Halyk: что делать в 2026"
   description="Как доказать налоговой, что переводы на Kaspi — это P2P-торговля криптой, а не предпринимательство. Блокировки карт, финмониторинг и как защитить себя."
+  article={{
+    authorName: 'Даниэль Амирханов',
+    datePublished: '2026-01-01',
+    dateModified: '2026-05-01',
+  }}
 >
 
   <div class="mb-8">
@@ -128,5 +134,13 @@ export const meta = {
       </div>
 
     </div>
+  
+    <AuthorBlock
+      name="Даниэль Амирханов"
+      role="Налоговый консультант · mytaxes.kz"
+      photo="/author.webp"
+      updated="Май 2026"
+    />
+
   </article>
 </Layout>

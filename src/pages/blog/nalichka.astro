@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro'
+import AuthorBlock from '../../components/AuthorBlock.astro'
 
 export const meta = {
   title: 'Наличные деньги и декларация: правило 10 000 МРП в 2026 году',
@@ -11,6 +12,11 @@ export const meta = {
 <Layout
   title="Наличные деньги и декларация: правило 10 000 МРП в 2026 году"
   description="Нужно ли декларировать наличные деньги в Казахстане? Правило 10 000 МРП, как легализовать накопления и что будет, если не указать наличку в декларации."
+  article={{
+    authorName: 'Даниэль Амирханов',
+    datePublished: '2026-01-01',
+    dateModified: '2026-05-01',
+  }}
 >
 
   <div class="mb-8">
@@ -108,5 +114,13 @@ export const meta = {
       </section>
 
     </div>
+  
+    <AuthorBlock
+      name="Даниэль Амирханов"
+      role="Налоговый консультант · mytaxes.kz"
+      photo="/author.webp"
+      updated="Май 2026"
+    />
+
   </article>
 </Layout>

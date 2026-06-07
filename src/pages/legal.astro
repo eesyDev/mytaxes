@@ -6,7 +6,13 @@ const updateDate = "Март 2026";
 const KGD_portal = "cabinet.salyk.kz";
 ---
 
-<Layout title="Юридическая информация — Mytaxes 2026">
+<Layout
+  title="Юридическая информация — MyTaxes.kz 2026"
+  breadcrumbs={[
+    { name: 'Главная', item: 'https://mytaxes.kz' },
+    { name: 'Юридическая информация' },
+  ]}
+>
   <div class="max-w-5xl mx-auto px-4 py-12 font-sans selection:bg-blue-100">
     
     <div class="text-center mb-16 pb-8 border-b border-gray-100">

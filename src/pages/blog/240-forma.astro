@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro'
+import AuthorBlock from '../../components/AuthorBlock.astro'
 
 export const meta = {
   title: 'Декларация по форме 240.00 в 2026 году: полный гайд',
@@ -11,6 +12,11 @@ export const meta = {
 <Layout
   title="Форма 240.00 в 2026 году: Гайд по заполнению и сроки"
   description="Как сдать 240 форму в Казахстане в 2026 году. Налоги на акции, крипту и зарубежное имущество. Пошаговая инструкция и сроки."
+  article={{
+    authorName: 'Даниэль Амирханов',
+    datePublished: '2026-01-01',
+    dateModified: '2026-05-01',
+  }}
 >
 
   <div class="mb-8">
@@ -131,6 +137,14 @@ export const meta = {
       </div>
 
     </div>
+  
+    <AuthorBlock
+      name="Даниэль Амирханов"
+      role="Налоговый консультант · mytaxes.kz"
+      photo="/author.webp"
+      updated="Май 2026"
+    />
+
   </article>
 
 </Layout>

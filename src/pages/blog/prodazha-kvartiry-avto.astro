@@ -1,0 +1,203 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import AuthorBlock from '../../components/AuthorBlock.astro'
+
+export const meta = {
+  title: 'Налог с продажи квартиры и машины в Казахстане 2026',
+  description: 'Когда нужно платить ИПН 10% с продажи имущества, как правильно рассчитать прирост стоимости и задекларировать доход в форме 270.',
+  category: 'Физлица · Имущество',
+}
+
+const mrp = 3_932
+const ipnRate = 0.10
+---
+
+<Layout
+  title={meta.title}
+  description={meta.description}
+  article={{
+    authorName: 'Даниэль Амирханов',
+    datePublished: '2026-06-01',
+    dateModified: '2026-06-07',
+    mentions: ['прирост стоимости', 'ИПН', 'форма 270', 'всеобщее декларирование', 'имущественный доход'],
+  }}
+>
+
+  <article class="max-w-4xl mx-auto py-12 px-4 font-sans text-gray-800 leading-relaxed">
+
+    <header class="mb-16">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-widest border border-emerald-200">Физлица · Имущество</span>
+        <span class="text-sm text-gray-400 font-bold">Данные на 2026 год</span>
+      </div>
+      <h1 class="text-5xl font-black text-gray-900 mb-6 tracking-tight leading-[1.1]">
+        Продал квартиру или машину?<br/>
+        <span class="text-emerald-600">Вот когда придется отдать 10% налога</span>
+      </h1>
+      <p class="text-2xl text-gray-500 leading-relaxed max-w-3xl">
+        В 2026 году в рамках Всеобщего декларирования налоговая автоматически сопоставляет ваши крупные сделки купли-продажи через базы ЦОНов и нотариусов. 
+      </p>
+    </header>
+
+    <section class="mb-12 text-xl text-gray-600 italic border-l-4 border-emerald-100 pl-8">
+      Продажа недвижимости или авто может повлечь за собой возникновение имущественного дохода (прироста стоимости). Если вы продали объект дороже, чем купили, и нарушили сроки владения — вы обязаны заплатить ИПН 10% с разницы.
+    </section>
+
+    <section class="mb-16">
+      <h2 class="text-3xl font-black text-gray-900 mb-6">1. Как работает налог: прирост стоимости</h2>
+      <p class="mb-6">
+        Налог платится не со всей суммы, которую вы получили на руки, а только с <strong>прироста стоимости</strong> (чистой прибыли от перепродажи). Ставка налога для граждан РК составляет <strong>10% ИПН</strong>.
+      </p>
+
+      <div class="bg-gray-50 rounded-3xl p-8 mb-8 border border-gray-100">
+        <h3 class="text-xl font-bold mb-6">Пример расчёта налога</h3>
+        <div class="font-mono bg-white rounded-2xl p-6 border border-gray-200 text-lg space-y-3">
+          <div class="flex justify-between border-b border-dashed border-gray-200 pb-3">
+            <span class="text-gray-500">Цена продажи квартиры</span>
+            <span class="font-black">25 000 000 ₸</span>
+          </div>
+          <div class="flex justify-between border-b border-dashed border-gray-200 pb-3">
+            <span class="text-gray-500">Цена покупки (по договору)</span>
+            <span class="font-black">− 21 000 000 ₸</span>
+          </div>
+          <div class="flex justify-between border-b border-dashed border-gray-200 pb-3 text-emerald-700">
+            <span class="font-bold">Прирост стоимости (доход)</span>
+            <span class="font-black">= 4 000 000 ₸</span>
+          </div>
+          <div class="flex justify-between text-red-700 font-black text-xl pt-2">
+            <span>ИПН 10% к уплате</span>
+            <span>400 000 ₸</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-16">
+      <h2 class="text-3xl font-black text-gray-900 mb-6">2. Недвижимость: Золотое правило одного года</h2>
+      <p class="mb-6">
+        Количество недвижимости в вашей собственности не имеет значения. Вы можете владеть хоть десятью домами. Ключевой фактор для освобождения от налога — **время**.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-6 mb-8">
+        <div class="p-6 border-t-4 border-emerald-500 bg-white shadow-xl shadow-gray-100 rounded-b-2xl">
+          <div class="text-2xl mb-3">📅</div>
+          <h4 class="font-black text-lg mb-2">Владение больше 1 года</h4>
+          <p class="text-gray-600 text-sm">Если квартира, дом, дача или земельный участок под ИЖС находились в вашей собственности <strong>12 месяцев и более</strong> — налога НЕТ, независимо от того, насколько дороже вы их продали.</p>
+          <span class="mt-4 inline-block bg-emerald-100 text-emerald-700 text-xs font-black px-3 py-1 rounded-full uppercase">Освобождение от ИПН</span>
+        </div>
+        <div class="p-6 border-t-4 border-red-400 bg-white shadow-xl shadow-gray-100 rounded-b-2xl">
+          <div class="text-2xl mb-3">⚡</div>
+          <h4 class="font-black text-lg mb-2">Сделка менее чем за 1 год</h4>
+          <p class="text-gray-600 text-sm">Если вы купили недвижимость и продали её раньше, чем истекли 12 месяцев владения, вы обязаны заплатить 10% от прироста цены.</p>
+          <span class="mt-4 inline-block bg-red-100 text-red-700 text-xs font-black px-3 py-1 rounded-full uppercase">Налог 10% с прироста</span>
+        </div>
+      </div>
+
+      <div class="p-5 bg-amber-50 border border-amber-200 rounded-2xl">
+        <p class="font-black text-amber-800 mb-1">⚠️ Исключение: Коммерческая недвижимость</p>
+        <p class="text-amber-700 text-sm">На офисы, склады, магазины и парковочные места правило одного года <strong>не распространяется</strong>. При их продаже налог 10% с прироста стоимости платится ВСЕГДА, даже если вы владели ими 10 лет.</p>
+      </div>
+    </section>
+
+    <section class="mb-16">
+      <h2 class="text-3xl font-black text-gray-900 mb-6">3. Автомобили: Личные машины и прицепы</h2>
+      <p class="mb-4">Для механических транспортных средств и прицепов в Казахстане действует аналогичный временной ценз, но с акцентом на дату регистрации в ПТИТС (полиции):</p>
+
+      <div class="bg-blue-900 text-white rounded-[2rem] p-10 relative overflow-hidden mb-8">
+        <div class="relative z-10">
+          <div class="space-y-5">
+            <div class="flex items-start gap-4">
+              <div class="bg-emerald-500 text-white w-10 h-10 rounded-full flex shrink-0 items-center justify-center font-black text-lg">✓</div>
+              <div>
+                <p class="font-black text-lg">Владение автомобилем более 1 года</p>
+                <p class="text-blue-300 text-sm">Полное освобождение. Даже если вы перепродали машину значительно дороже рыночной цены, налог равен нулю.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="bg-red-500 text-white w-10 h-10 rounded-full flex shrink-0 items-center justify-center font-black text-lg">!</div>
+              <div>
+                <p class="font-black text-lg">Владение менее 1 года + перепродажа в плюс</p>
+                <p class="text-blue-300 text-sm">Купили за 10 млн ₸, перепродали через 5 месяцев за 11 млн ₸. Налог 10% взимается с 1 миллиона прироста (100 000 ₸).</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="absolute -right-20 -bottom-20 w-64 h-64 bg-blue-700 rounded-full opacity-20"></div>
+      </div>
+    </section>
+
+    <section class="mb-16">
+      <h2 class="text-3xl font-black text-gray-900 mb-6">4. Что делать, если цена покупки неизвестна?</h2>
+      <p class="mb-6">Частая проблема: квартира приватизирована в 90-х годах, получена в наследство, в дар или построена самостоятельно, из-за чего официальной «цены покупки» в документах нет.</p>
+
+      <div class="space-y-4">
+        <div class="p-6 bg-white border border-gray-200 rounded-3xl hover:shadow-lg transition-shadow">
+          <h4 class="font-bold text-lg mb-2">Для унаследованного или подаренного имущества</h4>
+          <p class="text-gray-600 text-sm">Приростом признается разница между ценой продажи и <strong>рыночной стоимостью на дату вступления в права</strong>. Эту стоимость должен определить лицензированный оценщик. Важно: оценку нужно сделать до 31 марта года, следующего за годом продажи имущества.</p>
+        </div>
+        <div class="p-6 bg-white border border-gray-200 rounded-3xl hover:shadow-lg transition-shadow">
+          <h4 class="font-bold text-lg mb-2">Для приватизированного или построенного жилья</h4>
+          <p class="text-gray-600 text-sm">Если договора покупки нет, за базовую стоимость принимается <strong>кадастровая (оценочная) стоимость</strong>, которую рассчитывает Госкорпорация «Правительство для граждан» (ЦОН). Обычно она сильно ниже рыночной, поэтому налог может оказаться выше ожидания.</p>
+        </div>
+        <div class="p-6 bg-white border border-red-200 rounded-3xl border-l-4 border-l-red-500 bg-red-50/10">
+          <h4 class="font-bold text-lg mb-2 text-red-700">Если проигнорировать оценку и ЦОН</h4>
+          <p class="text-gray-600 text-sm">В случае отсутствия рыночной или кадастровой стоимости налоговые органы РК посчитают цену приобретения равной <strong>нулю</strong>. Налог 10% придется заплатить со всей стоимости продажи недвижимости.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-16">
+      <h2 class="text-3xl font-black text-gray-900 mb-6">5. Порядок и сроки декларирования в 2026 году</h2>
+
+      <div class="bg-white border-2 border-gray-200 rounded-3xl overflow-hidden shadow-sm">
+        <div class="bg-gray-100 p-4 border-b border-gray-200">
+          <span class="font-bold text-gray-500 uppercase tracking-tighter text-sm">Календарь налогоплательщика</span>
+        </div>
+        <div class="divide-y divide-gray-100">
+          <div class="flex items-start gap-4 p-5">
+            <div class="bg-emerald-600 text-white w-8 h-8 rounded-full flex shrink-0 items-center justify-center font-bold text-sm">1</div>
+            <div>
+              <p class="font-bold">Сдача декларации по Форме 270.00</p>
+              <p class="text-gray-500 text-sm">Поскольку в 2026 году в Казахстане действует тотальное Всеобщее декларирование, имущественный доход внутри страны отражается в ежегодной <strong>Форме 270.00</strong>. Срок сдачи — до 15 сентября года, следующего за отчетным.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-4 p-5">
+            <div class="bg-emerald-600 text-white w-8 h-8 rounded-full flex shrink-0 items-center justify-center font-bold text-sm">2</div>
+            <div>
+              <p class="font-bold">Уплата ИПН — до 10 апреля</p>
+              <p class="text-gray-500 text-sm">Внимание! Несмотря на то, что декларацию 270.00 можно сдать до сентября, сам налог 10% необходимо уплатить в бюджет <strong>до 10 апреля</strong> года, следующего за годом продажи.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="mt-24 p-12 bg-gray-900 rounded-[3rem] text-center text-white relative overflow-hidden">
+      <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-emerald-500 to-transparent opacity-50"></div>
+      <h2 class="text-4xl font-black mb-6 italic tracking-tight">Вошли в систему Всеобщего декларирования?</h2>
+      <p class="text-gray-400 max-w-lg mx-auto mb-10 text-lg">
+        Узнайте, как правильно заполнять отчетность по доходам и имуществу физлиц, чтобы избежать камеральных проверок.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="/calculators/forma-270" class="bg-emerald-600 hover:bg-emerald-700 text-white px-10 py-5 rounded-2xl font-black transition-all transform hover:scale-105 shadow-xl shadow-emerald-900/40">
+          Калькулятор Формы 270
+        </a>
+        <a href="/blog/vseobschee-2026" class="bg-white/5 hover:bg-white/10 border-2 border-white/10 text-white px-10 py-5 rounded-2xl font-black transition-all">
+          Гайд по Всеобщему декларированию →
+        </a>
+      </div>
+      <p class="mt-8 text-xs text-gray-500 uppercase tracking-widest font-bold">
+        Актуально для налогового периода 2026 года
+      </p>
+    </footer>
+
+    <AuthorBlock
+      name="Даниэль Амирханов"
+      role="Налоговый консультант · mytaxes.kz"
+      photo="/author.webp"
+      updated="Июнь 2026"
+    />
+
+  </article>
+
+</Layout>
