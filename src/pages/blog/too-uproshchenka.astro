@@ -1,0 +1,209 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import AuthorBlock from '../../components/AuthorBlock.astro'
+
+export const meta = {
+  title: 'ТОО на упрощённом режиме в Казахстане 2026: налоги и лимиты',
+  description: 'Как платить налоги ТОО на упрощёнке в 2026 году: ставка 3%, лимиты оборота, вывод дивидендов без налогов до 30 000 МРП и отличия от ИП.',
+  category: 'Бизнес в КЗ · ТОО',
+}
+
+const mrp = 3_932
+const mzp = 85_000
+const limitMrp = 24_038
+const limitHalf = limitMrp * mrp
+const dividendLimitTenge = 30_000 * mrp // 117 960 000 ₸
+---
+
+<Layout
+  title={meta.title}
+  description={meta.description}
+  article={{
+    authorName: 'Даниэль Амирханов',
+    datePublished: '2026-06-01',
+    dateModified: '2026-06-07',
+    mentions: ['ТОО', 'упрощённый режим', 'КПН', 'корпоративный подоходный налог', 'форма 910', 'дивиденды 2026'],
+  }}
+>
+
+  <article class="max-w-4xl mx-auto py-12 px-4 font-sans text-gray-800 leading-relaxed">
+
+    <header class="mb-16">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="bg-sky-100 text-sky-700 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-widest border border-sky-200">Бизнес · ТОО</span>
+        <span class="text-sm text-gray-400 font-bold">Данные на 2026 год</span>
+      </div>
+      <h1 class="text-5xl font-black text-gray-900 mb-6 tracking-tight leading-[1.1]">
+        ТОО на упрощёнке:<br/>
+        <span class="text-sky-600">те же 3%, но совсем другая игра</span>
+      </h1>
+      <p class="text-2xl text-gray-500 leading-relaxed max-w-3xl">
+        ТОО может применять упрощённый режим — базовая ставка налога такая же, как у ИП. Но правила вывода прибыли и юридическая структура меняют всю математику.
+      </p>
+    </header>
+
+    <section class="mb-12 text-xl text-gray-600 italic border-l-4 border-sky-100 pl-8">
+      ТОО на упрощённой декларации платит 3% от всего входящего дохода (оборота). Главное отличие от индивидуального предпринимателя — деньги на счете ТОО принадлежат юридическому лицу, а не вам как гражданину.
+    </section>
+
+    <section class="mb-16">
+      <h2 class="text-3xl font-black text-gray-900 mb-6">1. Условия применения упрощёнки для ТОО в 2026 году</h2>
+
+      <div class="grid md:grid-cols-3 gap-6 mb-8">
+        <div class="p-6 border-t-4 border-sky-500 bg-white shadow-xl shadow-gray-100 rounded-b-2xl">
+          <h4 class="font-black text-sm uppercase mb-2">Полугодовой Оборот</h4>
+          <p class="text-lg font-bold">{limitMrp.toLocaleString()} МРП</p>
+          <p class="text-sm text-gray-500 mt-1">≈ {(limitHalf / 1_000_000).toFixed(1)} млн ₸</p>
+          <p class="text-xs text-gray-400 mt-2 italic">Лимит обновляется каждые 6 месяцев</p>
+        </div>
+        <div class="p-6 border-t-4 border-sky-500 bg-white shadow-xl shadow-gray-100 rounded-b-2xl">
+          <h4 class="font-black text-sm uppercase mb-2">Штат сотрудников</h4>
+          <p class="text-lg font-bold">до 30 человек</p>
+          <p class="text-xs text-gray-400 mt-2 italic">Включая директора компании</p>
+        </div>
+        <div class="p-6 border-t-4 border-sky-500 bg-white shadow-xl shadow-gray-100 rounded-b-2xl">
+          <h4 class="font-black text-sm uppercase mb-2">Базовая ставка</h4>
+          <p class="text-lg font-bold">3% от дохода</p>
+          <p class="text-xs text-gray-400 mt-2 italic">Делится пополам: КПН и Соц налог</p>
+        </div>
+      </div>
+
+      <div class="p-5 bg-sky-50 border border-sky-200 rounded-2xl">
+        <p class="font-black text-sky-800 mb-1">💡 Налоговый бонус: уменьшение налога за сотрудников</p>
+        <p class="text-sky-700 text-sm">Если средняя зарплата ваших работников превышает установленный законом минимум, вы можете уменьшить итоговую сумму налога на 1.5% за каждого сотрудника по итогам полугодия (в рамках формы 910.00).</p>
+      </div>
+    </section>
+
+    <section class="mb-16">
+      <h2 class="text-3xl font-black text-gray-900 mb-6">2. Структура налоговой нагрузки: Сколько уходит государству?</h2>
+      <p class="mb-6">Налог по упрощенной декларации рассчитывается от «грязного» оборота ТОО, без учета ваших операционных расходов (аренды, закупа товара, серверов).</p>
+
+      <div class="bg-gray-900 text-white rounded-[2rem] p-10 relative overflow-hidden mb-6">
+        <div class="relative z-10">
+          <h3 class="text-xl font-bold mb-6 text-sky-300">Пример: оборот 10 млн ₸ за полугодие</h3>
+          <div class="space-y-4 font-mono">
+            <div class="flex justify-between border-b border-gray-700 pb-3">
+              <span class="text-gray-400">Общий доход ТОО</span>
+              <span class="font-black">10 000 000 ₸</span>
+            </div>
+            <div class="flex justify-between border-b border-gray-700 pb-3 text-sky-300">
+              <span>Налог 3% (Форма 910)</span>
+              <span class="font-black">300 000 ₸</span>
+            </div>
+            <div class="flex justify-between border-b border-gray-700 pb-3 text-gray-400">
+              <span>Чистая прибыль компании</span>
+              <span>9 700 000 ₸</span>
+            </div>
+            <div class="flex justify-between border-b border-gray-700 pb-3 text-emerald-400">
+              <span>Налог на дивиденды (до 30 тыс. МРП)</span>
+              <span class="font-black">0 ₸ (Льгота)</span>
+            </div>
+            <div class="flex justify-between text-xl font-black pt-2 text-emerald-400">
+              <span>Итоговый налог бизнеса</span>
+              <span>300 000 ₸ (ровно 3%)</span>
+            </div>
+          </div>
+          <p class="text-gray-500 text-xs mt-6 italic">* Благодаря действующим лимитам, малый бизнес полностью освобожден от уплаты подоходного налога с дивидендов, если их объем за год у одного человека укладывается в {dividendLimitTenge.toLocaleString()} ₸.</p>
+        </div>
+        <div class="absolute -right-20 -bottom-20 w-64 h-64 bg-sky-900 rounded-full opacity-30"></div>
+      </div>
+    </section>
+
+    <section class="mb-16">
+      <h2 class="text-3xl font-black text-gray-900 mb-6">3. Как учредителю легально забрать деньги компании</h2>
+      <p class="mb-6">Если вы просто переведете деньги с корпоративного счета ТОО на свою личную карту Kaspi Gold, это заблокируют как незаконное обналичивание. Есть два законных пути:</p>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="p-6 bg-white border border-gray-200 rounded-3xl hover:shadow-lg transition-shadow">
+          <h4 class="font-bold text-lg mb-3">Путь 1: Официальная зарплата</h4>
+          <p class="text-gray-600 text-sm mb-3">Вы назначаете себя исполнительным директором ТОО. Деньги выплачиваются ежемесячно, но облагаются стандартным пакетом налогов с ФОТ: ИПН 10%, ОПВ 10%, ВОСМС 2%. Сверху компания платит СО 3.5%, ООСМС 3% и ОПВР 2.5%.</p>
+          <div class="bg-gray-50 rounded-xl p-4 text-xs font-mono">
+            <div class="flex justify-between mb-1"><span>Оклад директора (начислено)</span><span>500 000 ₸</span></div>
+            <div class="flex justify-between text-red-500 mb-1"><span>Общие удержания и налоги</span><span>−148 500 ₸</span></div>
+            <div class="flex justify-between font-black"><span>Чистыми на руки</span><span>351 500 ₸</span></div>
+          </div>
+        </div>
+        <div class="p-6 bg-white border border-gray-200 rounded-3xl hover:shadow-lg transition-shadow">
+          <h4 class="font-bold text-lg mb-3">Путь 2: Выплата дивидендов</h4>
+          <p class="text-gray-600 text-sm mb-3">Осуществляется по протоколу собрания учредителей (раз в квартал, полугодие или год) строго из чистой прибыли после уплаты 3% налога. Если сумма за год меньше 30 000 МРП, ставка ИПН составляет 0%.</p>
+          <div class="bg-gray-50 rounded-xl p-4 text-xs font-mono">
+            <div class="flex justify-between mb-1"><span>Распределяемая прибыль</span><span>1 000 000 ₸</span></div>
+            <div class="flex justify-between text-emerald-600 mb-1"><span>Подоходный налог (ИПН)</span><span>−0 ₸</span></div>
+            <div class="flex justify-between font-black"><span>Чистыми на руки</span><span>1 000 000 ₸</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-16">
+      <h2 class="text-3xl font-black text-gray-900 mb-6">4. Сравнительный анализ: ТОО vs ИП</h2>
+
+      <div class="overflow-x-auto rounded-3xl border border-gray-200 shadow-sm">
+        <table class="w-full text-sm">
+          <thead class="bg-gray-50 border-b border-gray-200">
+            <tr>
+              <th class="text-left p-4 font-black text-gray-500 uppercase tracking-wide">Критерий оценки</th>
+              <th class="text-center p-4 font-black text-amber-700 uppercase tracking-wide">ИП на упрощенке</th>
+              <th class="text-center p-4 font-black text-sky-700 uppercase tracking-wide">ТОО на упрощенке</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100">
+            <tr>
+              <td class="p-4 font-medium">Материальная ответственность</td>
+              <td class="p-4 text-center text-red-500 font-bold">Всем личным имуществом физлица</td>
+              <td class="p-4 text-center text-emerald-600 font-bold">Строго в пределах уставного капитала</td>
+            </tr>
+            <tr class="bg-gray-50/50">
+              <td class="p-4 font-medium">Ставка налога с оборота</td>
+              <td class="p-4 text-center">3% от дохода</td>
+              <td class="p-4 text-center">3% от дохода</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-medium">Использование чистой прибыли</td>
+              <td class="p-4 text-center text-emerald-600">Свободное в любой момент времени</td>
+              <td class="p-4 text-center text-red-500">Только через дивиденды или зарплату</td>
+            </tr>
+            <tr class="bg-gray-50/50">
+              <td class="p-4 font-medium">Партнерство и доли</td>
+              <td class="p-4 text-center text-red-500">Владелец всегда только один</td>
+              <td class="p-4 text-center text-emerald-600">Допускается до 50 соучредителей</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-medium">Продажа или наследование бизнеса</td>
+              <td class="p-4 text-center text-red-500">Невозможно продать или подарить</td>
+              <td class="p-4 text-center text-emerald-600">Долю можно продать, подарить, завещать</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer class="mt-24 p-12 bg-gray-900 rounded-[3rem] text-center text-white relative overflow-hidden">
+      <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-sky-500 to-transparent opacity-50"></div>
+      <h2 class="text-4xl font-black mb-6 italic tracking-tight">Считайте налоги до открытия бизнеса</h2>
+      <p class="text-gray-400 max-w-lg mx-auto mb-10 text-lg">
+        Сравните реальную налоговую нагрузку на интерактивных моделях перед выбором организационной формы.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="/calculators/ip" class="bg-sky-600 hover:bg-sky-700 text-white px-10 py-5 rounded-2xl font-black transition-all transform hover:scale-105 shadow-xl shadow-sky-900/40">
+          Калькулятор налогов ИП и ТОО
+        </a>
+        <a href="/blog/ip-uproshchenniy-rezhim-2026" class="bg-white/5 hover:bg-white/10 border-2 border-white/10 text-white px-10 py-5 rounded-2xl font-black transition-all">
+          Статья об ИП на упрощёнке →
+        </a>
+      </div>
+      <p class="mt-8 text-xs text-gray-500 uppercase tracking-widest font-bold">
+        Актуально для налогового периода 2026 года
+      </p>
+    </footer>
+
+    <AuthorBlock
+      name="Даниэль Амирханов"
+      role="Налоговый consultant · mytaxes.kz"
+      photo="/author.webp"
+      updated="Июнь 2026"
+    />
+
+  </article>
+
+</Layout>

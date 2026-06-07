@@ -1,0 +1,200 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import AuthorBlock from '../../components/AuthorBlock.astro'
+
+export const meta = {
+  title: 'Налоги блогеров и инфлюенсеров в Казахстане 2026',
+  description: 'YouTube, Instagram, TikTok — как легально вести блог в Казахстане в 2026 году. Какой налоговый режим выбрать, как учитывать бартер и интеграции без штрафов.',
+  category: 'Физлица · Фриланс',
+}
+
+const mrp = 3_932
+const mzp = 85_000
+---
+
+<Layout
+  title={meta.title}
+  description={meta.description}
+  article={{
+    authorName: 'Даниэль Амирханов',
+    datePublished: '2026-06-01',
+    dateModified: '2026-06-07',
+    mentions: ['блогер', 'инфлюенсер', 'YouTube', 'реклама', 'ИП', 'бартер', 'e-Salyq Business', 'упрощенка'],
+  }}
+>
+
+  <article class="max-w-4xl mx-auto py-12 px-4 font-sans text-gray-800 leading-relaxed">
+
+    <header class="mb-16">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="bg-pink-100 text-pink-700 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-widest border border-pink-200">Блогеры · Контент</span>
+        <span class="text-sm text-gray-400 font-bold">Данные на 2026 год</span>
+      </div>
+      <h1 class="text-5xl font-black text-gray-900 mb-6 tracking-tight leading-[1.1]">
+        Блогер в Казахстане 2026:<br/>
+        <span class="text-pink-600">налоговая уже видит ваш YouTube, AdSense и Kaspi</span>
+      </h1>
+      <p class="text-2xl text-gray-500 leading-relaxed max-w-3xl">
+        Монетизация видео, рекламные интеграции, бартер с брендами и донаты — теперь это жестко регулируется законом. Разбираемся, как спать спокойно и платить минимальный налог.
+      </p>
+    </header>
+
+    <section class="mb-12 text-xl text-gray-600 italic border-l-4 border-pink-100 pl-8">
+      В 2026 году КГД РК полностью контролирует мобильные переводы и трансграничные платежи. Выплаты от AdSense, Payoneer или регулярные Kaspi-договоры от брендов автоматически попадают под радар финмониторинга. Работать без ИП стало максимально рискованно.
+    </section>
+
+    <section class="mb-16">
+      <h2 class="text-3xl font-black text-gray-900 mb-6">1. Что считается доходом блогера</h2>
+
+      <div class="grid md:grid-cols-2 gap-4 mb-6">
+        {[
+          { icon: '📺', title: 'Монетизация YouTube / TikTok', desc: 'Выплаты AdSense или медиасетей. Приходят на ваш валютный или тенговый счет. Это официальный доход из иностранных источников.' },
+          { icon: '📱', title: 'Рекламные интеграции', desc: 'Оплата от локальных и зарубежных брендов за посты, сторис, Reels и спецпроекты. Требует обязательной выписки чеков или актов.' },
+          { icon: '🎁', title: 'Бартер (товары и услуги)', desc: 'Бренд прислал косметику, гаджет или оплатил отель за обзор? По закону РК это натуральный доход. Он оценивается по рыночной стоимости.' },
+          { icon: '💳', title: 'Донаты, Стримы, Patreon', desc: 'Прямые пожертвования от подписчиков через DonationAlerts, Boosty, Kaspi. Если они регулярные — это предпринимательский доход.' },
+          { icon: '📚', title: 'Инфопродукты и гайды', desc: 'Продажа чек-листов, курсов, доступов в закрытые комьюнити. Самый проверяемый тип дохода из-за массовых платежей от физлиц.' },
+          { icon: '🤝', title: 'Реферальные ссылки', desc: 'Проценты от продаж по вашим промокодам и affiliate-ссылкам маркетплейсов (Aliexpress, Kaspi Магазин и др.).' },
+        ].map(item => (
+          <div class="p-5 bg-white border border-gray-200 rounded-2xl hover:shadow-md transition-shadow">
+            <div class="text-2xl mb-2">{item.icon}</div>
+            <h4 class="font-black mb-1">{item.title}</h4>
+            <p class="text-gray-500 text-sm">{item.desc}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="mb-16">
+      <h2 class="text-3xl font-black text-gray-900 mb-6">2. Какой режим выбрать (и почему Патент запрещен)</h2>
+      <p class="mb-4">
+        Согласно Налоговому кодексу РК, деятельность в сфере <strong>рекламы, маркетинга и консалтинга не имеет права использовать Патент</strong>. Поэтому у блогера в 2026 году есть только два легальных и удобных пути через регистрацию ИП:
+      </p>
+
+      <div class="space-y-5 mt-6">
+
+        <div class="p-6 border-l-4 border-emerald-500 bg-emerald-50 rounded-r-3xl">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <h4 class="font-black text-lg mb-1">ИП через «e-Salyq Business» — Лучший выбор для соло</h4>
+              <p class="text-gray-700 text-sm mb-2">Идеально, если вы работаете один (без штатных операторов и монтажеров). Налог составляет всего <strong>1% от дохода</strong>. Кассовый аппарат не нужен — чеки клиентам бьются прямо внутри бесплатного приложения.</p>
+              <p class="text-xs text-emerald-700 font-bold">Плюс: 0 отчетов, налог 1%, можно официально работать с ТОО и брендами. Лимит до 3 528 МРП в год.</p>
+            </div>
+            <div class="shrink-0 bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-xs font-black uppercase whitespace-nowrap">1% налог</div>
+          </div>
+        </div>
+
+        <div class="p-6 border-l-4 border-blue-500 bg-blue-50 rounded-r-3xl">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <h4 class="font-black text-lg mb-1">ИП на Упрощенной декларации — Для блогеров с командой</h4>
+              <p class="text-gray-700 text-sm mb-2">Если у вас свой продакшен, есть наемные сотрудники (монтажеры, сценаристы, менеджеры по рекламе) или доход превышает 13.9 млн тенге в год. Ставка — <strong>3% от оборота</strong>.</p>
+              <p class="text-xs text-blue-700 font-bold">Плюс: можно нанимать до 30 человек. Минус: нужен кассовый аппарат (онлайн-ККМ) и сдача формы 910 раз в полгода.</p>
+            </div>
+            <div class="shrink-0 bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-black uppercase whitespace-nowrap">3% налог</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="mt-6 p-5 bg-red-50 border border-red-200 rounded-2xl flex items-start gap-3">
+        <span class="text-xl">⚠️</span>
+        <div>
+          <p class="font-bold text-red-800">Опасность: Обычное физлицо (Форма 240)</p>
+          <p class="text-red-700 text-sm mt-1">По закону «Об онлайн-платформах и онлайн-рекламе», ведение систематической блогерской деятельности без регистрации ИП в РК наказывается штрафами. Форма 240 сдается обычными гражданами только при разовых доходах (например, продажа личного имущества за рубежом), но не для постоянного заработка на контенте.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-16">
+      <h2 class="text-3xl font-black text-gray-900 mb-6">3. Бартер: как оценить и задекларировать</h2>
+
+      <div class="bg-gray-900 text-white rounded-[2rem] p-10 relative overflow-hidden mb-6">
+        <div class="relative z-10">
+          <h3 class="text-pink-300 font-bold text-lg mb-4">Пример: бартерный iPhone за серию Reels</h3>
+          <div class="space-y-4 font-mono text-sm">
+            <div class="flex justify-between border-b border-gray-700 pb-3">
+              <span class="text-gray-400">Рыночная цена смартфона в магазине</span>
+              <span class="font-black">600 000 ₸</span>
+            </div>
+            <div class="flex justify-between border-b border-gray-700 pb-3 text-pink-300">
+              <span>Ваш зафиксированный доход по ИП</span>
+              <span class="font-black">600 000 ₸</span>
+            </div>
+            <div class="flex justify-between text-emerald-400 font-black text-lg pt-2">
+              <span>Налог на e-Salyq Business (1%)</span>
+              <span>6 000 ₸</span>
+            </div>
+          </div>
+          <p class="text-gray-500 text-xs mt-6 italic">Вы обязаны сформировать электронный чек в e-Salyq на сумму 600 000 ₸, выбрав тип оплаты «безналичный/иной способ». Бренд, в свою очередь, списывает этот телефон у себя как расходы на маркетинг.</p>
+        </div>
+        <div class="absolute -right-20 -bottom-20 w-64 h-64 bg-pink-900 rounded-full opacity-20"></div>
+      </div>
+    </section>
+
+    <section class="mb-16">
+      <h2 class="text-3xl font-black text-gray-900 mb-6">4. Валюта от AdSense и форма W-8BEN</h2>
+
+      <div class="space-y-4">
+        <div class="p-5 bg-white border border-gray-200 rounded-3xl hover:shadow-lg transition-shadow">
+          <h4 class="font-bold mb-2">Какой курс Нацбанка брать?</h4>
+          <p class="text-gray-600 text-sm">Если Google прислал вам $1 000, вы пересчитываете их в тенге строго по официальному курсу Национального Банка РК <strong>на дату фактического поступления денег на ваш счет</strong>, а не на день формирования отчета YouTube.</p>
+        </div>
+        <div class="p-5 bg-white border border-gray-200 rounded-3xl hover:shadow-lg transition-shadow">
+          <h4 class="font-bold mb-2">Как спастись от двойного налога (W-8BEN)</h4>
+          <p class="text-gray-600 text-sm">США удерживают налог с просмотров американских пользователей (до 30%). Обязательно заполните налоговую информацию (форма W-8BEN) в кабинете Google AdSense. Так как между Казахстаном и США действует конвенция об избежании двойного налогообложения, ставка удержания снизится до 10%.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-16">
+      <h2 class="text-3xl font-black text-gray-900 mb-6">5. Чек-лист по легализации для креатора</h2>
+      <div class="bg-white border-2 border-gray-200 rounded-3xl overflow-hidden shadow-sm">
+        <div class="bg-gray-100 p-4 border-b border-gray-200">
+          <span class="font-bold text-gray-500 uppercase tracking-tighter text-sm">Пошаговый план безопасности</span>
+        </div>
+        <div class="divide-y divide-gray-100">
+          {[
+            { text: 'Скачайте приложение e-Salyq Business и зарегистрируйте ИП за 5 минут, если работаете соло.' },
+            { text: 'Принимайте деньги от локальных брендов только на официальный счет ИП, а не на личную карту физлица.' },
+            { text: 'На каждую интеграцию или полученный бартер выбивайте электронный чек в приложении.' },
+            { text: 'Внесите налоговые данные США в AdSense (W-8BEN) для снижения американского налога на просмотры.' },
+            { text: 'Раз в месяц оплачивайте через e-Salyq рассчитанный налог (1%) и фиксированные соцплатежи за себя (~18,7 тыс ₸).' }
+          ].map(item => (
+            <div class="flex items-start gap-4 p-5">
+              <div class="bg-emerald-100 text-emerald-600 w-8 h-8 rounded-full flex shrink-0 items-center justify-center font-black text-sm">✓</div>
+              <p class="text-gray-700 text-sm pt-1">{item.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <footer class="mt-24 p-12 bg-gray-900 rounded-[3rem] text-center text-white relative overflow-hidden">
+      <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-pink-500 to-transparent opacity-50"></div>
+      <h2 class="text-4xl font-black mb-6 italic tracking-tight">Развиваете продакшен или команду?</h2>
+      <p class="text-gray-400 max-w-lg mx-auto mb-10 text-lg">
+        Если вы выросли из соло-формата, рассчитайте налоговую нагрузку для полноценной упрощенки с сотрудниками.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="/calculators/ip" class="bg-pink-600 hover:bg-pink-700 text-white px-10 py-5 rounded-2xl font-black transition-all transform hover:scale-105 shadow-xl shadow-pink-900/40">
+          Калькулятор налогов ИП
+        </a>
+        <a href="/blog/freelance" class="bg-white/5 hover:bg-white/10 border-2 border-white/10 text-white px-10 py-5 rounded-2xl font-black transition-all">
+          Налоги для фрилансеров →
+        </a>
+      </div>
+      <p class="mt-8 text-xs text-gray-500 uppercase tracking-widest font-bold">
+        Актуально для налогового периода 2026 года
+      </p>
+    </footer>
+
+    <AuthorBlock
+      name="Даниэль Амирханов"
+      role="Налоговый консультант · mytaxes.kz"
+      photo="/author.webp"
+      updated="Июнь 2026"
+    />
+
+  </article>
+
+</Layout>

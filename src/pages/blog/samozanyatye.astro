@@ -1,0 +1,247 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import AuthorBlock from '../../components/AuthorBlock.astro'
+
+export const meta = {
+  title: 'Как работать самозанятым в Казахстане 2026: замена ЕСП',
+  description: 'Единый совокупный платёж (ЕСП) отменён. Разбираем лучшую альтернативу для самозанятых в 2026 году — ИП через приложение e-Salyq Business: ставка 1%, ноль отчётов.',
+  category: 'Физлица · Самозанятые',
+}
+
+const mrp = 3_932
+const limitYear = mrp * 3_528 // Лимит дохода в год для спецрежима (13_878_096 ₸)
+---
+
+<Layout
+  title={meta.title}
+  description={meta.description}
+  article={{
+    authorName: 'Даниэль Амирханов',
+    datePublished: '2026-06-01',
+    dateModified: '2026-06-07',
+    mentions: ['e-Salyq Business', 'самозанятые', 'ИП', 'налоги 2026', 'отмена ЕСП'],
+  }}
+>
+
+  <article class="max-w-4xl mx-auto py-12 px-4 font-sans text-gray-800 leading-relaxed">
+
+    <header class="mb-16">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="bg-violet-100 text-violet-700 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-widest border border-violet-200">Самозанятые · ИП 2026</span>
+        <span class="text-sm text-gray-400 font-bold">Актуально на 2026 год</span>
+      </div>
+      <h1 class="text-5xl font-black text-gray-900 mb-6 tracking-tight leading-[1.1]">
+        ЕСП всё. Как легально работать<br/>
+        <span class="text-violet-600">на себя в Казахстане в 2026 году?</span>
+      </h1>
+      <p class="text-2xl text-gray-500 leading-relaxed max-w-3xl">
+        Единый совокупный платёж окончательно ушёл в прошлое. Главная и самая дешёвая альтернатива сегодня — специальный налоговый режим через e-Salyq Business. 
+      </p>
+    </header>
+
+    <section class="mb-12 text-xl text-gray-600 italic border-l-4 border-violet-100 pl-8">
+      <strong>Важно:</strong> С 1 января 2024 года ЕСП в Казахстане больше не действует. Работать «совсем без ИП» фрилансерам нельзя. Но пугаться не нужно: новый режим «e-Salyq Business» даже удобнее, а налог составляет всего 1% от вашего реального дохода.
+    </section>
+
+    <section class="mb-16">
+      <h2 class="text-3xl font-black text-gray-900 mb-6">1. Сколько стоит замена ЕСП в 2026 году</h2>
+
+      <div class="grid md:grid-cols-2 gap-6 mb-8">
+        <div class="bg-violet-900 text-white rounded-[2rem] p-8 relative overflow-hidden">
+          <div class="relative z-10">
+            <p class="text-violet-300 font-bold uppercase tracking-widest text-xs mb-3">Подоходный налог (ИПН)</p>
+            <p class="text-5xl font-black mb-2">1%</p>
+            <p class="text-violet-300">от каждого чека</p>
+            <p class="text-violet-300 text-sm mt-4">Заработали 100 000 ₸ — налог составит всего 1 000 ₸. Если в каком-то месяце дохода не было, налог равен нулю.</p>
+          </div>
+          <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-violet-700 rounded-full opacity-30"></div>
+        </div>
+        <div class="bg-gray-800 text-white rounded-[2rem] p-8 relative overflow-hidden">
+          <div class="relative z-10">
+            <p class="text-gray-400 font-bold uppercase tracking-widest text-xs mb-3">Максимальный доход</p>
+            <p class="text-5xl font-black mb-2">~13.8 млн ₸</p>
+            <p class="text-gray-400">в год ({limitYear.toLocaleString()} ₸)</p>
+            <p class="text-gray-400 text-sm mt-4">Лимит на данном режиме составляет 3 528 МРП в календарный год.</p>
+          </div>
+          <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-gray-600 rounded-full opacity-30"></div>
+        </div>
+      </div>
+
+      <div class="bg-gray-50 rounded-3xl p-8 border border-gray-100">
+        <h3 class="font-bold text-lg mb-4">Обязательные социальные платежи «за себя»</h3>
+        <p class="text-sm text-gray-600 mb-4">В отличие от ЕСП, где всё было внутри одного платежа, здесь помимо 1% налога ИП платит за себя фиксированные соцотчисления (в 2026 году расчет идет от минимальной зарплаты — 85 000 ₸):</p>
+        <div class="grid sm:grid-cols-3 gap-4 text-sm">
+          <div class="text-center p-4 bg-white rounded-2xl border border-gray-200">
+            <p class="text-2xl mb-2">🏦</p>
+            <p class="font-bold">ОПВ (Пенсионные)</p>
+            <p class="text-gray-500 text-xs">10% от МЗП = 8 500 ₸/мес</p>
+          </div>
+          <div class="text-center p-4 bg-white rounded-2xl border border-gray-200">
+            <p class="text-2xl mb-2">🛡️</p>
+            <p class="font-bold">Соцотчисления</p>
+            <p class="text-gray-500 text-xs">5% от МЗП = 4 250 ₸/мес</p>
+          </div>
+          <div class="text-center p-4 bg-white rounded-2xl border border-gray-200">
+            <p class="text-2xl mb-2">🏥</p>
+            <p class="font-bold">ВОСМС (Медицина)</p>
+            <p class="text-gray-500 text-xs">Фиксировано = 5 950 ₸/мес</p>
+          </div>
+        </div>
+        <p class="text-xs text-gray-400 mt-4 italic">* Итого фиксированных взносов — около 18 700 ₸ за тот месяц, когда у вас был официальный доход. Деньги идут на вашу личную страховку и пенсию.</p>
+      </div>
+    </section>
+
+    <section class="mb-16">
+      <h2 class="text-3xl font-black text-gray-900 mb-6">2. Кому подходит режим e-Salyq Business</h2>
+      <p class="mb-6">Этот режим идеален для тех, кто раньше платил ЕСП, работает в одиночку и оказывает услуги населению или другим ИП.</p>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <div>
+          <h3 class="font-black text-emerald-700 mb-4 uppercase tracking-wide text-sm">Разрешено</h3>
+          <div class="space-y-3">
+            {[
+              'Репетиторы, няни, сиделки, переводчики',
+              'Мастера маникюра, парикмахеры, массажисты',
+              'Фотографы, видеографы, мобилографы',
+              'Фрилансеры (дизайнеры, копирайтеры, программисты)',
+              'Ремонт техники, квартир, автомобилей',
+              'Таксисты и курьеры (работающие сами на себя)',
+              'Сдача в аренду коммерческой и жилой недвижимости',
+            ].map(item => (
+              <div class="flex items-center gap-3 p-3 bg-emerald-50 rounded-xl border border-emerald-100">
+                <span class="text-emerald-600 font-black">✓</span>
+                <span class="text-sm">{item}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div>
+          <h3 class="font-black text-red-600 mb-4 uppercase tracking-wide text-sm">Запрещено</h3>
+          <div class="space-y-3">
+            {[
+              'Перепродажа любых чужих товаров (торговля маркетплейсов)',
+              'Наличие наемных сотрудников (нужно работать строго одному)',
+              'Работа через агентские договоры (коммивояжеры, брокеры)',
+              'Оказание услуг на территории торгово-развлекательных центров',
+              'Услуги в сфере консалтинга, бухгалтерии и права',
+            ].map(item => (
+              <div class="flex items-center gap-3 p-3 bg-red-50 rounded-xl border border-red-100">
+                <span class="text-red-500 font-black">✗</span>
+                <span class="text-sm">{item}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-16">
+      <h2 class="text-3xl font-black text-gray-900 mb-6">3. Сравнение: Мобильное приложение vs Патент vs Упрощенка</h2>
+
+      <div class="overflow-x-auto rounded-3xl border border-gray-200 shadow-sm">
+        <table class="w-full text-sm">
+          <thead class="bg-gray-50 border-b border-gray-200">
+            <tr>
+              <th class="text-left p-4 font-black text-gray-500 uppercase tracking-wide">Параметр</th>
+              <th class="text-center p-4 font-black text-violet-700 uppercase tracking-wide">e-Salyq Business</th>
+              <th class="text-center p-4 font-black text-amber-700 uppercase tracking-wide">Патент</th>
+              <th class="text-center p-4 font-black text-blue-700 uppercase tracking-wide">Упрощенка</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100">
+            <tr>
+              <td class="p-4 font-medium">Ставка налога</td>
+              <td class="p-4 text-center text-emerald-600 font-bold">1% от дохода</td>
+              <td class="p-4 text-center font-bold">1% (авансом)</td>
+              <td class="p-4 text-center font-bold">3% от дохода</td>
+            </tr>
+            <tr class="bg-gray-50/50">
+              <td class="p-4 font-medium">Кассовый аппарат (ККМ)</td>
+              <td class="p-4 text-center text-emerald-600 font-bold">Не нужен (чеки бьются в приложении)</td>
+              <td class="p-4 text-center text-red-500">Нужен (физический или онлайн)</td>
+              <td class="p-4 text-center text-red-500">Нужен</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-medium">Налоговая отчетность</td>
+              <td class="p-4 text-center text-emerald-600">0 строк (вообще не сдается)</td>
+              <td class="p-4 text-center">Форма 911 (раз в год/полгода)</td>
+              <td class="p-4 text-center">Форма 910 (раз в полгода)</td>
+            </tr>
+            <tr class="bg-gray-50/50">
+              <td class="p-4 font-medium">Сотрудники</td>
+              <td class="p-4 text-center text-red-500">Запрещены</td>
+              <td class="p-4 text-center text-red-500">Запрещены</td>
+              <td class="p-4 text-center text-emerald-600">Разрешены (до 30 чел)</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-medium">Работа с юрлицами (ИП/ТОО)</td>
+              <td class="p-4 text-center text-emerald-600">Разрешена</td>
+              <td class="p-4 text-center text-red-500">Запрещена (только физлица)</td>
+              <td class="p-4 text-center text-emerald-600">Разрешена</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="mt-6 p-5 bg-violet-50 border border-violet-200 rounded-2xl">
+        <p class="font-black text-violet-800 mb-1">Почему приложение лучше старого ЕСП и патента?</p>
+        <p class="text-violet-700 text-sm">Вам вообще не нужен бухгалтер и кассовый аппарат. Вы просто выставляете чеки клиентам прямо в телефоне. Приложение само в конце месяца посчитает ваш налог (1%) и сформирует платежки на пенсионные и соцотчисления.</p>
+      </div>
+    </section>
+
+    <section class="mb-16">
+      <h2 class="text-3xl font-black text-gray-900 mb-6">4. Как начать работать по-новому за 10 минут</h2>
+      <div class="space-y-4">
+        <div class="flex items-start gap-4 p-5 bg-white border border-gray-200 rounded-3xl hover:shadow-lg transition-shadow">
+          <div class="bg-violet-600 text-white w-10 h-10 rounded-full flex shrink-0 items-center justify-center font-black">1</div>
+          <div>
+            <p class="font-bold">Скачайте приложение «e-Salyq Business»</p>
+            <p class="text-gray-500 text-sm">Оно официально выпущено Комитетом госдоходов РК и доступно бесплатно в App Store и Google Play.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4 p-5 bg-white border border-gray-200 rounded-3xl hover:shadow-lg transition-shadow">
+          <div class="bg-violet-600 text-white w-10 h-10 rounded-full flex shrink-0 items-center justify-center font-black">2</div>
+          <div>
+            <p class="font-bold">Откройте ИП прямо внутри приложения</p>
+            <p class="text-gray-500 text-sm">Авторизуйтесь по биометрии (Digital ID) или ЭЦП. Нажмите «Зарегистрировать ИП» и выберите налоговый режим: «Режим специального мобильного приложения».</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4 p-5 bg-white border border-gray-200 rounded-3xl hover:shadow-lg transition-shadow">
+          <div class="bg-violet-600 text-white w-10 h-10 rounded-full flex shrink-0 items-center justify-center font-black">3</div>
+          <div>
+            <p class="font-bold">Выдавайте чеки и платите в один клик</p>
+            <p class="text-gray-500 text-sm">Получили оплату от клиента? Зайдите в раздел «Чеки», введите сумму и отправьте электронный чек клиенту на WhatsApp. Налоги рассчитаются автоматически до 15 числа следующего месяца.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="mt-24 p-12 bg-gray-900 rounded-[3rem] text-center text-white relative overflow-hidden">
+      <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-violet-500 to-transparent opacity-50"></div>
+      <h2 class="text-4xl font-black mb-6 italic tracking-tight">Нужен детальный расчет налогов?</h2>
+      <p class="text-gray-400 max-w-lg mx-auto mb-10 text-lg">
+        Если вы планируете нанимать людей или открывать магазин, вам лучше подойдет упрощенная декларация.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="/calculators/ip" class="bg-violet-600 hover:bg-violet-700 text-white px-10 py-5 rounded-2xl font-black transition-all transform hover:scale-105 shadow-xl shadow-violet-900/40">
+          Калькулятор налогов ИП
+        </a>
+        <a href="/blog/uproschenka-2026" class="bg-white/5 hover:bg-white/10 border-2 border-white/10 text-white px-10 py-5 rounded-2xl font-black transition-all">
+          Статья об упрощенке →
+        </a>
+      </div>
+      <p class="mt-8 text-xs text-gray-500 uppercase tracking-widest font-bold">
+        Информация обновлена с учетом налогового законодательства РК на 2026 год
+      </p>
+    </footer>
+
+    <AuthorBlock
+      name="Даниэль Амирханов"
+      role="Налоговый консультант · mytaxes.kz"
+      photo="/author.webp"
+      updated="Июнь 2026"
+    />
+
+  </article>
+
+</Layout>
