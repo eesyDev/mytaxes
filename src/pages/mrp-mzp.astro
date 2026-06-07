@@ -14,7 +14,14 @@ export const stats = {
 }
 ---
 
-<Layout title={`МРП и МЗП на ${stats.year} год в Казахстане`}>
+<Layout
+  title={`МРП и МЗП на ${stats.year} год в Казахстане`}
+  description={`Актуальные размеры МРП (${stats.mrp} тг) и МЗП (${stats.mzp} тг) в Казахстане на ${stats.year} год. Применение в налогах и социальных выплатах.`}
+  breadcrumbs={[
+    { name: 'Главная', item: 'https://mytaxes.kz' },
+    { name: `МРП и МЗП ${stats.year}` },
+  ]}
+>
   <article class="max-w-4xl mx-auto py-16 px-4">
     
     <header class="text-center mb-16">
