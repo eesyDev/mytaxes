@@ -16,7 +16,7 @@ const months = [
     description: 'Расчёт зарплаты на руки и полной стоимости найма для ТОО (ОУР / Упрощёнка). Ставки 2026 года.',
   }}
 >
-  <div class="max-w-6xl mx-auto px-4 py-12 font-sans selection:bg-blue-100">
+  <div class="max-w-6xl mx-auto px-4 py-6 sm:py-12 font-sans selection:bg-blue-100 overflow-x-clip">
 
     <div class="text-center mb-10">
       <h1 class="text-4xl font-black text-gray-900 mb-3 tracking-tight">Калькулятор зарплаты</h1>
@@ -44,13 +44,13 @@ const months = [
       </select>
     </div>
 
-    <div class="grid lg:grid-cols-12 gap-10 items-start">
+    <div class="grid lg:grid-cols-12 gap-6 lg:gap-10 items-start">
 
       <!-- ЛЕВАЯ КОЛОНКА: ВВОД -->
-      <div class="lg:col-span-5 space-y-6">
+      <div class="lg:col-span-5 min-w-0 space-y-6">
 
         <!-- Блок «Расчёт» -->
-        <div class="bg-white p-7 rounded-[2.5rem] border border-gray-100 shadow-sm">
+        <div class="bg-white p-5 sm:p-7 rounded-[2rem] sm:rounded-[2.5rem] border border-gray-100 shadow-sm">
           <label class="block text-[10px] font-black text-blue-600 uppercase mb-5 tracking-[0.2em]">Тип занятости</label>
           <div class="space-y-3">
             <label class="flex items-center gap-3 cursor-pointer">
@@ -65,7 +65,7 @@ const months = [
             </label>
 
             <!-- Отработанные дни (только при неполном месяце) -->
-            <div id="partial-days" class="hidden flex items-center gap-2 pl-8">
+            <div id="partial-days" class="hidden flex flex-wrap items-center gap-2 pl-8">
               <input id="inp-worked" type="number" inputmode="numeric" min="0" value="10"
                 class="w-20 bg-gray-50 border-none rounded-xl px-3 py-2 text-sm font-black outline-none focus:ring-2 focus:ring-blue-500" />
               <span class="text-sm font-medium text-gray-400">из</span>
@@ -77,7 +77,7 @@ const months = [
         </div>
 
         <!-- Блок «Доход» -->
-        <div class="bg-white p-7 rounded-[2.5rem] border border-gray-100 shadow-sm space-y-5">
+        <div class="bg-white p-5 sm:p-7 rounded-[2rem] sm:rounded-[2.5rem] border border-gray-100 shadow-sm space-y-5">
           <div class="flex items-center justify-between">
             <label class="block text-[10px] font-black text-blue-600 uppercase tracking-[0.2em]">Доход</label>
           </div>
@@ -112,7 +112,7 @@ const months = [
         </div>
 
         <!-- Блок «Вычеты» -->
-        <div class="bg-white p-7 rounded-[2.5rem] border border-gray-100 shadow-sm">
+        <div class="bg-white p-5 sm:p-7 rounded-[2rem] sm:rounded-[2.5rem] border border-gray-100 shadow-sm">
           <label class="block text-[10px] font-black text-blue-600 uppercase mb-5 tracking-[0.2em]">Налоговые вычеты</label>
           <div class="space-y-3">
             <label class="flex items-center gap-3 cursor-pointer">
@@ -134,7 +134,7 @@ const months = [
         </div>
 
         <!-- Блок «Резидентство» -->
-        <div class="bg-white p-7 rounded-[2.5rem] border border-gray-100 shadow-sm">
+        <div class="bg-white p-5 sm:p-7 rounded-[2rem] sm:rounded-[2.5rem] border border-gray-100 shadow-sm">
           <label class="block text-[10px] font-black text-blue-600 uppercase mb-5 tracking-[0.2em]">Резидентство</label>
           <div class="space-y-3">
             <label class="flex items-center gap-3 cursor-pointer">
@@ -161,7 +161,7 @@ const months = [
         </div>
 
         <!-- Блок «Социальные статусы» -->
-        <div class="bg-white p-7 rounded-[2.5rem] border border-gray-100 shadow-sm">
+        <div class="bg-white p-5 sm:p-7 rounded-[2rem] sm:rounded-[2.5rem] border border-gray-100 shadow-sm">
           <label class="block text-[10px] font-black text-blue-600 uppercase mb-5 tracking-[0.2em]">Социальные статусы и льготы</label>
           <div class="space-y-3">
             <label class="flex items-center gap-3 cursor-pointer">
@@ -220,8 +220,8 @@ const months = [
       </div>
 
       <!-- ПРАВАЯ КОЛОНКА: КВИТАНЦИЯ -->
-      <div class="lg:col-span-7">
-        <div class="bg-white border border-gray-100 shadow-2xl rounded-[3rem] p-8 lg:p-12 sticky top-8">
+      <div class="lg:col-span-7 min-w-0">
+        <div class="bg-white border border-gray-100 shadow-2xl rounded-[2rem] sm:rounded-[3rem] p-6 sm:p-8 lg:p-12 lg:sticky lg:top-8">
 
           <div class="flex items-center justify-between mb-8">
             <h2 class="text-2xl font-black text-gray-900 tracking-tight">Квитанция</h2>
@@ -267,11 +267,11 @@ const months = [
           <div class="grid sm:grid-cols-2 gap-4">
             <div class="p-6 bg-gray-950 rounded-[2rem] text-white flex flex-col">
               <span class="text-[10px] font-bold uppercase opacity-40 mb-2 tracking-[0.3em]">💰 На руки</span>
-              <span id="r-naruki" class="text-3xl font-black tracking-tighter text-emerald-400">0 ₸</span>
+              <span id="r-naruki" class="text-2xl sm:text-3xl font-black tracking-tighter text-emerald-400">0 ₸</span>
             </div>
             <div class="p-6 bg-gray-100 rounded-[2rem] flex flex-col">
               <span class="text-[10px] font-bold uppercase text-gray-400 mb-2 tracking-[0.3em]">💼 Стоимость найма</span>
-              <span id="r-totalcost" class="text-3xl font-black tracking-tighter text-gray-900">0 ₸</span>
+              <span id="r-totalcost" class="text-2xl sm:text-3xl font-black tracking-tighter text-gray-900">0 ₸</span>
             </div>
           </div>
 
