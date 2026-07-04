@@ -252,8 +252,13 @@ const months = [
               <div class="flex justify-between items-center"><span class="text-gray-500 font-medium">ОПВР</span><span id="r-opvr" class="font-bold text-gray-900">0 ₸</span></div>
               <div id="row-so-empr" class="flex justify-between items-center"><span class="text-gray-500 font-medium">СО</span><span id="r-so-empr" class="font-bold text-gray-900">0 ₸</span></div>
               <div class="flex justify-between items-center"><span class="text-gray-500 font-medium">ООСМС</span><span id="r-oosms" class="font-bold text-gray-900">0 ₸</span></div>
-              <div class="flex justify-between items-center"><span class="text-gray-500 font-medium">СН</span><span id="r-sn" class="font-bold text-gray-900">0 ₸</span></div>
+              <div class="flex justify-between items-center"><span class="text-gray-500 font-medium">СН <span id="sn-tag" class="hidden text-[10px] text-emerald-600">(в налоге с оборота)</span></span><span id="r-sn" class="font-bold text-gray-900">0 ₸</span></div>
               <div class="flex justify-between items-center pt-2 border-t border-dashed border-gray-100"><span class="text-blue-600 font-bold">Итого расходов сверху</span><span id="r-employer-cost" class="font-black text-blue-600 text-lg">0 ₸</span></div>
+            </div>
+
+            <!-- Пояснение по упрощёнке (СН не платится подушево) -->
+            <div id="simplified-note" class="hidden mt-4 text-xs text-emerald-800 bg-emerald-50 rounded-xl p-3 leading-relaxed">
+              На упрощёнке социальный налог (6%) с зарплаты не уплачивается — он входит в единый налог с оборота (3–4%, форма 910.00).<span id="sn-savings-wrap"> Экономия на стоимости найма vs ОУР: <span id="sn-savings" class="font-black">0 ₸</span>/мес.</span>
             </div>
           </div>
 
@@ -377,11 +382,27 @@ const months = [
       effItems = items.map((it) => (it.type === 'salary' ? { ...it, amount: it.amount * factor } : it))
     }
 
-    // Прямой режим — считаем от начислений; обратный — подбираем оклад от суммы на руки.
-    const r = calcDir === 'reverse'
-      ? calculateGrossFromNet(parseFloat(($('inp-net') as HTMLInputElement).value) || 0, options)
-      : calculateSalary({ incomeItems: effItems, options })
+    // Единая точка расчёта для заданных опций: прямой — от начислений, обратный — от суммы на руки.
+    const netTarget = parseFloat(($('inp-net') as HTMLInputElement).value) || 0
+    const compute = (opts: typeof options) =>
+      calcDir === 'reverse'
+        ? calculateGrossFromNet(netTarget, opts)
+        : calculateSalary({ incomeItems: effItems, options: opts })
+
+    const r = compute(options)
     const gph = options.gph
+
+    // Упрощёнка: СН подушево не платится. Показываем пояснение и экономию vs ОУР
+    // (тот же расчёт с employerMode='our' — переиспользуем ядро, без дублирования формулы СН).
+    const isSimplified = options.employerMode === 'simplified'
+    $('simplified-note').classList.toggle('hidden', !isSimplified)
+    $('sn-tag').classList.toggle('hidden', !isSimplified)
+    if (isSimplified) {
+      const ourSn = compute({ ...options, employerMode: 'our' }).employer.sn
+      // Экономию показываем только когда она есть (при ГПХ/Astana Hub СН и на ОУР = 0)
+      $('sn-savings-wrap').classList.toggle('hidden', ourSn <= 0)
+      $('sn-savings').textContent = fmt(ourSn)
+    }
 
     // Начислено: в прямом режиме — весь gross, в обратном — подобранный оклад
     $('r-gross').textContent = fmt(r.gross)
