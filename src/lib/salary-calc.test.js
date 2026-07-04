@@ -1,7 +1,7 @@
 // src/lib/salary-calc.test.js
 // Юнит-тесты на calculateSalary. Можно запускать через Node.js или Jest.
 
-import { calculateSalary } from './salary-calc.js';
+import { calculateSalary, calculateGrossFromNet } from './salary-calc.js';
 
 function assertEqual(actual, expected, message) {
   const diff = Math.abs(actual - expected);
@@ -24,7 +24,7 @@ function runTests() {
         options: {
           employerMode: 'our',
           deductions: { ded30: true },
-          residency: 'citizenRK',
+          residency: 'residentRK',
           statuses: {},
         },
       },
@@ -48,7 +48,7 @@ function runTests() {
         options: {
           employerMode: 'our',
           deductions: {},
-          residency: 'citizenRK',
+          residency: 'residentRK',
         },
       },
       expected: {
@@ -63,7 +63,7 @@ function runTests() {
         options: {
           employerMode: 'our',
           deductions: { ded30: true },
-          residency: 'citizenRK',
+          residency: 'residentRK',
         },
       },
       expected: {
@@ -81,7 +81,7 @@ function runTests() {
         options: {
           employerMode: 'our',
           deductions: { ded30: true },
-          residency: 'citizenRK',
+          residency: 'residentRK',
         },
       },
       expected: {
@@ -96,7 +96,7 @@ function runTests() {
         options: {
           employerMode: 'our',
           deductions: { ded30: true },
-          residency: 'citizenRK',
+          residency: 'residentRK',
           statuses: { pensioner: true },
         },
       },
@@ -121,7 +121,7 @@ function runTests() {
           employerMode: 'our',
           gph: true,
           deductions: {},
-          residency: 'citizenRK',
+          residency: 'residentRK',
         },
       },
       expected: {
@@ -144,7 +144,7 @@ function runTests() {
         options: {
           employerMode: 'our',
           deductions: { ded30: true },
-          residency: 'citizenRK',
+          residency: 'residentRK',
           statuses: { disabled: 'I' },
         },
       },
@@ -167,7 +167,7 @@ function runTests() {
         options: {
           employerMode: 'our',
           deductions: { ded30: true },
-          residency: 'citizenRK',
+          residency: 'residentRK',
           statuses: { student: true },
         },
       },
@@ -190,7 +190,7 @@ function runTests() {
         options: {
           employerMode: 'our',
           deductions: { ded30: true },
-          residency: 'citizenRK',
+          residency: 'residentRK',
           statuses: { astanaHub: true },
         },
       },
@@ -213,7 +213,7 @@ function runTests() {
         options: {
           employerMode: 'simplified',
           deductions: { ded30: true },
-          residency: 'citizenRK',
+          residency: 'residentRK',
         },
       },
       expected: {
@@ -236,18 +236,71 @@ function runTests() {
         vosms: 0,
         ipn: 60_000,          // 300 000 * 20%
         naRuki: 240_000,
-        so: 13_500,
-        oosms: 9_000,
+        so: 0,                // нерезидент — СО не начисляется
+        oosms: 0,             // нерезидент — ООСМС не начисляется
         opvr: 0,              // нерезидент — ОПВР 0
-        sn: 15_840,
-        employerCost: 38_340,
+        sn: 15_840,           // СН остаётся
+        employerCost: 15_840, // только СН
+      },
+    },
+    {
+      name: 'ЕАЭС постоянно (резидент): 300 000 — как гражданин РК',
+      params: {
+        incomeItems: [{ type: 'salary', amount: 300_000 }],
+        options: {
+          employerMode: 'our',
+          deductions: { ded30: true },
+          residency: 'eaesPermanent',
+        },
+      },
+      expected: {
+        opv: 30_000,
+        vosms: 6_000,
+        ipn: 13_425,
+        naRuki: 250_575,
+        employerCost: 48_840,
+      },
+    },
+    {
+      name: 'Нерезидент с дивидендами: зп 300 000 + дивиденды 1 000 000',
+      params: {
+        incomeItems: [
+          { type: 'salary', amount: 300_000 },
+          { type: 'dividend', amount: 1_000_000 },
+        ],
+        options: { employerMode: 'our', residency: 'nonResident' },
+      },
+      expected: {
+        // трудовой доход 20% + дивиденды 15% (у источника, не по трудовой ставке)
+        ipn: 210_000,         // 300 000*20% + 1 000 000*15%
+      },
+    },
+    {
+      name: 'ЕАЭС временно (нерезидент): 300 000 — ИПН 10%',
+      params: {
+        incomeItems: [{ type: 'salary', amount: 300_000 }],
+        options: {
+          employerMode: 'our',
+          residency: 'eaesTemp',
+        },
+      },
+      expected: {
+        opv: 0,
+        vosms: 0,
+        ipn: 30_000,          // 300 000 * 10% (без вычетов)
+        naRuki: 270_000,
+        so: 0,
+        oosms: 0,
+        opvr: 0,
+        sn: 15_840,           // СН остаётся
+        employerCost: 15_840,
       },
     },
     {
       name: 'Только дивиденды (без зарплаты): 1 000 000',
       params: {
         incomeItems: [{ type: 'dividend', amount: 1_000_000 }],
-        options: { employerMode: 'our', residency: 'citizenRK' },
+        options: { employerMode: 'our', residency: 'residentRK' },
       },
       expected: {
         opv: 0,
@@ -263,6 +316,34 @@ function runTests() {
       },
     },
     {
+      name: 'Полный месяц: оклад 40 000 — мин. базы применяются',
+      params: {
+        incomeItems: [{ type: 'salary', amount: 40_000 }],
+        options: { employerMode: 'our', residency: 'residentRK' },
+      },
+      expected: {
+        so: 4_250,            // мин. база 1 МЗП
+        opvr: 2_975,
+        oosms: 2_550,
+        sn: 3_633,
+        employerCost: 13_408,
+      },
+    },
+    {
+      name: 'Неполный месяц: оклад 40 000 — мин. базы отменяются',
+      params: {
+        incomeItems: [{ type: 'salary', amount: 40_000 }],
+        options: { employerMode: 'our', residency: 'residentRK', partialMonth: true },
+      },
+      expected: {
+        so: 1_800,            // 5% от (40 000 - 4 000), без мин. базы
+        opvr: 1_400,          // 3.5% от 40 000
+        oosms: 1_200,         // 3% от 40 000
+        sn: 2_112,            // 6% от (40 000 - 4 000 - 800)
+        employerCost: 6_512,
+      },
+    },
+    {
       name: 'Astana Hub с дивидендами: зп 300 000 + дивиденды 1 000 000',
       params: {
         incomeItems: [
@@ -272,7 +353,7 @@ function runTests() {
         options: {
           employerMode: 'our',
           deductions: { ded30: true },
-          residency: 'citizenRK',
+          residency: 'residentRK',
           statuses: { astanaHub: true },
         },
       },
@@ -304,6 +385,37 @@ function runTests() {
       passed++;
     } catch (err) {
       console.error(`❌ ${test.name}`);
+      console.error(err.message);
+      failed++;
+    }
+  }
+
+  // ─── Обратный расчёт: round-trip прямой(обратный(net)) ≈ net ───
+  const reverseCases = [
+    { net: 250_575, options: { deductions: { ded30: true }, residency: 'residentRK' } },
+    { net: 237_600, options: { deductions: {}, residency: 'residentRK' } },
+    { net: 240_000, options: { residency: 'nonResident' } },        // 20% flat
+    { net: 500_000, options: { statuses: { astanaHub: true } } },    // ИПН = 0
+    { net: 300_000, options: { gph: true } },                        // СО удержано у исполнителя
+    { net: 1_200_000, options: { deductions: { ded30: true } } },    // выше лимитов баз
+    { net: 0, options: {} },                                          // край: 0 на руки → 0 оклад
+  ];
+
+  for (const { net, options } of reverseCases) {
+    const name = `Обратный: на руки ${net.toLocaleString('ru-RU')}`;
+    try {
+      const r = calculateGrossFromNet(net, options);
+      // Прямой прогон найденного оклада должен вернуть исходную сумму на руки.
+      const forward = calculateSalary({
+        incomeItems: [{ type: 'salary', amount: r.grossSalary }],
+        options,
+      });
+      assertEqual(forward.naRuki, net, `${name} — round-trip`);
+      if (net === 0) assertEqual(r.grossSalary, 0, `${name} — нулевой оклад`);
+      console.log(`✅ ${name} → оклад ${Math.round(r.grossSalary).toLocaleString('ru-RU')}`);
+      passed++;
+    } catch (err) {
+      console.error(`❌ ${name}`);
       console.error(err.message);
       failed++;
     }

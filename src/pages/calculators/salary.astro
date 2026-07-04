@@ -25,7 +25,10 @@ const months = [
 
     <!-- Верхняя строка: тип расчёта / сущность / режим / период -->
     <div class="bg-white p-5 rounded-[2rem] border border-gray-100 shadow-sm mb-8 flex flex-wrap items-center gap-3 justify-center">
-      <span class="inline-flex items-center gap-2 bg-gray-100 text-gray-500 text-[11px] font-black uppercase tracking-widest px-4 py-2 rounded-xl cursor-not-allowed" title="Расчёт «от обратного» появится позже">Прямой расчёт</span>
+      <div class="inline-flex bg-gray-100 p-1.5 rounded-2xl border border-gray-200">
+        <button data-dir="direct" class="dir-btn active-mode px-6 py-2.5 text-xs font-black rounded-xl transition-all uppercase tracking-widest">Прямой</button>
+        <button data-dir="reverse" class="dir-btn px-6 py-2.5 text-xs font-black rounded-xl transition-all text-gray-400 uppercase tracking-widest">Обратный</button>
+      </div>
       <span class="inline-flex items-center gap-2 bg-gray-100 text-gray-500 text-[11px] font-black uppercase tracking-widest px-4 py-2 rounded-xl cursor-not-allowed">ТОО</span>
 
       <div class="inline-flex bg-gray-100 p-1.5 rounded-2xl border border-gray-200">
@@ -58,8 +61,18 @@ const months = [
             <label class="flex items-center gap-3 cursor-pointer">
               <input type="checkbox" id="chk-hired" class="w-5 h-5 rounded-lg border-gray-200 text-blue-600 focus:ring-blue-500 cursor-pointer">
               <span class="font-bold text-gray-800">Принят / уволен в этом месяце</span>
-              <span class="tip" title="Флаг сохраняется, но в этой версии на расчёт не влияет (неполный месяц — позже).">i</span>
+              <span class="tip" title="Неполный месяц: оклад делится по отработанным дням, а минимальные базы СО/ОПВР/ООСМС/СН не применяются — берётся фактический доход.">i</span>
             </label>
+
+            <!-- Отработанные дни (только при неполном месяце) -->
+            <div id="partial-days" class="hidden flex items-center gap-2 pl-8">
+              <input id="inp-worked" type="number" inputmode="numeric" min="0" value="10"
+                class="w-20 bg-gray-50 border-none rounded-xl px-3 py-2 text-sm font-black outline-none focus:ring-2 focus:ring-blue-500" />
+              <span class="text-sm font-medium text-gray-400">из</span>
+              <input id="inp-workdays" type="number" inputmode="numeric" min="1" value="22"
+                class="w-20 bg-gray-50 border-none rounded-xl px-3 py-2 text-sm font-black outline-none focus:ring-2 focus:ring-blue-500" />
+              <span class="text-sm font-medium text-gray-400">раб. дней</span>
+            </div>
           </div>
         </div>
 
@@ -74,17 +87,28 @@ const months = [
             <span class="font-bold text-gray-800 text-sm">Повышенная ставка ИПН (15%)</span>
             <span class="tip" title="Применяется к доходу свыше 8 500 МРП за год. Калькулятор применяет 15% к текущему месяцу.">i</span>
           </label>
-          <label class="flex items-center gap-3 cursor-pointer">
+          <label id="row-high-div" class="flex items-center gap-3 cursor-pointer">
             <input type="checkbox" id="chk-high-div" class="w-5 h-5 rounded-lg border-gray-200 text-blue-600 focus:ring-blue-500 cursor-pointer">
             <span class="font-bold text-gray-800 text-sm">Дивиденды: ставка 15% (свыше порога)</span>
             <span class="tip" title="Дивиденды свыше 230 000 МРП за год облагаются по 15% вместо 5%.">i</span>
           </label>
 
-          <div id="income-rows" class="space-y-3 pt-2"></div>
+          <!-- Прямой режим: список начислений -->
+          <div id="income-direct" class="space-y-5">
+            <div id="income-rows" class="space-y-3 pt-2"></div>
 
-          <button id="btn-add-income" type="button" class="w-full border-2 border-dashed border-gray-200 rounded-2xl py-3 text-sm font-bold text-blue-600 hover:border-blue-400 hover:bg-blue-50 transition-all">
-            + Добавить начисление
-          </button>
+            <button id="btn-add-income" type="button" class="w-full border-2 border-dashed border-gray-200 rounded-2xl py-3 text-sm font-bold text-blue-600 hover:border-blue-400 hover:bg-blue-50 transition-all">
+              + Добавить начисление
+            </button>
+          </div>
+
+          <!-- Обратный режим: сумма на руки -->
+          <div id="income-reverse" class="hidden pt-2">
+            <label class="block text-[10px] font-black text-gray-400 uppercase mb-2 tracking-[0.2em]">Сумма на руки</label>
+            <input id="inp-net" type="number" inputmode="numeric" value="300000" placeholder="0"
+              class="w-full bg-gray-50 border-none rounded-xl px-4 py-3 text-lg font-black outline-none focus:ring-2 focus:ring-blue-500" />
+            <p class="mt-2 text-xs text-gray-400 leading-relaxed">Подберём оклад и все налоги от желаемой суммы на руки. Дивиденды и больничные в обратном режиме не учитываются.</p>
+          </div>
         </div>
 
         <!-- Блок «Вычеты» -->
@@ -114,21 +138,24 @@ const months = [
           <label class="block text-[10px] font-black text-blue-600 uppercase mb-5 tracking-[0.2em]">Резидентство</label>
           <div class="space-y-3">
             <label class="flex items-center gap-3 cursor-pointer">
-              <input type="radio" name="residency" value="citizenRK" checked class="w-5 h-5 border-gray-200 text-blue-600 focus:ring-blue-500 cursor-pointer">
-              <span class="font-bold text-gray-800 text-sm">Гражданин РК</span>
+              <input type="radio" name="residency" value="residentRK" checked class="w-5 h-5 border-gray-200 text-blue-600 focus:ring-blue-500 cursor-pointer">
+              <span class="font-bold text-gray-800 text-sm">Гражданин РК / ВНЖ</span>
+              <span class="tip" title="Резидент РК: ИПН 10% с вычетами, все социальные платежи начисляются.">i</span>
             </label>
             <label class="flex items-center gap-3 cursor-pointer">
-              <input type="radio" name="residency" value="taxResident" class="w-5 h-5 border-gray-200 text-blue-600 focus:ring-blue-500 cursor-pointer">
-              <span class="font-bold text-gray-800 text-sm">Налоговый резидент РК</span>
+              <input type="radio" name="residency" value="eaesPermanent" class="w-5 h-5 border-gray-200 text-blue-600 focus:ring-blue-500 cursor-pointer">
+              <span class="font-bold text-gray-800 text-sm">Гражданин ЕАЭС (постоянно)</span>
+              <span class="tip" title="Гражданин ЕАЭС, постоянно пребывающий → резидент. Считается как гражданин РК: ИПН 10% с вычетами, все соц. платежи.">i</span>
             </label>
             <label class="flex items-center gap-3 cursor-pointer">
-              <input type="radio" name="residency" value="eaes" class="w-5 h-5 border-gray-200 text-blue-600 focus:ring-blue-500 cursor-pointer">
-              <span class="font-bold text-gray-800 text-sm">Гражданин ЕАЭС (резидент РК)</span>
+              <input type="radio" name="residency" value="eaesTemp" class="w-5 h-5 border-gray-200 text-blue-600 focus:ring-blue-500 cursor-pointer">
+              <span class="font-bold text-gray-800 text-sm">Гражданин ЕАЭС (временно)</span>
+              <span class="tip" title="Гражданин ЕАЭС, временно пребывающий → нерезидент. Трудовой доход: ИПН 10% без вычетов. ОПВ/ВОСМС/СО/ОПВР/ООСМС не начисляются, остаётся СН.">i</span>
             </label>
             <label class="flex items-center gap-3 cursor-pointer">
               <input type="radio" name="residency" value="nonResident" class="w-5 h-5 border-gray-200 text-blue-600 focus:ring-blue-500 cursor-pointer">
-              <span class="font-bold text-gray-800 text-sm">Нерезидент (ИПН 20%)</span>
-              <span class="tip" title="Нерезидент третьих стран: ИПН 20% от дохода, без вычетов, без ОПВ/ВОСМС/ОПВР.">i</span>
+              <span class="font-bold text-gray-800 text-sm">Нерезидент, третьи страны (ИПН 20%)</span>
+              <span class="tip" title="Нерезидент третьих стран: ИПН 20% от дохода, без вычетов. ОПВ/ВОСМС/СО/ОПВР/ООСМС не начисляются, остаётся СН.">i</span>
             </label>
           </div>
         </div>
@@ -195,9 +222,15 @@ const months = [
       <div class="lg:col-span-7">
         <div class="bg-white border border-gray-100 shadow-2xl rounded-[3rem] p-8 lg:p-12 sticky top-8">
 
-          <div class="flex items-center justify-between mb-10">
+          <div class="flex items-center justify-between mb-8">
             <h2 class="text-2xl font-black text-gray-900 tracking-tight">Квитанция</h2>
             <div class="bg-blue-600 text-white text-[10px] font-black px-5 py-1.5 rounded-full uppercase tracking-widest">1 месяц</div>
+          </div>
+
+          <!-- Начислено (в обратном режиме — подобранный оклад) -->
+          <div class="flex justify-between items-baseline mb-8 pb-6 border-b border-gray-100">
+            <span class="text-gray-500 font-medium">Начислено <span id="gross-label" class="text-[10px] text-gray-400 uppercase tracking-widest">(оклад)</span></span>
+            <span id="r-gross" class="font-black text-gray-900 text-xl">0 ₸</span>
           </div>
 
           <!-- Работник -->
@@ -265,7 +298,7 @@ const months = [
 </style>
 
 <script>
-  import { calculateSalary } from '../../lib/salary-calc.js'
+  import { calculateSalary, calculateGrossFromNet } from '../../lib/salary-calc.js'
 
   const $ = (id: string) => document.getElementById(id) as HTMLElement
   const fmt = (n: number) => {
@@ -273,6 +306,7 @@ const months = [
     return Math.round(n).toLocaleString('ru-KZ') + ' ₸'
   }
 
+  let calcDir: 'direct' | 'reverse' = 'direct'
   let employerMode: 'our' | 'simplified' = 'our'
   type IncomeType = 'salary' | 'sick' | 'dividend'
   let items: Array<{ type: IncomeType; amount: number }> = [{ type: 'salary', amount: 300000 }]
@@ -302,42 +336,56 @@ const months = [
     })
   }
 
-  function gatherParams() {
-    const residency = (document.querySelector('input[name="residency"]:checked') as HTMLInputElement)?.value || 'citizenRK'
+  function gatherOptions() {
+    const residency = (document.querySelector('input[name="residency"]:checked') as HTMLInputElement)?.value || 'residentRK'
     const disabledOn = ($('chk-disabled') as HTMLInputElement).checked
     return {
-      incomeItems: items,
-      options: {
-        calcType: 'direct' as const,
-        employerMode,
-        gph: ($('chk-gph') as HTMLInputElement).checked,
-        hiredOrFired: ($('chk-hired') as HTMLInputElement).checked, // в state, на расчёт не влияет
-        highIpn: ($('chk-high-ipn') as HTMLInputElement).checked,
-        highDividendIpn: ($('chk-high-div') as HTMLInputElement).checked,
-        deductions: {
-          ded30: ($('chk-ded30') as HTMLInputElement).checked,
-          ded882: ($('chk-ded882') as HTMLInputElement).checked,
-          ded5000: ($('chk-ded5000') as HTMLInputElement).checked,
-        },
-        residency,
-        statuses: {
-          pensioner: ($('chk-pensioner') as HTMLInputElement).checked,
-          disabled: disabledOn ? (($('sel-disabled') as HTMLSelectElement).value as 'I' | 'II' | 'III') : 'none',
-          student: ($('chk-student') as HTMLInputElement).checked,
-          manyChildrenMother: ($('chk-mother') as HTMLInputElement).checked,
-          astanaHub: ($('chk-astanahub') as HTMLInputElement).checked,
-          mfca: ($('chk-mfca') as HTMLInputElement).checked,
-          exemptOpvr: ($('chk-exempt-opvr') as HTMLInputElement).checked,
-          oppvReceiver: ($('chk-oppv') as HTMLInputElement).checked,
-        },
+      employerMode,
+      gph: ($('chk-gph') as HTMLInputElement).checked,
+      partialMonth: ($('chk-hired') as HTMLInputElement).checked, // месяц найма/увольнения → мин. базы off
+      highIpn: ($('chk-high-ipn') as HTMLInputElement).checked,
+      highDividendIpn: ($('chk-high-div') as HTMLInputElement).checked,
+      deductions: {
+        ded30: ($('chk-ded30') as HTMLInputElement).checked,
+        ded882: ($('chk-ded882') as HTMLInputElement).checked,
+        ded5000: ($('chk-ded5000') as HTMLInputElement).checked,
+      },
+      residency,
+      statuses: {
+        pensioner: ($('chk-pensioner') as HTMLInputElement).checked,
+        disabled: disabledOn ? (($('sel-disabled') as HTMLSelectElement).value as 'I' | 'II' | 'III') : 'none',
+        student: ($('chk-student') as HTMLInputElement).checked,
+        manyChildrenMother: ($('chk-mother') as HTMLInputElement).checked,
+        astanaHub: ($('chk-astanahub') as HTMLInputElement).checked,
+        mfca: ($('chk-mfca') as HTMLInputElement).checked,
+        exemptOpvr: ($('chk-exempt-opvr') as HTMLInputElement).checked,
+        oppvReceiver: ($('chk-oppv') as HTMLInputElement).checked,
       },
     }
   }
 
   function recalc() {
-    const params = gatherParams()
-    const r = calculateSalary(params)
-    const gph = params.options.gph
+    const options = gatherOptions()
+
+    // Неполный месяц: делим оклад по отработанным дням (только прямой режим; в обратном
+    // оклад подбирается напрямую). Больничные и дивиденды не проратируются.
+    let effItems = items
+    if (options.partialMonth && calcDir === 'direct') {
+      const worked = parseFloat(($('inp-worked') as HTMLInputElement).value) || 0
+      const workdays = parseFloat(($('inp-workdays') as HTMLInputElement).value) || 0
+      const factor = workdays > 0 ? Math.max(0, Math.min(worked / workdays, 1)) : 1
+      effItems = items.map((it) => (it.type === 'salary' ? { ...it, amount: it.amount * factor } : it))
+    }
+
+    // Прямой режим — считаем от начислений; обратный — подбираем оклад от суммы на руки.
+    const r = calcDir === 'reverse'
+      ? calculateGrossFromNet(parseFloat(($('inp-net') as HTMLInputElement).value) || 0, options)
+      : calculateSalary({ incomeItems: effItems, options })
+    const gph = options.gph
+
+    // Начислено: в прямом режиме — весь gross, в обратном — подобранный оклад
+    $('r-gross').textContent = fmt(r.gross)
+    $('gross-label').textContent = calcDir === 'reverse' ? '(подобрано)' : '(оклад)'
 
     $('r-opv').textContent = fmt(r.employee.opv)
     $('r-vosms').textContent = fmt(r.employee.vosms)
@@ -367,6 +415,37 @@ const months = [
   }
 
   // ── события ──
+
+  // Поля отработанных дней видны только при неполном месяце и в прямом режиме
+  function applyPartial() {
+    const show = ($('chk-hired') as HTMLInputElement).checked && calcDir === 'direct'
+    $('partial-days').classList.toggle('hidden', !show)
+  }
+
+  // Переключатель направления расчёта: прямой ⇄ обратный
+  function applyDir() {
+    const reverse = calcDir === 'reverse'
+    $('income-direct').classList.toggle('hidden', reverse)
+    $('income-reverse').classList.toggle('hidden', !reverse)
+    // Дивиденды в обратном режиме не участвуют — прячем их ставку
+    $('row-high-div').classList.toggle('hidden', reverse)
+    applyPartial()
+  }
+
+  document.querySelectorAll<HTMLButtonElement>('.dir-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.dir-btn').forEach((b) => {
+        b.classList.remove('active-mode')
+        b.classList.add('text-gray-400')
+      })
+      btn.classList.add('active-mode')
+      btn.classList.remove('text-gray-400')
+      calcDir = btn.dataset.dir as 'direct' | 'reverse'
+      applyDir()
+      recalc()
+    })
+  })
+
   document.querySelectorAll<HTMLButtonElement>('.mode-btn').forEach((btn) => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.mode-btn').forEach((b) => {
@@ -425,14 +504,22 @@ const months = [
     $('oppv-note').classList.toggle('hidden', !($('chk-oppv') as HTMLInputElement).checked)
   })
 
+  // Неполный месяц: показываем поля дней. Пересчёт выполнит общий обработчик 'change'.
+  $('chk-hired').addEventListener('change', applyPartial)
+
   // Любое изменение в форме → пересчёт (реактивно, без кнопки «считать»).
   // Вне #income-rows все контролы — чекбоксы/радио/селекты, для них достаточно 'change'
   // (события 'input' + 'change' давали двойной пересчёт).
   document.querySelectorAll('input, select').forEach((el) => {
     if ((el as HTMLElement).closest('#income-rows')) return
+    if ((el as HTMLElement).closest('#income-reverse')) return
     el.addEventListener('change', recalc)
   })
 
+  // Живой пересчёт при вводе в числовые поля (на руки, отработанные дни)
+  ;['inp-net', 'inp-worked', 'inp-workdays'].forEach((id) => $(id).addEventListener('input', recalc))
+
   renderIncomeRows()
+  applyPartial()
   recalc()
 </script>

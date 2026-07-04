@@ -30,6 +30,7 @@ export const RATES = {
   ipnNonResident: 0.20,
   dividend: 0.05,
   dividendHigh: 0.15,
+  dividendNonResident: 0.15, // дивиденды нерезидента у источника (общий случай, ст. 646/682 НК)
 };
 
 export const LIMITS = {
