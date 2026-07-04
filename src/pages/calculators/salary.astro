@@ -177,6 +177,7 @@ const months = [
             <label class="flex items-center gap-3 cursor-pointer">
               <input type="checkbox" id="chk-mother" class="w-5 h-5 rounded-lg border-gray-200 text-blue-600 focus:ring-blue-500 cursor-pointer">
               <span class="font-bold text-gray-800 text-sm">Многодетная мать</span>
+              <span class="tip" title="4+ несовершеннолетних детей: с 2026 старый вычет 282 МРП отменён, взамен — полное освобождение от ИПН по зарплате. Взносы (ОПВ/ВОСМС/СО/ОПВР/ООСМС) удерживаются как обычно.">i</span>
             </label>
 
             <div class="flex items-center gap-3 flex-wrap">
@@ -320,6 +321,14 @@ const months = [
     salary: 'Зарплата',
     sick: 'Больничные',
     dividend: 'Дивиденды',
+  }
+
+  // Рабочие дни по месяцам, производственный календарь РК 2026 (5-дневная неделя).
+  // Используется для автоподстановки в неполном месяце; поле остаётся редактируемым.
+  const workdays2026 = [19, 20, 18, 22, 17, 22, 22, 21, 22, 21, 21, 22]
+  function syncWorkdays() {
+    const m = Number(($('sel-month') as HTMLSelectElement).value) || 0
+    ;($('inp-workdays') as HTMLInputElement).value = String(workdays2026[m] ?? 22)
   }
 
   function renderIncomeRows() {
@@ -528,6 +537,9 @@ const months = [
   // Неполный месяц: показываем поля дней. Пересчёт выполнит общий обработчик 'change'.
   $('chk-hired').addEventListener('change', applyPartial)
 
+  // Смена месяца → подставляем норму рабочих дней (пересчёт сделает общий обработчик 'change')
+  $('sel-month').addEventListener('change', syncWorkdays)
+
   // Любое изменение в форме → пересчёт (реактивно, без кнопки «считать»).
   // Вне #income-rows все контролы — чекбоксы/радио/селекты, для них достаточно 'change'
   // (события 'input' + 'change' давали двойной пересчёт).
@@ -542,5 +554,8 @@ const months = [
 
   renderIncomeRows()
   applyPartial()
+  // По умолчанию — текущий месяц (календарь 2026); подставляем норму рабочих дней
+  ;($('sel-month') as HTMLSelectElement).value = String(new Date().getMonth())
+  syncWorkdays()
   recalc()
 </script>

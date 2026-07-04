@@ -77,6 +77,9 @@ export function calculateSalary(params) {
   const isAstanaHub = statuses.astanaHub || false;
   const isMfca = statuses.mfca || false;
   const isExemptOpvr = statuses.exemptOpvr || false;
+  // Многодетная мать (4+ несовершеннолетних детей): с 2026 старый вычет 282 МРП отменён,
+  // взамен введено полное освобождение от ИПН по зарплате. Взносы удерживаются как обычно.
+  const isManyChildrenMother = statuses.manyChildrenMother || false;
   // Резидентство. Практически 4 категории:
   //   residentRK     — гражданин РК / иностранец с ВНЖ (резидент)
   //   eaesPermanent  — гражданин ЕАЭС, постоянно пребывающий (резидент) → как гражданин РК
@@ -145,8 +148,9 @@ export function calculateSalary(params) {
     ipnDividend = RATES.dividendNonResident * dividendGross;
     ipn = ipnSalary + ipnDividend;
   } else {
-    // Astana Hub / МФЦА освобождают от ИПН только зарплатную часть; дивиденды облагаются.
-    const salaryIpnExempt = isAstanaHub || isMfca;
+    // Astana Hub / МФЦА / многодетная мать освобождают от ИПН только зарплатную часть;
+    // дивиденды облагаются.
+    const salaryIpnExempt = isAstanaHub || isMfca || isManyChildrenMother;
 
     // Зарплатная база (salary + sick)
     const taxableBase = Math.max(0, salaryGross + sickGross - opv - vosms - deductions);

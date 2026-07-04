@@ -316,6 +316,28 @@ function runTests() {
       },
     },
     {
+      name: 'Многодетная мать: 300 000 — освобождение от ИПН',
+      params: {
+        incomeItems: [{ type: 'salary', amount: 300_000 }],
+        options: {
+          employerMode: 'our',
+          deductions: { ded30: true },
+          residency: 'residentRK',
+          statuses: { manyChildrenMother: true },
+        },
+      },
+      expected: {
+        ipn: 0,               // освобождение от ИПН
+        opv: 30_000,          // взносы удерживаются как обычно
+        vosms: 6_000,
+        so: 13_500,
+        oosms: 9_000,
+        opvr: 10_500,
+        sn: 15_840,
+        naRuki: 264_000,      // 300 000 - 30 000 - 6 000
+      },
+    },
+    {
       name: 'Полный месяц: оклад 40 000 — мин. базы применяются',
       params: {
         incomeItems: [{ type: 'salary', amount: 40_000 }],
