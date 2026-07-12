@@ -1,0 +1,570 @@
+---
+import { TAX_YEAR } from '../data/tax-rates-2026.js'
+
+interface Props {
+  mode: 'our' | 'simplified'
+  direction: 'direct' | 'reverse'
+  active: string
+  heading: string
+  subheading: string
+}
+
+const { mode, direction, active, heading, subheading } = Astro.props
+
+const months = [
+  'Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+  'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь',
+]
+
+// Навигация по типам калькуляторов (отдельные страницы под SEO).
+// href: null → заглушка «скоро».
+const tabs = [
+  { key: 'ip-usn', label: 'ИП УСН', href: null },
+  { key: 'ip-our', label: 'ИП ОУР', href: null },
+  { key: 'too-usn', label: 'ТОО УСН', href: '/calculators/salary-too-usn' },
+  { key: 'too-our', label: 'ТОО ОУР', href: '/calculators/salary-too-our' },
+  { key: 'reverse', label: 'Расчёт от обратного', href: '/calculators/salary-reverse' },
+  { key: 'ediny', label: 'Единый платёж', href: null },
+]
+
+const dirLabel = direction === 'reverse' ? 'Расчёт от обратного' : 'Прямой расчёт'
+const modeLabel = mode === 'simplified' ? 'Упрощёнка' : 'ОУР'
+---
+
+<div id="calc-root" data-mode={mode} data-direction={direction} class="max-w-6xl mx-auto px-4 py-6 sm:py-12 font-sans selection:bg-blue-100 overflow-x-clip">
+
+  <div class="text-center mb-8">
+    <h1 class="text-3xl sm:text-4xl font-black text-gray-900 mb-3 tracking-tight">{heading}</h1>
+    <p class="text-gray-500 font-medium">{subheading}</p>
+  </div>
+
+  <!-- Навигация по калькуляторам -->
+  <nav class="mb-6 -mx-4 px-4 overflow-x-auto">
+    <div class="flex gap-2 w-max">
+      {tabs.map((tab) => (
+        tab.key === active ? (
+          <span class="px-5 py-2.5 rounded-full text-sm font-bold bg-gray-900 text-white whitespace-nowrap">{tab.label}</span>
+        ) : tab.href ? (
+          <a href={tab.href} class="px-5 py-2.5 rounded-full text-sm font-medium bg-white border border-gray-200 text-gray-700 hover:border-gray-400 whitespace-nowrap transition-colors">{tab.label}</a>
+        ) : (
+          <span class="px-5 py-2.5 rounded-full text-sm font-medium bg-gray-50 border border-gray-100 text-gray-300 cursor-not-allowed whitespace-nowrap" title="Скоро">{tab.label}</span>
+        )
+      ))}
+    </div>
+  </nav>
+
+  <!-- Верхняя строка: тип расчёта / сущность / режим / период (фиксированы для этой страницы) -->
+  <div class="bg-white p-5 rounded-[2rem] border border-gray-100 shadow-sm mb-8 flex flex-wrap items-center gap-3 justify-center">
+    <span class="inline-flex items-center gap-2 bg-gray-100 text-gray-600 text-[11px] font-black uppercase tracking-widest px-4 py-2 rounded-xl">{dirLabel}</span>
+    <span class="inline-flex items-center gap-2 bg-gray-100 text-gray-600 text-[11px] font-black uppercase tracking-widest px-4 py-2 rounded-xl">ТОО</span>
+    <span class="inline-flex items-center gap-2 bg-gray-100 text-gray-600 text-[11px] font-black uppercase tracking-widest px-4 py-2 rounded-xl">{modeLabel}</span>
+
+    <select id="sel-year" class="bg-gray-50 border-none rounded-xl px-4 py-2.5 text-sm font-bold outline-none cursor-pointer">
+      <option value={TAX_YEAR}>{TAX_YEAR}</option>
+    </select>
+    <select id="sel-month" class="bg-gray-50 border-none rounded-xl px-4 py-2.5 text-sm font-bold outline-none cursor-pointer">
+      {months.map((m, i) => <option value={i}>{m}</option>)}
+    </select>
+  </div>
+
+  <div class="grid lg:grid-cols-12 gap-6 lg:gap-10 items-start">
+
+    <!-- ЛЕВАЯ КОЛОНКА: ВВОД -->
+    <div class="lg:col-span-5 min-w-0 space-y-6">
+
+      <!-- Блок «Расчёт» -->
+      <div class="bg-white p-5 sm:p-7 rounded-[2rem] sm:rounded-[2.5rem] border border-gray-100 shadow-sm">
+        <label class="block text-[10px] font-black text-blue-600 uppercase mb-5 tracking-[0.2em]">Тип занятости</label>
+        <div class="space-y-3">
+          <label class="flex items-center gap-3 cursor-pointer">
+            <input type="checkbox" id="chk-gph" class="w-5 h-5 rounded-lg border-gray-200 text-blue-600 focus:ring-blue-500 cursor-pointer">
+            <span class="font-bold text-gray-800">Договор ГПХ</span>
+            <span class="tip" title="Работодатель не платит ОПВР, ООСМС, СН. СО удерживается из дохода исполнителя.">i</span>
+          </label>
+          <label class="flex items-center gap-3 cursor-pointer">
+            <input type="checkbox" id="chk-hired" class="w-5 h-5 rounded-lg border-gray-200 text-blue-600 focus:ring-blue-500 cursor-pointer">
+            <span class="font-bold text-gray-800">Принят / уволен в этом месяце</span>
+            <span class="tip" title="Неполный месяц: оклад делится по отработанным дням, а минимальные базы СО/ОПВР/ООСМС/СН не применяются — берётся фактический доход.">i</span>
+          </label>
+
+          <!-- Отработанные дни (только при неполном месяце) -->
+          <div id="partial-days" class="hidden flex flex-wrap items-center gap-2 pl-8">
+            <input id="inp-worked" type="number" inputmode="numeric" min="0" value="10"
+              class="w-20 bg-gray-50 border-none rounded-xl px-3 py-2 text-sm font-black outline-none focus:ring-2 focus:ring-blue-500" />
+            <span class="text-sm font-medium text-gray-400">из</span>
+            <input id="inp-workdays" type="number" inputmode="numeric" min="1" value="22"
+              class="w-20 bg-gray-50 border-none rounded-xl px-3 py-2 text-sm font-black outline-none focus:ring-2 focus:ring-blue-500" />
+            <span class="text-sm font-medium text-gray-400">раб. дней</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Блок «Доход» -->
+      <div class="bg-white p-5 sm:p-7 rounded-[2rem] sm:rounded-[2.5rem] border border-gray-100 shadow-sm space-y-5">
+        <div class="flex items-center justify-between">
+          <label class="block text-[10px] font-black text-blue-600 uppercase tracking-[0.2em]">Доход</label>
+        </div>
+
+        <label class="flex items-center gap-3 cursor-pointer">
+          <input type="checkbox" id="chk-high-ipn" class="w-5 h-5 rounded-lg border-gray-200 text-blue-600 focus:ring-blue-500 cursor-pointer">
+          <span class="font-bold text-gray-800 text-sm">Повышенная ставка ИПН (15%)</span>
+          <span class="tip" title="Применяется к доходу свыше 8 500 МРП за год. Калькулятор применяет 15% к текущему месяцу.">i</span>
+        </label>
+        <label id="row-high-div" class="flex items-center gap-3 cursor-pointer">
+          <input type="checkbox" id="chk-high-div" class="w-5 h-5 rounded-lg border-gray-200 text-blue-600 focus:ring-blue-500 cursor-pointer">
+          <span class="font-bold text-gray-800 text-sm">Дивиденды: ставка 15% (свыше порога)</span>
+          <span class="tip" title="Дивиденды свыше 230 000 МРП за год облагаются по 15% вместо 5%.">i</span>
+        </label>
+
+        <!-- Прямой режим: список начислений -->
+        <div id="income-direct" class="space-y-5">
+          <div id="income-rows" class="space-y-3 pt-2"></div>
+
+          <button id="btn-add-income" type="button" class="w-full border-2 border-dashed border-gray-200 rounded-2xl py-3 text-sm font-bold text-blue-600 hover:border-blue-400 hover:bg-blue-50 transition-all">
+            + Добавить начисление
+          </button>
+        </div>
+
+        <!-- Обратный режим: сумма на руки -->
+        <div id="income-reverse" class="hidden pt-2">
+          <label class="block text-[10px] font-black text-gray-400 uppercase mb-2 tracking-[0.2em]">Сумма на руки</label>
+          <input id="inp-net" type="number" inputmode="numeric" value="300000" placeholder="0"
+            class="w-full bg-gray-50 border-none rounded-xl px-4 py-3 text-lg font-black outline-none focus:ring-2 focus:ring-blue-500" />
+          <p class="mt-2 text-xs text-gray-400 leading-relaxed">Подберём оклад и все налоги от желаемой суммы на руки. Дивиденды и больничные в обратном режиме не учитываются.</p>
+        </div>
+      </div>
+
+      <!-- Блок «Вычеты» -->
+      <div id="block-deductions" class="bg-white p-5 sm:p-7 rounded-[2rem] sm:rounded-[2.5rem] border border-gray-100 shadow-sm">
+        <label class="block text-[10px] font-black text-blue-600 uppercase mb-5 tracking-[0.2em]">Налоговые вычеты</label>
+        <div class="space-y-3">
+          <label class="flex items-center gap-3 cursor-pointer">
+            <input type="checkbox" id="chk-ded30" checked class="w-5 h-5 rounded-lg border-gray-200 text-blue-600 focus:ring-blue-500 cursor-pointer">
+            <span class="font-bold text-gray-800 text-sm">30 МРП (129 750 ₸)</span>
+            <span class="tip" title="Базовый вычет 129 750 ₸. Доступен резидентам РК.">i</span>
+          </label>
+          <label class="flex items-center gap-3 cursor-pointer">
+            <input type="checkbox" id="chk-ded882" class="w-5 h-5 rounded-lg border-gray-200 text-blue-600 focus:ring-blue-500 cursor-pointer">
+            <span class="font-bold text-gray-800 text-sm">882 МРП</span>
+            <span class="tip" title="Социальный вычет для инвалидов III группы и опекунов. В помесячном расчёте обнуляет базу ИПН.">i</span>
+          </label>
+          <label class="flex items-center gap-3 cursor-pointer">
+            <input type="checkbox" id="chk-ded5000" class="w-5 h-5 rounded-lg border-gray-200 text-blue-600 focus:ring-blue-500 cursor-pointer">
+            <span class="font-bold text-gray-800 text-sm">5000 МРП</span>
+            <span class="tip" title="Социальный вычет для инвалидов I/II группы. В помесячном расчёте обнуляет базу ИПН.">i</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Блок «Резидентство» -->
+      <div class="bg-white p-5 sm:p-7 rounded-[2rem] sm:rounded-[2.5rem] border border-gray-100 shadow-sm">
+        <label class="block text-[10px] font-black text-blue-600 uppercase mb-5 tracking-[0.2em]">Резидентство</label>
+        <div class="space-y-3">
+          <label class="flex items-center gap-3 cursor-pointer">
+            <input type="radio" name="residency" value="residentRK" checked class="w-5 h-5 border-gray-200 text-blue-600 focus:ring-blue-500 cursor-pointer">
+            <span class="font-bold text-gray-800 text-sm">Гражданин РК / ВНЖ</span>
+            <span class="tip" title="Резидент РК: ИПН 10% с вычетами, все социальные платежи начисляются.">i</span>
+          </label>
+          <label class="flex items-center gap-3 cursor-pointer">
+            <input type="radio" name="residency" value="eaesPermanent" class="w-5 h-5 border-gray-200 text-blue-600 focus:ring-blue-500 cursor-pointer">
+            <span class="font-bold text-gray-800 text-sm">Гражданин ЕАЭС (постоянно)</span>
+            <span class="tip" title="Гражданин ЕАЭС, постоянно пребывающий → резидент. Считается как гражданин РК: ИПН 10% с вычетами, все соц. платежи.">i</span>
+          </label>
+          <label class="flex items-center gap-3 cursor-pointer">
+            <input type="radio" name="residency" value="eaesTemp" class="w-5 h-5 border-gray-200 text-blue-600 focus:ring-blue-500 cursor-pointer">
+            <span class="font-bold text-gray-800 text-sm">Гражданин ЕАЭС (временно)</span>
+            <span class="tip" title="Гражданин ЕАЭС, временно пребывающий → нерезидент. Трудовой доход: ИПН 10% без вычетов. ОПВ/ВОСМС/СО/ОПВР/ООСМС не начисляются, остаётся СН.">i</span>
+          </label>
+          <label class="flex items-center gap-3 cursor-pointer">
+            <input type="radio" name="residency" value="nonResident" class="w-5 h-5 border-gray-200 text-blue-600 focus:ring-blue-500 cursor-pointer">
+            <span class="font-bold text-gray-800 text-sm">Нерезидент, третьи страны (ИПН 20%)</span>
+            <span class="tip" title="Нерезидент третьих стран: ИПН 20% от дохода, без вычетов. ОПВ/ВОСМС/СО/ОПВР/ООСМС не начисляются, остаётся СН.">i</span>
+          </label>
+        </div>
+        <p id="nonresident-note" class="hidden mt-4 text-xs text-gray-500 leading-relaxed bg-gray-50 rounded-xl p-3">
+          Для нерезидента вычеты и социальные статусы (льготы) не применяются — ИПН считается по плоской ставке от всего дохода.
+        </p>
+      </div>
+
+      <!-- Блок «Социальные статусы» -->
+      <div id="block-statuses" class="bg-white p-5 sm:p-7 rounded-[2rem] sm:rounded-[2.5rem] border border-gray-100 shadow-sm">
+        <label class="block text-[10px] font-black text-blue-600 uppercase mb-5 tracking-[0.2em]">Социальные статусы и льготы</label>
+        <div class="space-y-3">
+          <label class="flex items-center gap-3 cursor-pointer">
+            <input type="checkbox" id="chk-pensioner" class="w-5 h-5 rounded-lg border-gray-200 text-blue-600 focus:ring-blue-500 cursor-pointer">
+            <span class="font-bold text-gray-800 text-sm">Пенсионер</span>
+            <span class="tip" title="Не удерживается ОПВ, ВОСМС. Работодатель не платит ОПВР, СО, ООСМС.">i</span>
+          </label>
+          <label class="flex items-center gap-3 cursor-pointer">
+            <input type="checkbox" id="chk-student" class="w-5 h-5 rounded-lg border-gray-200 text-blue-600 focus:ring-blue-500 cursor-pointer">
+            <span class="font-bold text-gray-800 text-sm">Студент</span>
+            <span class="tip" title="ВОСМС = 0, ООСМС = 0. ОПВ / СО / ОПВР / СН — стандартно.">i</span>
+          </label>
+          <label class="flex items-center gap-3 cursor-pointer">
+            <input type="checkbox" id="chk-mother" class="w-5 h-5 rounded-lg border-gray-200 text-blue-600 focus:ring-blue-500 cursor-pointer">
+            <span class="font-bold text-gray-800 text-sm">Многодетная мать</span>
+            <span class="tip" title="4+ несовершеннолетних детей: с 2026 старый вычет 282 МРП отменён, взамен — полное освобождение от ИПН по зарплате. Взносы (ОПВ/ВОСМС/СО/ОПВР/ООСМС) удерживаются как обычно.">i</span>
+          </label>
+
+          <div class="flex items-center gap-3 flex-wrap">
+            <label class="flex items-center gap-3 cursor-pointer">
+              <input type="checkbox" id="chk-disabled" class="w-5 h-5 rounded-lg border-gray-200 text-blue-600 focus:ring-blue-500 cursor-pointer">
+              <span class="font-bold text-gray-800 text-sm">Инвалид</span>
+            </label>
+            <select id="sel-disabled" disabled class="bg-gray-50 border-none rounded-lg px-3 py-1.5 text-sm font-bold outline-none cursor-pointer disabled:opacity-40">
+              <option value="I">I группа</option>
+              <option value="II">II группа</option>
+              <option value="III">III группа</option>
+            </select>
+            <span class="tip" title="I/II группа: ОПВ/ВОСМС/ОПВР = 0, ООСМС работодатель платит стандартно.">i</span>
+          </div>
+
+          <label class="flex items-center gap-3 cursor-pointer">
+            <input type="checkbox" id="chk-astanahub" class="w-5 h-5 rounded-lg border-gray-200 text-blue-600 focus:ring-blue-500 cursor-pointer">
+            <span class="font-bold text-gray-800 text-sm">Astana Hub</span>
+            <span class="tip" title="ИПН и СН не начисляются при соблюдении условий льготного режима.">i</span>
+          </label>
+          <label class="flex items-center gap-3 cursor-pointer">
+            <input type="checkbox" id="chk-mfca" class="w-5 h-5 rounded-lg border-gray-200 text-blue-600 focus:ring-blue-500 cursor-pointer">
+            <span class="font-bold text-gray-800 text-sm">AFSA (МФЦА)</span>
+            <span class="tip" title="ИПН = 0. Всё остальное — стандартно.">i</span>
+          </label>
+          <label class="flex items-center gap-3 cursor-pointer">
+            <input type="checkbox" id="chk-exempt-opvr" class="w-5 h-5 rounded-lg border-gray-200 text-blue-600 focus:ring-blue-500 cursor-pointer">
+            <span class="font-bold text-gray-800 text-sm">Рождён до 1975 (ОПВР = 0)</span>
+          </label>
+          <label class="flex items-center gap-3 cursor-pointer">
+            <input type="checkbox" id="chk-oppv" class="w-5 h-5 rounded-lg border-gray-200 text-blue-600 focus:ring-blue-500 cursor-pointer">
+            <span class="font-bold text-gray-800 text-sm">Получатель ОППВ (инфо)</span>
+            <span class="tip" title="ОППВ в этой версии не входит в расчёт — только информационная отметка.">i</span>
+          </label>
+        </div>
+        <p id="oppv-note" class="hidden mt-4 text-xs text-gray-400 leading-relaxed bg-gray-50 rounded-xl p-3">
+          ОППВ (профессиональные пенсионные взносы, 5%) уплачивается работодателем за работников вредных профессий. В этой версии калькулятора не входит в итог.
+        </p>
+      </div>
+    </div>
+
+    <!-- ПРАВАЯ КОЛОНКА: КВИТАНЦИЯ -->
+    <div class="lg:col-span-7 min-w-0">
+      <div class="bg-white border border-gray-100 shadow-2xl rounded-[2rem] sm:rounded-[3rem] p-6 sm:p-8 lg:p-12 lg:sticky lg:top-8">
+
+        <div class="flex items-center justify-between mb-8">
+          <h2 class="text-2xl font-black text-gray-900 tracking-tight">Квитанция</h2>
+          <div class="bg-blue-600 text-white text-[10px] font-black px-5 py-1.5 rounded-full uppercase tracking-widest">1 месяц</div>
+        </div>
+
+        <!-- Начислено (в обратном режиме — подобранный оклад) -->
+        <div class="flex justify-between items-baseline mb-8 pb-6 border-b border-gray-100">
+          <span class="text-gray-500 font-medium">Начислено <span id="gross-label" class="text-[10px] text-gray-400 uppercase tracking-widest">(оклад)</span></span>
+          <span id="r-gross" class="font-black text-gray-900 text-xl">0 ₸</span>
+        </div>
+
+        <!-- Работник -->
+        <div class="mb-8">
+          <div class="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-4">Удержания работника</div>
+          <div class="space-y-3">
+            <div class="flex justify-between items-center"><span class="text-gray-500 font-medium">ОПВ</span><span id="r-opv" class="font-bold text-gray-900">0 ₸</span></div>
+            <div class="flex justify-between items-center"><span class="text-gray-500 font-medium">ВОСМС</span><span id="r-vosms" class="font-bold text-gray-900">0 ₸</span></div>
+            <div id="row-so-emp" class="hidden justify-between items-center"><span class="text-gray-500 font-medium">СО <span class="text-[10px] text-gray-400">(удержано, ГПХ)</span></span><span id="r-so-emp" class="font-bold text-gray-900">0 ₸</span></div>
+            <div class="flex justify-between items-center"><span class="text-gray-500 font-medium">ИПН</span><span id="r-ipn" class="font-bold text-gray-900">0 ₸</span></div>
+            <div id="row-ipn-div" class="hidden justify-between items-center pl-4"><span class="text-gray-400 text-sm">в т.ч. ИПН с дивидендов</span><span id="r-ipn-div" class="font-medium text-gray-500 text-sm">0 ₸</span></div>
+          </div>
+        </div>
+
+        <!-- Работодатель -->
+        <div class="mb-8 pt-6 border-t border-gray-100">
+          <div class="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-4">Расходы работодателя</div>
+          <div class="space-y-3">
+            <div class="flex justify-between items-center"><span class="text-gray-500 font-medium">ОПВР</span><span id="r-opvr" class="font-bold text-gray-900">0 ₸</span></div>
+            <div id="row-so-empr" class="flex justify-between items-center"><span class="text-gray-500 font-medium">СО</span><span id="r-so-empr" class="font-bold text-gray-900">0 ₸</span></div>
+            <div class="flex justify-between items-center"><span class="text-gray-500 font-medium">ООСМС</span><span id="r-oosms" class="font-bold text-gray-900">0 ₸</span></div>
+            <div class="flex justify-between items-center"><span class="text-gray-500 font-medium">СН <span id="sn-tag" class="hidden text-[10px] text-emerald-600">(в налоге с оборота)</span></span><span id="r-sn" class="font-bold text-gray-900">0 ₸</span></div>
+            <div class="flex justify-between items-center pt-2 border-t border-dashed border-gray-100"><span class="text-blue-600 font-bold">Итого расходов сверху</span><span id="r-employer-cost" class="font-black text-blue-600 text-lg">0 ₸</span></div>
+          </div>
+
+          <!-- Пояснение по упрощёнке (СН не платится подушево) -->
+          <div id="simplified-note" class="hidden mt-4 text-xs text-emerald-800 bg-emerald-50 rounded-xl p-3 leading-relaxed">
+            На упрощёнке социальный налог (6%) с зарплаты не уплачивается — он входит в единый налог с оборота (3–4%, форма 910.00).<span id="sn-savings-wrap"> Экономия на стоимости найма vs ОУР: <span id="sn-savings" class="font-black">0 ₸</span>/мес.</span>
+          </div>
+        </div>
+
+        <!-- Итоги -->
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div class="p-6 bg-gray-950 rounded-[2rem] text-white flex flex-col">
+            <span class="text-[10px] font-bold uppercase opacity-40 mb-2 tracking-[0.3em]">💰 На руки</span>
+            <span id="r-naruki" class="text-2xl sm:text-3xl font-black tracking-tighter text-emerald-400">0 ₸</span>
+          </div>
+          <div class="p-6 bg-gray-100 rounded-[2rem] flex flex-col">
+            <span class="text-[10px] font-bold uppercase text-gray-400 mb-2 tracking-[0.3em]">💼 Стоимость найма</span>
+            <span id="r-totalcost" class="text-2xl sm:text-3xl font-black tracking-tighter text-gray-900">0 ₸</span>
+          </div>
+        </div>
+
+        <!-- Дисклеймеры -->
+        <div class="mt-8 pt-6 border-t border-gray-100 space-y-2 text-xs text-gray-400 leading-relaxed">
+          <p>ИПН по прогрессивной ставке считается нарастающим итогом за год; калькулятор показывает помесячное приближение. Для точного расчёта обратитесь к бухгалтеру.</p>
+          <p>При ГПХ социальные отчисления (СО) удерживаются из дохода исполнителя, а не оплачиваются работодателем сверху.</p>
+          <p>Льготные статусы (Astana Hub, AFSA, инвалиды, пенсионеры) применяются при соблюдении условий, установленных законодательством.</p>
+          <p>Информация носит справочный характер. Актуально на {TAX_YEAR} год.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<style is:global>
+  body { background-color: #f8fafc; }
+  .tip {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 16px; height: 16px; border-radius: 9999px;
+    background: #eff6ff; color: #2563eb; font-size: 10px; font-weight: 800;
+    font-style: normal; cursor: help; flex-shrink: 0;
+  }
+  .income-row { animation: fadeIn 0.3s ease-out forwards; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+
+<script>
+  import { calculateSalary, calculateGrossFromNet } from '../lib/salary-calc.js'
+
+  const $ = (id: string) => document.getElementById(id) as HTMLElement
+  const fmt = (n: number) => {
+    if (n === null || n === undefined || isNaN(n)) return '0 ₸'
+    return Math.round(n).toLocaleString('ru-KZ') + ' ₸'
+  }
+
+  // Режим и направление фиксированы страницей — читаем из data-атрибутов корня.
+  const root = document.getElementById('calc-root') as HTMLElement
+  const calcDir: 'direct' | 'reverse' = (root.dataset.direction as 'direct' | 'reverse') || 'direct'
+  const employerMode: 'our' | 'simplified' = (root.dataset.mode as 'our' | 'simplified') || 'our'
+
+  type IncomeType = 'salary' | 'sick' | 'dividend'
+  let items: Array<{ type: IncomeType; amount: number }> = [{ type: 'salary', amount: 300000 }]
+
+  const incomeTypes: Record<IncomeType, string> = {
+    salary: 'Зарплата',
+    sick: 'Больничные',
+    dividend: 'Дивиденды',
+  }
+
+  // Рабочие дни по месяцам, производственный календарь РК 2026 (5-дневная неделя).
+  // Используется для автоподстановки в неполном месяце; поле остаётся редактируемым.
+  const workdays2026 = [19, 20, 18, 22, 17, 22, 22, 21, 22, 21, 21, 22]
+  function syncWorkdays() {
+    const m = Number(($('sel-month') as HTMLSelectElement).value) || 0
+    ;($('inp-workdays') as HTMLInputElement).value = String(workdays2026[m] ?? 22)
+  }
+
+  function renderIncomeRows() {
+    const wrap = $('income-rows')
+    wrap.innerHTML = ''
+    items.forEach((item, i) => {
+      const row = document.createElement('div')
+      row.className = 'income-row flex items-center gap-2'
+      row.innerHTML = `
+        <select data-i="${i}" data-field="type" class="bg-gray-50 border-none rounded-xl px-3 py-3 text-sm font-bold outline-none cursor-pointer">
+          ${(Object.keys(incomeTypes) as IncomeType[]).map(t => `<option value="${t}" ${item.type === t ? 'selected' : ''}>${incomeTypes[t]}</option>`).join('')}
+        </select>
+        <input data-i="${i}" data-field="amount" type="number" inputmode="numeric" value="${item.amount || ''}" placeholder="0"
+          class="flex-1 min-w-0 bg-gray-50 border-none rounded-xl px-4 py-3 text-lg font-black outline-none focus:ring-2 focus:ring-blue-500" />
+        <button data-del="${i}" type="button" title="Удалить"
+          class="shrink-0 w-10 h-10 rounded-xl bg-gray-50 text-gray-400 hover:bg-red-50 hover:text-red-500 transition-all flex items-center justify-center">🗑</button>
+      `
+      wrap.appendChild(row)
+    })
+  }
+
+  function gatherOptions() {
+    const residency = (document.querySelector('input[name="residency"]:checked') as HTMLInputElement)?.value || 'residentRK'
+    const disabledOn = ($('chk-disabled') as HTMLInputElement).checked
+    return {
+      employerMode,
+      gph: ($('chk-gph') as HTMLInputElement).checked,
+      partialMonth: ($('chk-hired') as HTMLInputElement).checked, // месяц найма/увольнения → мин. базы off
+      highIpn: ($('chk-high-ipn') as HTMLInputElement).checked,
+      highDividendIpn: ($('chk-high-div') as HTMLInputElement).checked,
+      deductions: {
+        ded30: ($('chk-ded30') as HTMLInputElement).checked,
+        ded882: ($('chk-ded882') as HTMLInputElement).checked,
+        ded5000: ($('chk-ded5000') as HTMLInputElement).checked,
+      },
+      residency,
+      statuses: {
+        pensioner: ($('chk-pensioner') as HTMLInputElement).checked,
+        disabled: disabledOn ? (($('sel-disabled') as HTMLSelectElement).value as 'I' | 'II' | 'III') : 'none',
+        student: ($('chk-student') as HTMLInputElement).checked,
+        manyChildrenMother: ($('chk-mother') as HTMLInputElement).checked,
+        astanaHub: ($('chk-astanahub') as HTMLInputElement).checked,
+        mfca: ($('chk-mfca') as HTMLInputElement).checked,
+        exemptOpvr: ($('chk-exempt-opvr') as HTMLInputElement).checked,
+        oppvReceiver: ($('chk-oppv') as HTMLInputElement).checked,
+      },
+    }
+  }
+
+  // Вычеты и соц-статусы применимы только к резидентам — у нерезидента прячем эти блоки.
+  function applyResidency() {
+    const residency = (document.querySelector('input[name="residency"]:checked') as HTMLInputElement)?.value || 'residentRK'
+    const nonResident = residency === 'eaesTemp' || residency === 'nonResident'
+    $('block-deductions').classList.toggle('hidden', nonResident)
+    $('block-statuses').classList.toggle('hidden', nonResident)
+    $('nonresident-note').classList.toggle('hidden', !nonResident)
+  }
+
+  function recalc() {
+    applyResidency()
+    const options = gatherOptions()
+
+    // Неполный месяц: делим оклад по отработанным дням (только прямой режим; в обратном
+    // оклад подбирается напрямую). Больничные и дивиденды не проратируются.
+    let effItems = items
+    if (options.partialMonth && calcDir === 'direct') {
+      const worked = parseFloat(($('inp-worked') as HTMLInputElement).value) || 0
+      const workdays = parseFloat(($('inp-workdays') as HTMLInputElement).value) || 0
+      const factor = workdays > 0 ? Math.max(0, Math.min(worked / workdays, 1)) : 1
+      effItems = items.map((it) => (it.type === 'salary' ? { ...it, amount: it.amount * factor } : it))
+    }
+
+    // Единая точка расчёта для заданных опций: прямой — от начислений, обратный — от суммы на руки.
+    const netTarget = parseFloat(($('inp-net') as HTMLInputElement).value) || 0
+    const compute = (opts: typeof options) =>
+      calcDir === 'reverse'
+        ? calculateGrossFromNet(netTarget, opts)
+        : calculateSalary({ incomeItems: effItems, options: opts })
+
+    const r = compute(options)
+    const gph = options.gph
+
+    // Упрощёнка: СН подушево не платится. Показываем пояснение и экономию vs ОУР
+    // (тот же расчёт с employerMode='our' — переиспользуем ядро, без дублирования формулы СН).
+    const isSimplified = options.employerMode === 'simplified'
+    $('simplified-note').classList.toggle('hidden', !isSimplified)
+    $('sn-tag').classList.toggle('hidden', !isSimplified)
+    if (isSimplified) {
+      const ourSn = compute({ ...options, employerMode: 'our' }).employer.sn
+      // Экономию показываем только когда она есть (при ГПХ/Astana Hub СН и на ОУР = 0)
+      $('sn-savings-wrap').classList.toggle('hidden', ourSn <= 0)
+      $('sn-savings').textContent = fmt(ourSn)
+    }
+
+    // Начислено: в прямом режиме — весь gross, в обратном — подобранный оклад
+    $('r-gross').textContent = fmt(r.gross)
+    $('gross-label').textContent = calcDir === 'reverse' ? '(подобрано)' : '(оклад)'
+
+    $('r-opv').textContent = fmt(r.employee.opv)
+    $('r-vosms').textContent = fmt(r.employee.vosms)
+    $('r-ipn').textContent = fmt(r.employee.ipn)
+
+    // СО: при ГПХ — в удержаниях работника, иначе — в расходах работодателя
+    $('row-so-emp').classList.toggle('hidden', !gph)
+    $('row-so-emp').classList.toggle('flex', gph)
+    $('row-so-empr').classList.toggle('hidden', gph)
+    $('row-so-empr').classList.toggle('flex', !gph)
+    $('r-so-emp').textContent = fmt(r.employee.so)
+    $('r-so-empr').textContent = fmt(r.employer.so)
+
+    // Дивидендный ИПН отдельной строкой
+    const hasDiv = r.dividendGross > 0
+    $('row-ipn-div').classList.toggle('hidden', !hasDiv)
+    $('row-ipn-div').classList.toggle('flex', hasDiv)
+    $('r-ipn-div').textContent = fmt(r.employee.ipnDividend)
+
+    $('r-opvr').textContent = fmt(r.employer.opvr)
+    $('r-oosms').textContent = fmt(r.employer.oosms)
+    $('r-sn').textContent = fmt(r.employer.sn)
+    $('r-employer-cost').textContent = fmt(r.employer.employerCost)
+
+    $('r-naruki').textContent = fmt(r.naRuki)
+    $('r-totalcost').textContent = fmt(r.totalCost)
+  }
+
+  // ── события ──
+
+  // Поля отработанных дней видны только при неполном месяце и в прямом режиме
+  function applyPartial() {
+    const show = ($('chk-hired') as HTMLInputElement).checked && calcDir === 'direct'
+    $('partial-days').classList.toggle('hidden', !show)
+  }
+
+  // Настройка UI под направление (фиксировано страницей): прямой — начисления, обратный — «на руки».
+  function applyDir() {
+    const reverse = calcDir === 'reverse'
+    $('income-direct').classList.toggle('hidden', reverse)
+    $('income-reverse').classList.toggle('hidden', !reverse)
+    // Дивиденды в обратном режиме не участвуют — прячем их ставку
+    $('row-high-div').classList.toggle('hidden', reverse)
+    applyPartial()
+  }
+
+  // Динамические строки дохода (делегирование)
+  const incomeWrap = $('income-rows')
+  incomeWrap.addEventListener('input', (e) => {
+    const el = e.target as HTMLInputElement
+    const i = Number(el.dataset.i)
+    if (Number.isNaN(i)) return
+    if (el.dataset.field === 'amount') items[i].amount = parseFloat(el.value) || 0
+    recalc()
+  })
+  incomeWrap.addEventListener('change', (e) => {
+    const el = e.target as HTMLSelectElement
+    const i = Number(el.dataset.i)
+    if (Number.isNaN(i)) return
+    if (el.dataset.field === 'type') {
+      items[i].type = el.value as IncomeType
+      recalc()
+    }
+  })
+  incomeWrap.addEventListener('click', (e) => {
+    const btn = (e.target as HTMLElement).closest('[data-del]') as HTMLElement | null
+    if (!btn) return
+    const i = Number(btn.dataset.del)
+    items.splice(i, 1)
+    if (items.length === 0) items.push({ type: 'salary', amount: 0 })
+    renderIncomeRows()
+    recalc()
+  })
+
+  $('btn-add-income').addEventListener('click', () => {
+    items.push({ type: 'salary', amount: 0 })
+    renderIncomeRows()
+    recalc()
+  })
+
+  // Инвалид: селект группы активен только при чекбоксе.
+  // Пересчёт выполнит общий обработчик 'change' ниже — здесь только переключаем доступность.
+  $('chk-disabled').addEventListener('change', () => {
+    ;($('sel-disabled') as HTMLSelectElement).disabled = !($('chk-disabled') as HTMLInputElement).checked
+  })
+
+  // ОППВ инфо-заметка
+  $('chk-oppv').addEventListener('change', () => {
+    $('oppv-note').classList.toggle('hidden', !($('chk-oppv') as HTMLInputElement).checked)
+  })
+
+  // Неполный месяц: показываем поля дней. Пересчёт выполнит общий обработчик 'change'.
+  $('chk-hired').addEventListener('change', applyPartial)
+
+  // Смена месяца → подставляем норму рабочих дней (пересчёт сделает общий обработчик 'change')
+  $('sel-month').addEventListener('change', syncWorkdays)
+
+  // Любое изменение в форме → пересчёт (реактивно, без кнопки «считать»).
+  // Вне #income-rows все контролы — чекбоксы/радио/селекты, для них достаточно 'change'
+  // (события 'input' + 'change' давали двойной пересчёт).
+  document.querySelectorAll('input, select').forEach((el) => {
+    if ((el as HTMLElement).closest('#income-rows')) return
+    if ((el as HTMLElement).closest('#income-reverse')) return
+    el.addEventListener('change', recalc)
+  })
+
+  // Живой пересчёт при вводе в числовые поля (на руки, отработанные дни)
+  ;['inp-net', 'inp-worked', 'inp-workdays'].forEach((id) => $(id).addEventListener('input', recalc))
+
+  renderIncomeRows()
+  applyDir()
+  // По умолчанию — текущий месяц (календарь 2026); подставляем норму рабочих дней
+  ;($('sel-month') as HTMLSelectElement).value = String(new Date().getMonth())
+  syncWorkdays()
+  recalc()
+</script>

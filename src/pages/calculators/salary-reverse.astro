@@ -1,0 +1,22 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import SalaryCalculator from '../../components/SalaryCalculator.astro'
+import { TAX_YEAR } from '../../data/tax-rates-2026.js'
+---
+
+<Layout
+  title={`Расчёт зарплаты от обратного ${TAX_YEAR} — от суммы на руки к окладу`}
+  description="Обратный расчёт зарплаты в Казахстане 2026: по желаемой сумме на руки подбираем оклад (gross) и все налоги — ОПВ, ВОСМС, ИПН, СО, ОПВР, ООСМС, СН. ТОО, ставки 2026."
+  calculator={{
+    name: `Расчёт зарплаты от обратного ${TAX_YEAR}`,
+    description: 'По сумме на руки подбираем оклад и полную стоимость найма для ТОО. Ставки 2026 года.',
+  }}
+>
+  <SalaryCalculator
+    mode="our"
+    direction="reverse"
+    active="reverse"
+    heading={`Расчёт зарплаты от обратного ${TAX_YEAR}`}
+    subheading="От суммы на руки → к окладу и стоимости найма · ТОО"
+  />
+</Layout>

@@ -1,0 +1,22 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import SalaryCalculator from '../../components/SalaryCalculator.astro'
+import { TAX_YEAR } from '../../data/tax-rates-2026.js'
+---
+
+<Layout
+  title={`Калькулятор зарплаты ТОО на упрощёнке (УСН) ${TAX_YEAR}`}
+  description="Расчёт зарплаты на руки и налогов работодателя для ТОО на упрощённом режиме (УСН) в Казахстане 2026. Социальный налог не платится подушево — входит в налог с оборота."
+  calculator={{
+    name: `Калькулятор зарплаты ТОО на упрощёнке ${TAX_YEAR}`,
+    description: 'Расчёт зарплаты на руки и стоимости найма для ТОО на упрощённой декларации (УСН). Ставки 2026 года.',
+  }}
+>
+  <SalaryCalculator
+    mode="simplified"
+    direction="direct"
+    active="too-usn"
+    heading={`Калькулятор зарплаты ТОО на упрощёнке ${TAX_YEAR}`}
+    subheading="Зарплата на руки и стоимость найма · ТОО · упрощённая декларация"
+  />
+</Layout>

@@ -1,0 +1,22 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import SalaryCalculator from '../../components/SalaryCalculator.astro'
+import { TAX_YEAR } from '../../data/tax-rates-2026.js'
+---
+
+<Layout
+  title={`Калькулятор зарплаты ТОО на ОУР ${TAX_YEAR}`}
+  description="Расчёт зарплаты на руки и налогов работодателя для ТОО на общеустановленном режиме (ОУР) в Казахстане 2026: ОПВ, ВОСМС, ИПН, СО, ОПВР, ООСМС, СН. С вычетами и льготами."
+  calculator={{
+    name: `Калькулятор зарплаты ТОО на ОУР ${TAX_YEAR}`,
+    description: 'Расчёт зарплаты на руки и полной стоимости найма для ТОО на общеустановленном режиме (ОУР). Ставки 2026 года.',
+  }}
+>
+  <SalaryCalculator
+    mode="our"
+    direction="direct"
+    active="too-our"
+    heading={`Калькулятор зарплаты ТОО на ОУР ${TAX_YEAR}`}
+    subheading="Зарплата на руки и стоимость найма · ТОО · общеустановленный режим"
+  />
+</Layout>
