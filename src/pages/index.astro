@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro'
+import SalaryCalculator from '../components/SalaryCalculator.astro'
 
 // Подтягиваем мета статей напрямую из блога, чтобы заголовки и описания не дублировались
 const modules = import.meta.glob('./blog/*.astro', { eager: true })
@@ -119,16 +120,21 @@ const limits: Record<string, Array<{ label: string; min: string; max: string }>>
 }
 ---
 
-<Layout title="Калькулятор налогов Казахстан 2026">
+<Layout title="Калькулятор налогов для ИП и ТОО (упрощёнка, ОУР) — Казахстан 2026">
 
   <!-- Hero -->
-  <section class="text-center py-14">
-    <h1 class="text-4xl font-bold tracking-tight mb-4">
-      Калькулятор налогов<br />Казахстан 2026
+  <section class="text-center pt-10 pb-6">
+    <h1 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+      Калькулятор налогов для ИП и ТОО<br class="hidden sm:block" /> на упрощёнке и ОУР — Казахстан 2026
     </h1>
     <p class="text-gray-500 text-lg max-w-xl mx-auto">
-      Быстро рассчитайте налоги для ИП и ТОО. Актуальные ставки 2026 года.
+      Быстро рассчитайте зарплату и налоги для ИП и ТОО. Актуальные ставки 2026 года.
     </p>
+  </section>
+
+  <!-- Встроенный калькулятор зарплаты (ТОО на упрощёнке) с навигацией по типам -->
+  <section class="mb-16">
+    <SalaryCalculator mode="simplified" direction="direct" active="too-usn" />
   </section>
 
   <!-- Calculator cards -->

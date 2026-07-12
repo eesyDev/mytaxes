@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro'
+import CalcNav from '../../components/CalcNav.astro'
 ---
 
 <Layout
@@ -22,6 +23,8 @@ import Layout from '../../layouts/Layout.astro'
         <p class="text-xs font-bold text-blue-700">Курс НБ РК: <span id="nb-rate">Загрузка...</span> ₸ / $</p>
       </div>
     </div>
+
+    <CalcNav active="forma-240" />
 
     <div class="grid lg:grid-cols-12 gap-10 items-start">
 

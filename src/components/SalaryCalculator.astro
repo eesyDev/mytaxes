@@ -1,12 +1,15 @@
 ---
 import { TAX_YEAR } from '../data/tax-rates-2026.js'
+import CalcNav from './CalcNav.astro'
 
 interface Props {
   mode: 'our' | 'simplified'
   direction: 'direct' | 'reverse'
   active: string
-  heading: string
-  subheading: string
+  // Необязательны: на отдельных страницах задают h1/подзаголовок; при встраивании
+  // (напр. на главной) опускаются, чтобы h1 был у страницы, а не у компонента.
+  heading?: string
+  subheading?: string
 }
 
 const { mode, direction, active, heading, subheading } = Astro.props
@@ -16,42 +19,21 @@ const months = [
   'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь',
 ]
 
-// Навигация по типам калькуляторов (отдельные страницы под SEO).
-// href: null → заглушка «скоро».
-const tabs = [
-  { key: 'ip-usn', label: 'ИП УСН', href: null },
-  { key: 'ip-our', label: 'ИП ОУР', href: null },
-  { key: 'too-usn', label: 'ТОО УСН', href: '/calculators/salary-too-usn' },
-  { key: 'too-our', label: 'ТОО ОУР', href: '/calculators/salary-too-our' },
-  { key: 'reverse', label: 'Расчёт от обратного', href: '/calculators/salary-reverse' },
-  { key: 'ediny', label: 'Единый платёж', href: null },
-]
-
 const dirLabel = direction === 'reverse' ? 'Расчёт от обратного' : 'Прямой расчёт'
 const modeLabel = mode === 'simplified' ? 'Упрощёнка' : 'ОУР'
 ---
 
 <div id="calc-root" data-mode={mode} data-direction={direction} class="max-w-6xl mx-auto px-4 py-6 sm:py-12 font-sans selection:bg-blue-100 overflow-x-clip">
 
-  <div class="text-center mb-8">
-    <h1 class="text-3xl sm:text-4xl font-black text-gray-900 mb-3 tracking-tight">{heading}</h1>
-    <p class="text-gray-500 font-medium">{subheading}</p>
-  </div>
+  {heading && (
+    <div class="text-center mb-8">
+      <h1 class="text-3xl sm:text-4xl font-black text-gray-900 mb-3 tracking-tight">{heading}</h1>
+      <p class="text-gray-500 font-medium">{subheading}</p>
+    </div>
+  )}
 
   <!-- Навигация по калькуляторам -->
-  <nav class="mb-6 -mx-4 px-4 overflow-x-auto">
-    <div class="flex gap-2 w-max">
-      {tabs.map((tab) => (
-        tab.key === active ? (
-          <span class="px-5 py-2.5 rounded-full text-sm font-bold bg-gray-900 text-white whitespace-nowrap">{tab.label}</span>
-        ) : tab.href ? (
-          <a href={tab.href} class="px-5 py-2.5 rounded-full text-sm font-medium bg-white border border-gray-200 text-gray-700 hover:border-gray-400 whitespace-nowrap transition-colors">{tab.label}</a>
-        ) : (
-          <span class="px-5 py-2.5 rounded-full text-sm font-medium bg-gray-50 border border-gray-100 text-gray-300 cursor-not-allowed whitespace-nowrap" title="Скоро">{tab.label}</span>
-        )
-      ))}
-    </div>
-  </nav>
+  <CalcNav active={active} />
 
   <!-- Верхняя строка: тип расчёта / сущность / режим / период (фиксированы для этой страницы) -->
   <div class="bg-white p-5 rounded-[2rem] border border-gray-100 shadow-sm mb-8 flex flex-wrap items-center gap-3 justify-center">
@@ -552,7 +534,9 @@ const modeLabel = mode === 'simplified' ? 'Упрощёнка' : 'ОУР'
   // Любое изменение в форме → пересчёт (реактивно, без кнопки «считать»).
   // Вне #income-rows все контролы — чекбоксы/радио/селекты, для них достаточно 'change'
   // (события 'input' + 'change' давали двойной пересчёт).
-  document.querySelectorAll('input, select').forEach((el) => {
+  // Ограничено пределами калькулятора (#calc-root) — компонент встраивается и на главную,
+  // рядом с другими секциями, поэтому не цепляемся к посторонним input/select на странице.
+  root.querySelectorAll('input, select').forEach((el) => {
     if ((el as HTMLElement).closest('#income-rows')) return
     if ((el as HTMLElement).closest('#income-reverse')) return
     el.addEventListener('change', recalc)
