@@ -112,7 +112,7 @@ const months = [
         </div>
 
         <!-- Блок «Вычеты» -->
-        <div class="bg-white p-5 sm:p-7 rounded-[2rem] sm:rounded-[2.5rem] border border-gray-100 shadow-sm">
+        <div id="block-deductions" class="bg-white p-5 sm:p-7 rounded-[2rem] sm:rounded-[2.5rem] border border-gray-100 shadow-sm">
           <label class="block text-[10px] font-black text-blue-600 uppercase mb-5 tracking-[0.2em]">Налоговые вычеты</label>
           <div class="space-y-3">
             <label class="flex items-center gap-3 cursor-pointer">
@@ -158,10 +158,13 @@ const months = [
               <span class="tip" title="Нерезидент третьих стран: ИПН 20% от дохода, без вычетов. ОПВ/ВОСМС/СО/ОПВР/ООСМС не начисляются, остаётся СН.">i</span>
             </label>
           </div>
+          <p id="nonresident-note" class="hidden mt-4 text-xs text-gray-500 leading-relaxed bg-gray-50 rounded-xl p-3">
+            Для нерезидента вычеты и социальные статусы (льготы) не применяются — ИПН считается по плоской ставке от всего дохода.
+          </p>
         </div>
 
         <!-- Блок «Социальные статусы» -->
-        <div class="bg-white p-5 sm:p-7 rounded-[2rem] sm:rounded-[2.5rem] border border-gray-100 shadow-sm">
+        <div id="block-statuses" class="bg-white p-5 sm:p-7 rounded-[2rem] sm:rounded-[2.5rem] border border-gray-100 shadow-sm">
           <label class="block text-[10px] font-black text-blue-600 uppercase mb-5 tracking-[0.2em]">Социальные статусы и льготы</label>
           <div class="space-y-3">
             <label class="flex items-center gap-3 cursor-pointer">
@@ -378,7 +381,17 @@ const months = [
     }
   }
 
+  // Вычеты и соц-статусы применимы только к резидентам — у нерезидента прячем эти блоки.
+  function applyResidency() {
+    const residency = (document.querySelector('input[name="residency"]:checked') as HTMLInputElement)?.value || 'residentRK'
+    const nonResident = residency === 'eaesTemp' || residency === 'nonResident'
+    $('block-deductions').classList.toggle('hidden', nonResident)
+    $('block-statuses').classList.toggle('hidden', nonResident)
+    $('nonresident-note').classList.toggle('hidden', !nonResident)
+  }
+
   function recalc() {
+    applyResidency()
     const options = gatherOptions()
 
     // Неполный месяц: делим оклад по отработанным дням (только прямой режим; в обратном

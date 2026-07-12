@@ -244,6 +244,25 @@ function runTests() {
       },
     },
     {
+      name: 'Нерезидент + Astana Hub: статус не применяется (СН остаётся)',
+      params: {
+        incomeItems: [{ type: 'salary', amount: 300_000 }],
+        options: {
+          employerMode: 'our',
+          residency: 'nonResident',
+          statuses: { astanaHub: true },
+        },
+      },
+      expected: {
+        ipn: 60_000,          // плоский ИПН нерезидента, льгота Astana Hub не действует
+        sn: 15_840,           // СН НЕ обнуляется у нерезидента
+        so: 0,
+        oosms: 0,
+        opvr: 0,
+        employerCost: 15_840, // только СН
+      },
+    },
+    {
       name: 'ЕАЭС постоянно (резидент): 300 000 — как гражданин РК',
       params: {
         incomeItems: [{ type: 'salary', amount: 300_000 }],

@@ -69,17 +69,7 @@ export function calculateSalary(params) {
 
   const totalGross = salaryGross + sickGross + dividendGross;
 
-  // ─── 2. Флаги статусов ───
-  const isPensioner = statuses.pensioner || false;
-  const isDisabled12 = statuses.disabled === 'I' || statuses.disabled === 'II';
-  const isDisabled3 = statuses.disabled === 'III';
-  const isStudent = statuses.student || false;
-  const isAstanaHub = statuses.astanaHub || false;
-  const isMfca = statuses.mfca || false;
-  const isExemptOpvr = statuses.exemptOpvr || false;
-  // Многодетная мать (4+ несовершеннолетних детей): с 2026 старый вычет 282 МРП отменён,
-  // взамен введено полное освобождение от ИПН по зарплате. Взносы удерживаются как обычно.
-  const isManyChildrenMother = statuses.manyChildrenMother || false;
+  // ─── 2. Резидентство и флаги статусов ───
   // Резидентство. Практически 4 категории:
   //   residentRK     — гражданин РК / иностранец с ВНЖ (резидент)
   //   eaesPermanent  — гражданин ЕАЭС, постоянно пребывающий (резидент) → как гражданин РК
@@ -90,6 +80,19 @@ export function calculateSalary(params) {
   const isNonResident = residency === 'eaesTemp' || residency === 'nonResident';
   const nonResidentIpnRate = residency === 'eaesTemp' ? RATES.ipn : RATES.ipnNonResident;
   const isResidentForDeductions = residency === 'residentRK' || residency === 'eaesPermanent';
+
+  // Соц-статусы — льготы резидентов; у нерезидента не применяются. Гейтинг по !isNonResident
+  // в т.ч. закрывает утечку, когда Astana Hub обнулял СН нерезиденту, оставляя плоский ИПН.
+  const isPensioner = !isNonResident && (statuses.pensioner || false);
+  const isDisabled12 = !isNonResident && (statuses.disabled === 'I' || statuses.disabled === 'II');
+  const isDisabled3 = !isNonResident && statuses.disabled === 'III';
+  const isStudent = !isNonResident && (statuses.student || false);
+  const isAstanaHub = !isNonResident && (statuses.astanaHub || false);
+  const isMfca = !isNonResident && (statuses.mfca || false);
+  const isExemptOpvr = !isNonResident && (statuses.exemptOpvr || false);
+  // Многодетная мать (4+ несовершеннолетних детей): с 2026 старый вычет 282 МРП отменён,
+  // взамен введено полное освобождение от ИПН по зарплате. Взносы удерживаются как обычно.
+  const isManyChildrenMother = !isNonResident && (statuses.manyChildrenMother || false);
 
   // ─── 3. Вычеты ───
   let deductions = 0;
