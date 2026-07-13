@@ -1,0 +1,42 @@
+---
+// Подборка статей блога — одинаковая на всех страницах (главная + калькуляторы).
+const modules = import.meta.glob('../pages/blog/*.astro', { eager: true })
+const allPosts = Object.entries(modules)
+  .filter(([, mod]) => (mod as any).meta)
+  .map(([path, mod]) => ({
+    ...(mod as any).meta,
+    slug: path.replace('../pages/blog/', '').replace('.astro', ''),
+  }))
+
+const featuredSlugs = [
+  'ip-uproshchenniy-rezhim-2026',
+  'patent-dlya-ip-2026',
+  'too-uproshchenka',
+  'crypto',
+  'freelance',
+  'nalogovye-vychety',
+]
+const featured = featuredSlugs
+  .map((slug) => {
+    const post = allPosts.find((p) => p.slug === slug)
+    if (!post) console.warn(`[FeaturedPosts] статья не найдена: ${slug}`)
+    return post
+  })
+  .filter(Boolean) as Array<{ slug: string; title: string; description: string; category: string }>
+---
+
+<section class="mb-16">
+  <div class="flex items-center justify-between mb-6">
+    <h2 class="text-xl font-bold">Статьи о налогах</h2>
+    <a href="/blog" class="text-sm text-blue-600 hover:underline">Все статьи →</a>
+  </div>
+  <div class="grid sm:grid-cols-2 gap-4">
+    {featured.map((post) => (
+      <a href={`/blog/${post.slug}`} class="group border border-gray-100 rounded-2xl p-6 hover:border-gray-300 transition-all">
+        <span class="text-xs text-gray-400 uppercase tracking-wide">{post.category}</span>
+        <h3 class="font-semibold mt-1 mb-2 group-hover:text-blue-600 transition-colors">{post.title}</h3>
+        <p class="text-sm text-gray-500">{post.description}</p>
+      </a>
+    ))}
+  </div>
+</section>

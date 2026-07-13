@@ -1,0 +1,40 @@
+---
+// Секция FAQ + разметка FAQPage (JSON-LD) для SEO. Вопросы передаются пропсом.
+interface FaqItem {
+  q: string
+  a: string
+}
+interface Props {
+  faqs: FaqItem[]
+  heading?: string
+}
+const { faqs, heading = 'Частые вопросы' } = Astro.props
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a },
+  })),
+}
+---
+
+<section class="mb-16">
+  <div class="flex items-center justify-between mb-6">
+    <h2 class="text-xl font-bold">{heading}</h2>
+  </div>
+  <div class="space-y-3">
+    {faqs.map((item) => (
+      <details class="group border border-gray-200 rounded-2xl px-6 open:border-gray-300 transition-all">
+        <summary class="flex items-center justify-between gap-4 py-5 cursor-pointer list-none group-hover:text-blue-600 transition-colors">
+          <h3 class="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">{item.q}</h3>
+          <span class="shrink-0 text-gray-400 text-xl leading-none transition-transform group-open:rotate-45">+</span>
+        </summary>
+        <p class="text-sm text-gray-500 leading-relaxed pb-5 -mt-1">{item.a}</p>
+      </details>
+    ))}
+  </div>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+</section>

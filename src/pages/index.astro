@@ -1,34 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import SalaryCalculator from '../components/SalaryCalculator.astro'
-
-// Подтягиваем мета статей напрямую из блога, чтобы заголовки и описания не дублировались
-const modules = import.meta.glob('./blog/*.astro', { eager: true })
-const allPosts = Object.entries(modules)
-  .filter(([, mod]) => (mod as any).meta)
-  .map(([path, mod]) => ({
-    ...(mod as any).meta,
-    slug: path.replace('./blog/', '').replace('.astro', ''),
-  }))
-
-// Подборка для главной — 6 статей с разным охватом тем
-const featuredSlugs = [
-  'ip-uproshchenniy-rezhim-2026',
-  'patent-dlya-ip-2026',
-  'too-uproshchenka',
-  'crypto',
-  'freelance',
-  'nalogovye-vychety',
-]
-const featured = featuredSlugs
-  .map((slug) => {
-    const post = allPosts.find((p) => p.slug === slug)
-    // Предупреждаем при сборке, если статья из подборки не найдена или без meta —
-    // иначе карточка молча исчезнет с главной.
-    if (!post) console.warn(`[index] featured-статья не найдена: ${slug}`)
-    return post
-  })
-  .filter(Boolean) as Array<{ slug: string; title: string; description: string; category: string }>
+import FaqSection from '../components/FaqSection.astro'
+import FeaturedPosts from '../components/FeaturedPosts.astro'
 
 // FAQ — структура на 10 вопросов
 const faqs = [
@@ -73,16 +47,6 @@ const faqs = [
     a: 'Штраф за неуплату налога может достигать значительной части суммы, плюс пеня за просрочку и риск блокировки счетов по линии финмониторинга. Декларировать выгоднее, чем скрывать.',
   },
 ]
-
-const faqSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: faqs.map((item) => ({
-    '@type': 'Question',
-    name: item.q,
-    acceptedAnswer: { '@type': 'Answer', text: item.a },
-  })),
-}
 
 // Базовые ставки по годам
 const baseRates = [
@@ -226,45 +190,10 @@ const limits: Record<string, Array<{ label: string; min: string; max: string }>>
   </section>
 
   <!-- Blog section -->
-  <section class="mb-20">
-    <div class="flex items-center justify-between mb-6">
-      <h2 class="text-xl font-bold">Статьи о налогах</h2>
-      <a href="/blog" class="text-sm text-blue-600 hover:underline">Все статьи →</a>
-    </div>
-    <div class="grid sm:grid-cols-2 gap-4">
-      {featured.map(post => (
-        <a href={`/blog/${post.slug}`} class="group border border-gray-100 rounded-2xl p-6 hover:border-gray-300 transition-all">
-          <span class="text-xs text-gray-400 uppercase tracking-wide">{post.category}</span>
-          <h3 class="font-semibold mt-1 mb-2 group-hover:text-blue-600 transition-colors">
-            {post.title}
-          </h3>
-          <p class="text-sm text-gray-500">{post.description}</p>
-        </a>
-      ))}
-    </div>
-  </section>
+  <FeaturedPosts />
 
   <!-- FAQ section -->
-  <section>
-    <div class="flex items-center justify-between mb-6">
-      <h2 class="text-xl font-bold">Частые вопросы</h2>
-    </div>
-    <div class="space-y-3">
-      {faqs.map(item => (
-        <details class="group border border-gray-200 rounded-2xl px-6 open:border-gray-300 transition-all">
-          <summary class="flex items-center justify-between gap-4 py-5 cursor-pointer list-none group-hover:text-blue-600 transition-colors">
-            <h3 class="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">{item.q}</h3>
-            <span class="shrink-0 text-gray-400 text-xl leading-none transition-transform group-open:rotate-45">+</span>
-          </summary>
-          <p class="text-sm text-gray-500 leading-relaxed pb-5 -mt-1">
-            {item.a}
-          </p>
-        </details>
-      ))}
-    </div>
-  </section>
-
-  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <FaqSection faqs={faqs} />
 
   <script>
     const section = document.getElementById('rates')
