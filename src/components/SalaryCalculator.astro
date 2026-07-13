@@ -35,19 +35,10 @@ const modeLabel = mode === 'simplified' ? 'Упрощёнка' : 'ОУР'
   <!-- Навигация по калькуляторам -->
   <CalcNav active={active} />
 
-  <!-- Верхняя строка: тип расчёта / сущность / режим / период (фиксированы для этой страницы) -->
-  <div class="bg-white p-5 rounded-[2rem] border border-gray-100 shadow-sm mb-8 flex flex-wrap items-center gap-3 justify-center">
-    <span class="inline-flex items-center gap-2 bg-gray-100 text-gray-600 text-[11px] font-black uppercase tracking-widest px-4 py-2 rounded-xl">{dirLabel}</span>
-    <span class="inline-flex items-center gap-2 bg-gray-100 text-gray-600 text-[11px] font-black uppercase tracking-widest px-4 py-2 rounded-xl">ТОО</span>
-    <span class="inline-flex items-center gap-2 bg-gray-100 text-gray-600 text-[11px] font-black uppercase tracking-widest px-4 py-2 rounded-xl">{modeLabel}</span>
-
-    <select id="sel-year" class="bg-gray-50 border-none rounded-xl px-4 py-2.5 text-sm font-bold outline-none cursor-pointer">
-      <option value={TAX_YEAR}>{TAX_YEAR}</option>
-    </select>
-    <select id="sel-month" class="bg-gray-50 border-none rounded-xl px-4 py-2.5 text-sm font-bold outline-none cursor-pointer">
-      {months.map((m, i) => <option value={i}>{m}</option>)}
-    </select>
-  </div>
+  <!-- Контекст расчёта (фиксирован страницей) — простой текст без плашки -->
+  <p class="text-center text-[13px] font-medium text-gray-400 mb-8 uppercase tracking-widest">
+    {dirLabel} · ТОО · {modeLabel} · {TAX_YEAR}
+  </p>
 
   <div class="grid lg:grid-cols-12 gap-6 lg:gap-10 items-start">
 
@@ -69,14 +60,23 @@ const modeLabel = mode === 'simplified' ? 'Упрощёнка' : 'ОУР'
             <span class="tip" title="Неполный месяц: оклад делится по отработанным дням, а минимальные базы СО/ОПВР/ООСМС/СН не применяются — берётся фактический доход.">i</span>
           </label>
 
-          <!-- Отработанные дни (только при неполном месяце) -->
-          <div id="partial-days" class="hidden flex flex-wrap items-center gap-2 pl-8">
-            <input id="inp-worked" type="number" inputmode="numeric" min="0" value="10"
-              class="w-20 bg-gray-50 border-none rounded-xl px-3 py-2 text-sm font-black outline-none focus:ring-2 focus:ring-blue-500" />
-            <span class="text-sm font-medium text-gray-400">из</span>
-            <input id="inp-workdays" type="number" inputmode="numeric" min="1" value="22"
-              class="w-20 bg-gray-50 border-none rounded-xl px-3 py-2 text-sm font-black outline-none focus:ring-2 focus:ring-blue-500" />
-            <span class="text-sm font-medium text-gray-400">раб. дней</span>
+          <!-- Неполный месяц: месяц задаёт норму рабочих дней, поля дней редактируемы -->
+          <div id="partial-days" class="hidden pl-8 space-y-2">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="text-sm font-medium text-gray-500 w-24 shrink-0">Месяц</span>
+              <select id="sel-month" class="bg-gray-50 border-none rounded-lg px-3 py-1.5 text-sm font-bold outline-none cursor-pointer">
+                {months.map((m, i) => <option value={i}>{m}</option>)}
+              </select>
+            </div>
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="text-sm font-medium text-gray-500 w-24 shrink-0">Отработано</span>
+              <input id="inp-worked" type="number" inputmode="numeric" min="0" value="10"
+                class="w-16 bg-gray-50 border-none rounded-lg px-3 py-1.5 text-sm font-black outline-none focus:ring-2 focus:ring-blue-500" />
+              <span class="text-sm text-gray-400">из</span>
+              <input id="inp-workdays" type="number" inputmode="numeric" min="1" value="22"
+                class="w-16 bg-gray-50 border-none rounded-lg px-3 py-1.5 text-sm font-black outline-none focus:ring-2 focus:ring-blue-500" />
+              <span class="text-sm text-gray-400">раб. дней</span>
+            </div>
           </div>
         </div>
       </div>

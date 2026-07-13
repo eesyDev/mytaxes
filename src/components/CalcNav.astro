@@ -15,13 +15,20 @@ const tabs = [
   { key: 'forma-240', label: 'Форма 240', href: '/calculators/forma-240' },
   { key: 'ediny', label: 'Единый платёж', href: null },
 ]
+
+// Текущая страница определяется по URL (нормализуем хвостовой слэш), плюс явный
+// `active` для встраивания (напр. на главной, где путь не совпадает ни с одним табом).
+// Любой таб, ведущий на текущую страницу, становится неактивным (не ссылкой).
+const current = Astro.url.pathname.replace(/\/+$/, '') || '/'
+const isCurrent = (tab: (typeof tabs)[number]) =>
+  tab.key === active || (tab.href != null && tab.href === current)
 ---
 
 <nav class="mb-8 overflow-x-auto flex sm:justify-center">
   <div class="inline-flex gap-1 bg-gray-100 p-1 rounded-full w-max">
     {tabs.map((tab) => (
-      tab.key === active ? (
-        <span class="px-4 py-2 rounded-full text-[13px] font-bold bg-white text-gray-900 shadow-sm whitespace-nowrap">{tab.label}</span>
+      isCurrent(tab) ? (
+        <span aria-current="page" class="px-4 py-2 rounded-full text-[13px] font-bold bg-blue-600 text-white shadow-sm whitespace-nowrap cursor-default">{tab.label}</span>
       ) : tab.href ? (
         <a href={tab.href} class="px-4 py-2 rounded-full text-[13px] font-medium text-gray-500 hover:text-gray-900 whitespace-nowrap transition-colors">{tab.label}</a>
       ) : (
