@@ -73,11 +73,11 @@ const faqs = [
   <div class="max-w-6xl mx-auto px-4 py-12 font-sans selection:bg-blue-100">
     
     <div class="text-center mb-8">
-      <h1 class="text-4xl font-black text-gray-900 mb-3 tracking-tight">Налоговый калькулятор</h1>
-      <p class="text-gray-500 font-medium">Актуальные ставки на март 2026 года</p>
+      <h1 class="text-4xl font-black text-gray-900 mb-3 tracking-tight">Калькулятор налогов для ИП на упрощёнке, патенте и ОУР 2026</h1>
+      <p class="text-gray-500 font-medium">Актуальные ставки 2026 года</p>
     </div>
 
-    <CalcNav active="ip-usn" />
+    <CalcNav active="ip" />
 
     <div class="flex justify-center mb-12">
       <div class="inline-flex bg-gray-100 p-1.5 rounded-2xl border border-gray-200 shadow-inner">
@@ -196,18 +196,59 @@ const faqs = [
 
     </div>
 
-    <div class="mt-16">
-      <FeaturedPosts />
-      <FaqSection faqs={faqs} />
-    </div>
+    <section class="my-16 text-gray-700 leading-relaxed">
+      <h2 class="text-2xl font-black text-gray-900 tracking-tight mb-4">Как рассчитать налоги ИП в Казахстане в 2026 году</h2>
+      <p class="mb-4">
+        Итоговая налоговая нагрузка ИП складывается из двух частей: <strong>налога с дохода</strong> по выбранному
+        режиму и <strong>социальных платежей «за себя»</strong> (ОПВ, СО, ВОСМС). Калькулятор считает обе части сразу и
+        показывает полную сумму к оплате за месяц или за полугодие — переключатель периода вверху.
+      </p>
+
+      <h3 class="text-lg font-bold text-gray-900 mt-8 mb-3">Три режима налогообложения ИП</h3>
+      <ul class="list-disc pl-5 space-y-1 mb-4">
+        <li><strong>Упрощённая декларация</strong> — ИПН 4% от оборота (дохода), отчётность по форме 910.00 раз в полгода. Можно нанимать работников.</li>
+        <li><strong>Патент</strong> — 1% от заявленного дохода, самый простой режим. Только без наёмных работников и по ограниченному перечню видов деятельности.</li>
+        <li><strong>Общеустановленный режим (ОУР)</strong> — ИПН 10% с чистого дохода (доходы минус расходы). Подходит при высоких расходах и превышении лимитов упрощёнки.</li>
+      </ul>
+
+      <h3 class="text-lg font-bold text-gray-900 mt-8 mb-3">Социальные платежи «за себя»</h3>
+      <p class="mb-4">
+        Независимо от режима ИП платит за себя <strong>ОПВ 10%</strong>, <strong>социальные отчисления (СО) 5%</strong> и
+        <strong>ВОСМС</strong>. Базой служит заявленный доход в пределах установленных лимитов, но не ниже 1 МЗП
+        (85 000 ₸). ВОСМС уплачивается от фиксированной базы даже при нулевом доходе, а ОПВ и СО при отсутствии дохода
+        могут не начисляться — калькулятор учитывает это автоматически.
+      </p>
+
+      <h3 class="text-lg font-bold text-gray-900 mt-8 mb-3">Работники и НДС</h3>
+      <p class="mb-4">
+        За наёмных сотрудников ИП удерживает и платит те же взносы, что и ТОО (ОПВ, ВОСМС, ИПН, СО, ОПВР, ООСМС) — в
+        калькуляторе можно указать их число и зарплату. При обороте свыше <strong>20 000 МРП</strong> за календарный год
+        постановка на учёт по НДС обязательна независимо от режима.
+      </p>
+
+      <h3 class="text-lg font-bold text-gray-900 mt-8 mb-3">Что выгоднее — патент или упрощёнка</h3>
+      <p class="mb-4">
+        Патент дешевле по ставке (1% против 4%), но не позволяет нанимать работников и охватывает меньше видов
+        деятельности. Упрощёнка гибче и допускает наём сотрудников. Введите свои цифры в калькуляторе и сравните итоговую
+        сумму к оплате по каждому режиму.
+      </p>
+
+      <p class="text-sm text-gray-500">
+        Расчёт носит справочный характер и использует ставки 2026 года. Для точного учёта лимитов и вычетов обратитесь к
+        бухгалтеру.
+      </p>
+    </section>
+
+    <FeaturedPosts />
+    <FaqSection faqs={faqs} />
   </div>
 </Layout>
 
 <style is:global>
   body { background-color: #f8fafc; }
-  .regime-btn { border-color: #f1f5f9; color: #94a3b8; background: #fff; }
+  .regime-btn { border-color: #f1f5f9; color: #94a3b8; background: #fff; cursor: pointer; }
   .active-regime { border-color: #2563eb; background: #fff; color: #1e293b !important; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05); }
-  .period-btn { color: #94a3b8; }
+  .period-btn { color: #94a3b8; cursor: pointer; }
   .active-tab { background: #fff; color: #0f172a !important; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
   .animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }

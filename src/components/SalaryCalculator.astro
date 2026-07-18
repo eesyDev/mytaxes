@@ -23,7 +23,7 @@ const dirLabel = direction === 'reverse' ? 'Расчёт от обратного
 const modeLabel = mode === 'simplified' ? 'Упрощёнка' : 'ОУР'
 ---
 
-<div id="calc-root" data-mode={mode} data-direction={direction} class="max-w-6xl mx-auto px-4 py-6 sm:py-12 font-sans selection:bg-blue-100 overflow-x-clip">
+<div id="calc-root" data-mode={mode} data-direction={direction} class="pt-6 sm:pt-12 font-sans selection:bg-blue-100 overflow-x-clip">
 
   {heading && (
     <div class="text-center mb-8">
@@ -102,7 +102,7 @@ const modeLabel = mode === 'simplified' ? 'Упрощёнка' : 'ОУР'
         <div id="income-direct" class="space-y-5">
           <div id="income-rows" class="space-y-3 pt-2"></div>
 
-          <button id="btn-add-income" type="button" class="w-full border-2 border-dashed border-gray-200 rounded-2xl py-3 text-sm font-bold text-blue-600 hover:border-blue-400 hover:bg-blue-50 transition-all">
+          <button id="btn-add-income" type="button" class="w-full border-2 border-dashed border-gray-200 rounded-2xl py-3 text-sm font-bold text-blue-600 hover:border-blue-400 hover:bg-blue-50 transition-all cursor-pointer">
             + Добавить начисление
           </button>
         </div>
@@ -352,7 +352,7 @@ const modeLabel = mode === 'simplified' ? 'Упрощёнка' : 'ОУР'
         <input data-i="${i}" data-field="amount" type="number" inputmode="numeric" value="${item.amount || ''}" placeholder="0"
           class="flex-1 min-w-0 bg-gray-50 border-none rounded-xl px-4 py-3 text-lg font-black outline-none focus:ring-2 focus:ring-blue-500" />
         <button data-del="${i}" type="button" title="Удалить"
-          class="shrink-0 w-10 h-10 rounded-xl bg-gray-50 text-gray-400 hover:bg-red-50 hover:text-red-500 transition-all flex items-center justify-center">🗑</button>
+          class="shrink-0 w-10 h-10 rounded-xl bg-gray-50 text-gray-400 hover:bg-red-50 hover:text-red-500 transition-all flex items-center justify-center cursor-pointer">🗑</button>
       `
       wrap.appendChild(row)
     })

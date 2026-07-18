@@ -7,8 +7,7 @@ interface Props {
 const { active } = Astro.props
 
 const tabs = [
-  { key: 'ip-usn', label: 'ИП УСН', href: '/calculators/ip' },
-  { key: 'ip-our', label: 'ИП ОУР', href: '/calculators/ip' },
+  { key: 'ip', label: 'ИП УСН и ОУР', href: '/calculators/ip' },
   { key: 'too-usn', label: 'ТОО УСН', href: '/calculators/salary-too-usn' },
   { key: 'too-our', label: 'ТОО ОУР', href: '/calculators/salary-too-our' },
   { key: 'reverse', label: 'Расчёт от обратного', href: '/calculators/salary-reverse' },
@@ -30,7 +29,7 @@ const isCurrent = (tab: (typeof tabs)[number]) =>
       isCurrent(tab) ? (
         <span aria-current="page" class="px-4 py-2 rounded-full text-[13px] font-bold bg-blue-600 text-white shadow-sm whitespace-nowrap cursor-default">{tab.label}</span>
       ) : tab.href ? (
-        <a href={tab.href} class="px-4 py-2 rounded-full text-[13px] font-medium text-gray-500 hover:text-gray-900 whitespace-nowrap transition-colors">{tab.label}</a>
+        <a href={tab.href} class="px-4 py-2 rounded-full text-[13px] font-medium text-gray-500 hover:text-gray-900 whitespace-nowrap transition-colors cursor-pointer">{tab.label}</a>
       ) : (
         <span class="px-4 py-2 rounded-full text-[13px] font-medium text-gray-300 cursor-not-allowed whitespace-nowrap" title="Скоро">{tab.label}</span>
       )
