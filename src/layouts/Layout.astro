@@ -32,7 +32,7 @@ const {
   pageType = 'WebPage',
 } = Astro.props
 
-const baseUrl = 'https://mytaxes.kz'
+const baseUrl = 'https://www.mytaxes.kz'
 const currentUrl = new URL(Astro.url.pathname, baseUrl).href
 
 const schemas: object[] = [
@@ -151,6 +151,7 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': sche
 
 const ogType = article ? 'article' : 'website'
 const ogImage = `${baseUrl}/og-image.png`
+const articleVerified = !article || (article.dateModified ?? article.datePublished) >= '2026-10-10'
 ---
 
 <!doctype html>
@@ -159,8 +160,10 @@ const ogImage = `${baseUrl}/og-image.png`
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    {!articleVerified && <meta name="robots" content="noindex,follow" />}
     <meta name="google-site-verification" content="_OQXWII4T_Av5SBj3O66yzD5P2DvWWiTp7rbDQZMy5g" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={currentUrl} />
     <title>{title} | MyTaxes.kz</title>
 
     <!-- Open Graph -->
@@ -202,6 +205,11 @@ const ogImage = `${baseUrl}/og-image.png`
 
     <!-- Main -->
     <main class="max-w-5xl mx-auto px-4 py-10">
+      {!articleVerified && (
+        <aside class="mb-8 rounded-2xl border border-amber-300 bg-amber-50 p-5 text-sm text-amber-950">
+          <strong>Архивный материал.</strong> Эта статья ещё не прошла редакционную проверку по правилам 2026 года и исключена из индексации. Не используйте её для расчёта или отчётности; начните с <a class="underline" href="/methodology">проверенной методики</a>.
+        </aside>
+      )}
       <slot />
     </main>
 
@@ -209,10 +217,13 @@ const ogImage = `${baseUrl}/og-image.png`
     <footer class="border-t border-gray-100 mt-20">
       <div class="max-w-4xl mx-auto px-4 py-8 text-sm text-gray-400">
         <p>© 2026 mytaxes.kz — Калькулятор налогов Казахстан. Информация носит справочный характер.</p>
-        <div class="flex items-center justify-between flex-wrap gap-2 mt-1">
-          <a href="/legal" class="text-xs text-gray-400 tracking-widest hover:text-blue-600 transition-colors border-b border-transparent hover:border-blue-600 pb-1">
-            Юридическая информация
-          </a>
+        <div class="flex items-center justify-between flex-wrap gap-3 mt-3">
+          <nav class="flex flex-wrap gap-4 text-xs">
+            <a href="/about" class="hover:text-blue-600">О проекте</a>
+            <a href="/methodology" class="hover:text-blue-600">Методика</a>
+            <a href="/contact" class="hover:text-blue-600">Контакты</a>
+            <a href="/legal" class="hover:text-blue-600">Конфиденциальность</a>
+          </nav>
           <a href="https://eezydev.net/" target="_blank" rel="noopener noreferrer" class="text-xs text-gray-400 hover:text-blue-600 transition-colors">
             designed & created by EEZYDEV
           </a>

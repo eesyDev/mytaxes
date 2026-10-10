@@ -8,15 +8,15 @@ import FeaturedPosts from '../components/FeaturedPosts.astro'
 const faqs = [
   {
     q: 'Какие ставки налога для ИП в 2026 году?',
-    a: 'На упрощённом режиме — 4% от дохода, на патенте — 1%. Дополнительно ИП платит социальные платежи (ОПВ, СО, ВОСМС, ОПВР) от заявленного дохода.',
+    a: 'Базовая ставка упрощённой декларации — 4% от дохода. Маслихат вправе изменить её не более чем на 50% (диапазон 2–6%). Патент с 2026 года отменён.',
   },
   {
     q: 'Когда нужно вставать на учёт по НДС?',
-    a: 'Порог постановки на учёт по НДС в 2026 году — 20 000 МРП за календарный год. При превышении нужно встать на учёт в течение установленного срока, иначе грозит штраф.',
+    a: 'Для налогоплательщиков на ОУР порог обязательной регистрации по НДС в 2026 году — 10 000 МРП за календарный год. Применяющие СНР плательщиками НДС не являются.',
   },
   {
-    q: 'Чем патент отличается от упрощёнки?',
-    a: 'Патент — ставка 1%, но жёсткие ограничения по видам деятельности и без наёмных сотрудников. Упрощёнка — ставка 4%, можно нанимать работников и шире список ОКЭД.',
+    q: 'Работает ли патент в 2026 году?',
+    a: 'Нет. С 1 января 2026 года патент отменён. Нужно проверить условия нового СНР для самозанятых, упрощённой декларации либо ОУР.',
   },
   {
     q: 'Нужно ли платить налог с переводов на Kaspi?',
@@ -27,16 +27,16 @@ const faqs = [
     a: 'Доход от продажи крипты облагается ИПН 10% с прибыли (разница между ценой продажи и покупки). Доход фиксируется в тенге по курсу Нацбанка на дату операции и декларируется в форме 270.00.',
   },
   {
-    q: 'Что такое форма 240.00 и кто её сдаёт?',
-    a: 'Это декларация по индивидуальному подоходному налогу для физлиц с доходами из-за рубежа: дивиденды, акции, крипта, зарубежная недвижимость. Срок сдачи — до 31 марта следующего года.',
+    q: 'Чем формы 240.00, 250.00 и 270.00 отличаются в 2026 году?',
+    a: 'Форма 240.00 упразднена с 2025 года. Форма 250.00 — декларация об активах и обязательствах для предусмотренных законом категорий; 270.00 — декларация о доходах и имуществе. Обязанность зависит от статуса и отчётного периода.',
   },
   {
     q: 'Какие налоговые вычеты доступны физлицам?',
-    a: 'Стандартный вычет 14 МРП в месяц, вычет 1 МЗП, вычеты на медицину, добровольные пенсионные взносы, вознаграждение по ипотеке Отбасы банка и взносы на ВОСМС.',
+    a: 'С 2026 года базовый вычет — 30 МРП за календарный месяц, не более 360 МРП за год. Также предусмотрены вычет социальных платежей и социальные вычеты при соблюдении условий.',
   },
   {
     q: 'Как платят налоги фрилансеры?',
-    a: 'Самый удобный вариант — оформить ИП на упрощёнке или через приложение e-Salyq Business со ставкой 1%. Это легализует доход и снимает риски при крупных переводах на карту.',
+    a: 'Вариант зависит от деятельности и дохода. В 2026 году нужно проверить условия СНР для самозанятых, упрощённой декларации или ОУР; прежний СНР через специальное мобильное приложение отменён.',
   },
   {
     q: 'Какой налог при продаже квартиры или авто?',
@@ -44,7 +44,7 @@ const faqs = [
   },
   {
     q: 'Что будет, если не задекларировать доход?',
-    a: 'Штраф за неуплату налога может достигать значительной части суммы, плюс пеня за просрочку и риск блокировки счетов по линии финмониторинга. Декларировать выгоднее, чем скрывать.',
+    a: 'Последствия зависят от состава нарушения и процедуры. Сайт не прогнозирует автоматический штраф или блокировку; проверьте уведомление КГД и применимую норму.',
   },
 ]
 
@@ -105,8 +105,8 @@ const limits: Record<string, Array<{ label: string; min: string; max: string }>>
   <section class="grid sm:grid-cols-2 gap-4 mb-20">
     <a href="/calculators/ip" class="group border border-gray-200 rounded-2xl p-6 hover:border-blue-400 hover:shadow-sm transition-all">
       <div class="text-2xl mb-3">📊</div>
-      <h2 class="font-semibold text-lg mb-1">ИП — упрощённый режим и патент</h2>
-      <p class="text-sm text-gray-500">4% на упрощёнке, 1% на патенте. Ставки 2026 года.</p>
+      <h2 class="font-semibold text-lg mb-1">ИП — упрощёнка и ОУР</h2>
+      <p class="text-sm text-gray-500">Базовая ставка упрощёнки 4% (регионально 2–6%). Патент отменён.</p>
       <span class="mt-4 inline-block text-sm text-blue-600 group-hover:underline">Рассчитать →</span>
     </a>
     <a href="/calculators/salary-too-our" class="group border border-gray-200 rounded-2xl p-6 hover:border-blue-400 hover:shadow-sm transition-all">
@@ -127,10 +127,10 @@ const limits: Record<string, Array<{ label: string; min: string; max: string }>>
       <p class="text-sm text-gray-500">По сумме на руки подбираем оклад и полную стоимость найма.</p>
       <span class="mt-4 inline-block text-sm text-blue-600 group-hover:underline">Рассчитать →</span>
     </a>
-    <a href="/calculators/forma-240" class="group border border-gray-200 rounded-2xl p-6 hover:border-blue-400 hover:shadow-sm transition-all">
+    <a href="/blog/250-vs-270" class="group border border-gray-200 rounded-2xl p-6 hover:border-blue-400 hover:shadow-sm transition-all">
       <div class="text-2xl mb-3">📄</div>
-      <h2 class="font-semibold text-lg mb-1">Форма 240 — инвестиции</h2>
-      <p class="text-sm text-gray-500">ИПН с дивидендов, акций, крипты и зарубежных доходов.</p>
+      <h2 class="font-semibold text-lg mb-1">Исторический расчёт формы 240</h2>
+      <p class="text-sm text-gray-500">Форма упразднена с 2025 года. Для текущей обязанности проверяйте форму 270.00.</p>
       <span class="mt-4 inline-block text-sm text-blue-600 group-hover:underline">Рассчитать →</span>
     </a>
   </section>
@@ -148,7 +148,7 @@ const limits: Record<string, Array<{ label: string; min: string; max: string }>>
     <div class="grid md:grid-cols-2 gap-6">
       <!-- Базовые ставки -->
       <div class="bg-white border border-gray-200 rounded-2xl p-6">
-        <h3 class="font-semibold mb-2">Базовые ставки</h3>
+        <h3 class="font-semibold mb-2">Базовые ставки — <span data-active-year>2026</span></h3>
         <div class="divide-y divide-gray-100 text-sm">
           {baseRates.map(r => (
             <div class="flex items-center justify-between gap-4 py-3">
@@ -164,8 +164,8 @@ const limits: Record<string, Array<{ label: string; min: string; max: string }>>
 
       <!-- Пределы для исчисления -->
       <div class="bg-white border border-gray-200 rounded-2xl p-6">
-        <h3 class="font-semibold mb-2">Пределы для исчисления</h3>
-        <table class="w-full text-sm">
+        <h3 class="font-semibold mb-2">Пределы для исчисления — <span data-active-year>2026</span></h3>
+        <div class="overflow-x-auto"><table class="w-full text-sm">
           <thead>
             <tr class="text-gray-400 text-xs uppercase tracking-wide">
               <th class="text-left font-medium py-2">Исчисления</th>
@@ -184,7 +184,7 @@ const limits: Record<string, Array<{ label: string; min: string; max: string }>>
               ))}
             </tbody>
           ))}
-        </table>
+        </table></div>
       </div>
     </div>
   </section>
@@ -211,6 +211,7 @@ const limits: Record<string, Array<{ label: string; min: string; max: string }>>
           b.classList.toggle('text-gray-500', !active)
           b.setAttribute('aria-selected', String(active))
         })
+        section.querySelectorAll<HTMLElement>('[data-active-year]').forEach((el) => { el.textContent = year })
       }
       buttons.forEach((b) => b.addEventListener('click', () => setYear(b.dataset.yearBtn!)))
       setYear('2026')
