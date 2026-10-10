@@ -9,6 +9,12 @@ const posts = Object.entries(modules)
     ...mod.meta,
     slug: path.replace('./', '').replace('.astro', ''),
   }))
+
+const reviewedSlugs = new Set([
+  'snr-2026', 'nds-porog', 'nalogovye-vychety',
+  'pochemu-raschet-zarplaty-otlichaetsya', 'oklad-ot-summy-na-ruki',
+])
+const reviewedPosts = posts.filter((post) => reviewedSlugs.has(post.slug))
 ---
 
 <Layout
@@ -25,7 +31,7 @@ const posts = Object.entries(modules)
   <p class="text-gray-500 mb-10">Понятно о налогах в Казахстане. Без воды.</p>
 
   <div class="space-y-4">
-    {posts.map(post => (
+    {reviewedPosts.map(post => (
       <a href={`/blog/${post.slug}`} class="group flex gap-4 border border-gray-200 rounded-2xl p-6 hover:border-gray-300 transition-all">
         <div class="flex-1">
           <span class="text-xs text-gray-400 uppercase tracking-wide">{post.category}</span>

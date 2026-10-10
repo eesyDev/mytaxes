@@ -87,12 +87,12 @@ const modeLabel = mode === 'simplified' ? 'Упрощёнка' : 'ОУР'
           <label class="block text-[10px] font-black text-blue-600 uppercase tracking-[0.2em]">Доход</label>
         </div>
 
-        <label class="flex items-center gap-3 cursor-pointer">
+        <label class="hidden">
           <input type="checkbox" id="chk-high-ipn" class="w-5 h-5 rounded-lg border-gray-200 text-blue-600 focus:ring-blue-500 cursor-pointer">
           <span class="font-bold text-gray-800 text-sm">Повышенная ставка ИПН (15%)</span>
           <span class="tip" title="Применяется к доходу свыше 8 500 МРП за год. Калькулятор применяет 15% к текущему месяцу.">i</span>
         </label>
-        <label id="row-high-div" class="flex items-center gap-3 cursor-pointer">
+        <label id="row-high-div" class="hidden">
           <input type="checkbox" id="chk-high-div" class="w-5 h-5 rounded-lg border-gray-200 text-blue-600 focus:ring-blue-500 cursor-pointer">
           <span class="font-bold text-gray-800 text-sm">Дивиденды: ставка 15% (свыше порога)</span>
           <span class="tip" title="Дивиденды свыше 230 000 МРП за год облагаются по 15% вместо 5%.">i</span>
@@ -169,7 +169,7 @@ const modeLabel = mode === 'simplified' ? 'Упрощёнка' : 'ОУР'
       </div>
 
       <!-- Блок «Социальные статусы» -->
-      <div id="block-statuses" class="bg-white p-5 sm:p-7 rounded-[2rem] sm:rounded-[2.5rem] border border-gray-100 shadow-sm">
+      <div id="block-statuses" class="hidden">
         <label class="block text-[10px] font-black text-blue-600 uppercase mb-5 tracking-[0.2em]">Социальные статусы и льготы</label>
         <div class="space-y-3">
           <label class="flex items-center gap-3 cursor-pointer">
@@ -267,7 +267,7 @@ const modeLabel = mode === 'simplified' ? 'Упрощёнка' : 'ОУР'
 
           <!-- Пояснение по упрощёнке (СН не платится подушево) -->
           <div id="simplified-note" class="hidden mt-4 text-xs text-emerald-800 bg-emerald-50 rounded-xl p-3 leading-relaxed">
-            На упрощёнке социальный налог (6%) с зарплаты не уплачивается — он входит в единый налог с оборота (3–4%, форма 910.00).<span id="sn-savings-wrap"> Экономия на стоимости найма vs ОУР: <span id="sn-savings" class="font-black">0 ₸</span>/мес.</span>
+            На упрощёнке социальный налог с зарплаты не уплачивается; налог с дохода имеет базовую ставку 4% (регионально 2–6%, форма 910.00).<span id="sn-savings-wrap"> Разница в показанной стоимости найма vs ОУР: <span id="sn-savings" class="font-black">0 ₸</span>/мес.</span>
           </div>
         </div>
 
@@ -295,6 +295,12 @@ const modeLabel = mode === 'simplified' ? 'Упрощёнка' : 'ОУР'
 
   </div>
 </div>
+
+<aside class="mt-8 rounded-2xl border border-amber-200 bg-amber-50 p-5 text-sm text-amber-950 leading-relaxed">
+  <strong>Границы расчёта.</strong> Калькулятор применим к одному месяцу 2026 года и не знает доход/вычеты с начала года.
+  Поэтому он не рассчитывает прогрессивную ставку у годового порога и сложные льготные случаи автоматически. Проверено
+  10.10.2026. Формулы, округление и официальные источники: <a class="underline" href="/methodology">методика расчёта</a>.
+</aside>
 
 <style is:global>
   body { background-color: #f8fafc; }
@@ -365,24 +371,17 @@ const modeLabel = mode === 'simplified' ? 'Упрощёнка' : 'ОУР'
       employerMode,
       gph: ($('chk-gph') as HTMLInputElement).checked,
       partialMonth: ($('chk-hired') as HTMLInputElement).checked, // месяц найма/увольнения → мин. базы off
-      highIpn: ($('chk-high-ipn') as HTMLInputElement).checked,
-      highDividendIpn: ($('chk-high-div') as HTMLInputElement).checked,
+      highIpn: false,
+      highDividendIpn: false,
       deductions: {
         ded30: ($('chk-ded30') as HTMLInputElement).checked,
         ded882: ($('chk-ded882') as HTMLInputElement).checked,
         ded5000: ($('chk-ded5000') as HTMLInputElement).checked,
       },
       residency,
-      statuses: {
-        pensioner: ($('chk-pensioner') as HTMLInputElement).checked,
-        disabled: disabledOn ? (($('sel-disabled') as HTMLSelectElement).value as 'I' | 'II' | 'III') : 'none',
-        student: ($('chk-student') as HTMLInputElement).checked,
-        manyChildrenMother: ($('chk-mother') as HTMLInputElement).checked,
-        astanaHub: ($('chk-astanahub') as HTMLInputElement).checked,
-        mfca: ($('chk-mfca') as HTMLInputElement).checked,
-        exemptOpvr: ($('chk-exempt-opvr') as HTMLInputElement).checked,
-        oppvReceiver: ($('chk-oppv') as HTMLInputElement).checked,
-      },
+      // Специальные статусы скрыты до постатейной верификации условий каждой льготы.
+      statuses: { pensioner: false, disabled: 'none', student: false, manyChildrenMother: false,
+        astanaHub: false, mfca: false, exemptOpvr: false, oppvReceiver: false },
     }
   }
 
@@ -391,7 +390,7 @@ const modeLabel = mode === 'simplified' ? 'Упрощёнка' : 'ОУР'
     const residency = (document.querySelector('input[name="residency"]:checked') as HTMLInputElement)?.value || 'residentRK'
     const nonResident = residency === 'eaesTemp' || residency === 'nonResident'
     $('block-deductions').classList.toggle('hidden', nonResident)
-    $('block-statuses').classList.toggle('hidden', nonResident)
+    $('block-statuses').classList.add('hidden')
     $('nonresident-note').classList.toggle('hidden', !nonResident)
   }
 

@@ -1,15 +1,15 @@
 ---
 import Layout from '../layouts/Layout.astro'
+import { MRP, MZP, BUSINESS_2026, OFFICIAL_SOURCES, VERIFIED_AT } from '../data/tax-rates-2026.js'
 
 // Централизованные данные на 2026 год
 export const stats = {
-  mrp: 3_932,
-  mzp: 85_000,
+  mrp: MRP,
+  mzp: MZP,
   year: 2026,
   limits: {
     nds: 10_000, // порог НДС в МРП
-    patent: 3_528, // предел патента в МРП
-    simplified: 24_038, // предел упрощенки в МРП (полугодие)
+    simplified: BUSINESS_2026.simplified.annualIncomeMrp,
   }
 }
 ---
@@ -58,15 +58,16 @@ export const stats = {
           <span class="font-bold text-xl">{(stats.limits.nds * stats.mrp).toLocaleString()} ₸</span>
         </div>
         <div class="flex justify-between items-center border-b pb-4">
-          <span>Лимит дохода для патента (3 528 МРП)</span>
-          <span class="font-bold text-xl">{(stats.limits.patent * stats.mrp).toLocaleString()} ₸</span>
+          <span>Патент в 2026 году</span>
+          <span class="font-bold text-xl">отменён</span>
         </div>
         <div class="flex justify-between items-center border-b pb-4">
-          <span>Лимит упрощенки за полугодие (24 038 МРП)</span>
+          <span>Лимит упрощёнки за 2026 год (600 000 МРП)</span>
           <span class="font-bold text-xl text-blue-600">{(stats.limits.simplified * stats.mrp).toLocaleString()} ₸</span>
         </div>
       </div>
     </section>
+    <p class="mt-8 text-sm text-gray-500">Проверено {VERIFIED_AT}. Порог НДС относится к ОУР; плательщики СНР не являются плательщиками НДС. Источники: <a class="text-blue-600 underline" href={OFFICIAL_SOURCES.indicators}>государственные показатели</a>, <a class="text-blue-600 underline" href={OFFICIAL_SOURCES.vat}>КГД о НДС</a>.</p>
 
   </article>
 </Layout>

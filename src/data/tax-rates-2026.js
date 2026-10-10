@@ -3,6 +3,7 @@
 // Все денежные суммы в KZT.
 
 export const TAX_YEAR = 2026;
+export const VERIFIED_AT = '2026-10-10';
 
 export const MRP = 4325;
 export const MZP = 85000;
@@ -43,6 +44,40 @@ export const LIMITS = {
   oosmsMinBase: 1 * MZP,    // 85 000
   oosmsMaxBase: 40 * MZP,   // 3 400 000
   snMinBase: 14 * MRP,      // 60 550
+};
+
+// Бизнес-режимы 2026. Патент, отдельный розничный налог и СНР через
+// специальное мобильное приложение с 01.01.2026 не являются самостоятельными СНР.
+export const BUSINESS_2026 = {
+  simplified: {
+    rate: 0.04,
+    minRegionalRate: 0.02,
+    maxRegionalRate: 0.06,
+    annualIncomeMrp: 600_000,
+    annualIncome: 600_000 * MRP,
+    reporting: '910.00, полугодие',
+    vatPayer: false,
+  },
+  selfEmployed: {
+    ipnRate: 0,
+    socialPaymentRate: 0.04,
+    monthlyIncomeMrp: 300,
+    monthlyIncome: 300 * MRP,
+  },
+  vat: {
+    ourRegistrationThresholdMrp: 10_000,
+    ourRegistrationThreshold: 10_000 * MRP,
+  },
+  discontinued: ['patent', 'retail-tax', 'special-mobile-app'],
+};
+
+export const OFFICIAL_SOURCES = {
+  taxCode: 'https://adilet.zan.kz/rus/docs/K2500000214',
+  simplified: 'https://www.gov.kz/memleket/entities/kgd-vko/press/article/details/219504?lang=ru',
+  vat: 'https://www.gov.kz/memleket/entities/kgd/press/news/details/1096207?lang=ru',
+  deductions: 'https://www.gov.kz/memleket/entities/minfin/documents/details/1030415?lang=ru',
+  indicators: 'https://www.gov.kz/article/17157?lang=ru',
+  declarations: 'https://www.gov.kz/memleket/entities/kgd-astana/press/news/details/1070739?lang=ru',
 };
 
 // Каждый платёж содержит ставку, сторону оплаты и лимиты базы.

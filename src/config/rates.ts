@@ -10,12 +10,15 @@
  * - Социальный кодекс РК
  */
 
+import { MRP, MZP, RATES, LIMITS, BUSINESS_2026 } from '../data/tax-rates-2026.js'
+
+/** @deprecated Используйте src/data/tax-rates-2026.js — единственный источник данных. */
 export const RATES_2026 = {
   /** Минимальная заработная плата (тенге/мес.) — осталась без изменений */
-  MZP: 85_000,
+  MZP,
 
   /** Месячный расчётный показатель (тенге) — новый на 2026 год */
-  MRP: 4_325,
+  MRP,
 
   /** СНР на основе упрощенной декларации (Новый НК РК 2026) */
   simplified: {
@@ -23,10 +26,10 @@ export const RATES_2026 = {
      * Примечание: Социальный налог отменен, это чистый ИПН/КПН.
      * Акиматы регионов имеют право корректировать ставку в пределах 2% - 6%.
      */
-    taxRate: 0.04,
+    taxRate: BUSINESS_2026.simplified.rate,
 
     /** Лимит дохода теперь считается ЗА ГОД (раньше было за полугодие) */
-    incomeMaxMRP: 600_000,
+    incomeMaxMRP: BUSINESS_2026.simplified.annualIncomeMrp,
 
     /** Лимит дохода за год в тенге (2 595 000 000 тг) */
     get incomeMax() {
@@ -46,7 +49,7 @@ export const RATES_2026 = {
    */
   selfEmployed: {
     /** Единый платеж, заменяющий налоги и соц. отчисления */
-    taxRate: 0.04,
+    taxRate: BUSINESS_2026.selfEmployed.socialPaymentRate,
 
     /** Лимит дохода В МЕСЯЦ в МРП */
     incomeMaxMRP_month: 300,
@@ -59,7 +62,7 @@ export const RATES_2026 = {
 
   /** Обязательные пенсионные взносы (ОПВ) */
   opv: {
-    rate: 0.10,
+    rate: RATES.opv,
     minBaseMZP: 1,
     maxBaseMZP: 50,
   },
@@ -68,7 +71,7 @@ export const RATES_2026 = {
    * С 1 января 2026 года ставка выросла до 3.5%. ИП платят их за себя.
    */
   opvr: {
-    rate: 0.035,
+    rate: RATES.opvr,
     minBaseMZP: 1,
   },
 
@@ -80,7 +83,7 @@ export const RATES_2026 = {
 
   /** Социальные отчисления (СО) */
   so: {
-    rate: 0.05,
+    rate: RATES.so,
     minBaseMZP: 1,
     maxBaseMZP: 7, // Максимальная база для СО — 7 МЗП
   },
