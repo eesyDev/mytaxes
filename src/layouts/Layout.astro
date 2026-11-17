@@ -152,6 +152,7 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': sche
 const ogType = article ? 'article' : 'website'
 const ogImage = `${baseUrl}/og-image.png`
 const articleVerified = !article || (article.dateModified ?? article.datePublished) >= '2026-10-10'
+const formatDate = (value: string) => new Intl.DateTimeFormat('ru-KZ', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${value}T00:00:00Z`))
 ---
 
 <!doctype html>
@@ -207,6 +208,12 @@ const articleVerified = !article || (article.dateModified ?? article.datePublish
 
     <!-- Main -->
     <main class="max-w-5xl mx-auto px-4 py-10">
+      {article && (
+        <div class="max-w-4xl mx-auto mb-6 flex flex-wrap gap-x-5 gap-y-2 text-sm text-gray-500" aria-label="Даты статьи">
+          <span>Опубликовано: <time datetime={article.datePublished}>{formatDate(article.datePublished)}</time></span>
+          <span>Обновлено: <time datetime={article.dateModified ?? article.datePublished}>{formatDate(article.dateModified ?? article.datePublished)}</time></span>
+        </div>
+      )}
       {!articleVerified && (
         <aside class="mb-8 rounded-2xl border border-amber-300 bg-amber-50 p-5 text-sm text-amber-950">
           <strong>Архивный материал.</strong> Эта статья ещё не прошла редакционную проверку по правилам 2026 года и исключена из индексации. Не используйте её для расчёта или отчётности; начните с <a class="underline" href="/methodology">проверенной методики</a>.

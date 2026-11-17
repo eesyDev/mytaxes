@@ -1,0 +1,29 @@
+---
+import Layout from './Layout.astro'
+import AuthorBlock from '../components/AuthorBlock.astro'
+const { meta } = Astro.props
+---
+<Layout title={meta.title} description={meta.description} article={{authorName:'Редакция MyTaxes.kz',datePublished:meta.datePublished,dateModified:meta.dateModified}}>
+  <article class="tax-article max-w-4xl mx-auto">
+    <h1>{meta.title}</h1>
+    <slot />
+    <AuthorBlock name="Редакция MyTaxes.kz" role="Автор материала" />
+  </article>
+</Layout>
+<style is:global>
+  .tax-article { line-height: 1.8; overflow-wrap: anywhere; }
+  .tax-article h1 { font-size: clamp(1.8rem, 4vw, 2.7rem); font-weight: 800; line-height: 1.2; margin-bottom: 1.5rem; }
+  .tax-article h2 { font-size: 1.5rem; font-weight: 700; line-height: 1.35; margin: 2rem 0 1rem; }
+  .tax-article h3 { font-size: 1.15rem; font-weight: 700; margin: 1.5rem 0 .75rem; }
+  .tax-article p, .tax-article ul, .tax-article ol { margin-bottom: 1rem; }
+  .tax-article ul { list-style: disc; padding-left: 1.5rem; }
+  .tax-article ol { list-style: decimal; padding-left: 1.5rem; }
+  .tax-article li { margin-bottom: .5rem; }
+  .tax-article a { color: #2563eb; text-decoration: underline; }
+  .tax-article .table-scroll { overflow-x: auto; margin: 1.5rem 0; }
+  .tax-article table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+  .tax-article caption { text-align: left; font-weight: 600; margin-bottom: .5rem; }
+  .tax-article th, .tax-article td { padding: .75rem; border-bottom: 1px solid #e2e8f0; text-align: left; }
+  .tax-article th { background: #f8fafc; }
+  .tax-article .planning-notice p { margin: .75rem 0 0; }
+</style>

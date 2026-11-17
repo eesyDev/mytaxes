@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro'
+import PlanningNotice from '../components/PlanningNotice.astro'
 import { MRP, MZP, BUSINESS_2026, OFFICIAL_SOURCES, VERIFIED_AT } from '../data/tax-rates-2026.js'
 
 // Централизованные данные на 2026 год
@@ -37,7 +38,7 @@ export const stats = {
         <p class="text-7xl font-black text-gray-900">{stats.mrp.toLocaleString()} <span class="text-3xl">₸</span></p>
         <p class="mt-4 text-gray-600 text-sm leading-relaxed">
           Используется для исчисления пособий, штрафов, налогов и других платежей. 
-          <br/><strong>В 2025 году был:</strong> 3 692 ₸.
+          <br/><strong>В 2025 году был:</strong> 3 932 ₸.
         </p>
       </div>
 
@@ -50,6 +51,8 @@ export const stats = {
       </div>
     </div>
 
+    <PlanningNotice />
+    <p class="mb-8 text-sm text-gray-600">Предварительные расчёты: <a class="text-blue-600 underline" href="/blog/mrp-2027">пороги и лимиты 2027 года</a> · <a class="text-blue-600 underline" href="/blog/mzp-2027">МЗП и стоимость сотрудника</a>. Действующие значения 2026 года приведены ниже.</p>
     <section class="bg-gray-50 rounded-[2rem] p-10">
       <h3 class="text-2xl font-bold mb-8">Важные лимиты на {stats.year} год</h3>
       <div class="space-y-6">
