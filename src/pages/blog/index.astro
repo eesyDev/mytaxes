@@ -13,13 +13,16 @@ const posts = Object.entries(modules)
 const reviewedSlugs = new Set([
   'snr-2026', 'nds-porog', 'nalogovye-vychety',
   'pochemu-raschet-zarplaty-otlichaetsya', 'oklad-ot-summy-na-ruki',
+  'mzp-2027', 'mrp-2027', 'ipn-2027', 'forma-910-2-polugodie-2026',
 ])
 const reviewedPosts = posts.filter((post) => reviewedSlugs.has(post.slug))
+  .sort((a, b) => (b.datePublished ?? '2026-10-10').localeCompare(a.datePublished ?? '2026-10-10'))
+const formatDate = (value: string) => new Intl.DateTimeFormat('ru-KZ', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${value}T00:00:00Z`))
 ---
 
 <Layout
-  title="Статьи о налогах Казахстан 2026"
-  description="Полезные статьи о налогах для ИП и ТОО в Казахстане. Разборы ставок, сроков, режимов налогообложения 2026."
+  title="Статьи о налогах Казахстана: 2026 и изменения 2027 года"
+  description="Налоги для ИП, ТОО и физлиц: правила 2026 года, предварительные показатели 2027, расчёты и сроки отчётности."
   pageType="CollectionPage"
   breadcrumbs={[
     { name: 'Главная', item: 'https://mytaxes.kz' },
@@ -40,6 +43,10 @@ const reviewedPosts = posts.filter((post) => reviewedSlugs.has(post.slug))
           </h2>
           <p class="text-sm text-gray-500">
             {post.description}
+          </p>
+          <p class="mt-3 text-xs text-gray-500">
+            Опубликовано: <time datetime={post.datePublished ?? '2026-10-10'}>{formatDate(post.datePublished ?? '2026-10-10')}</time>
+            {' · '}Обновлено: <time datetime={post.dateModified ?? '2026-10-10'}>{formatDate(post.dateModified ?? '2026-10-10')}</time>
           </p>
         </div>
         <span class="text-gray-300 self-center text-xl">→</span>
